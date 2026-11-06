@@ -61,6 +61,7 @@
 
 /* ---------- Sağ: canlı noktalı harita ---------- */
 .hero2__map {
+  position: relative;
   margin: 0;
   min-width: 0;
   align-self: center;
@@ -122,6 +123,60 @@
   opacity: 0;
 }
 
+/* "Dağıt, yeniden topla": saçılma sırasında çizgiler, düğümler ve akan noktalar gizlenir;
+   merkez ve ORVENA etiketi görünür kalır */
+.map-fg > g[style],
+.map-fg .map-flow {
+  transition: opacity 0.25s ease;
+}
+
+.map-fg.is-scattered > g[style],
+.map-fg.is-scattered .map-flow {
+  opacity: 0;
+}
+
+.map-scatter {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.map-scatter[hidden] {
+  display: none;
+}
+
+.map-scatter:hover {
+  border-color: var(--accent);
+}
+
+.map-scatter:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.map-scatter__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
 .map-node {
   fill: var(--map-node-bg);
   stroke: var(--text);
@@ -153,18 +208,19 @@
   font-weight: 600;
 }
 
-/* Açılış animasyonu: çizgiler sırayla çizilir */
+/* Çizgiler sırayla çizilir. "is-drawing" sınıfı JS tarafından kaldırılıp yeniden
+   eklenerek animasyon "Dağıt, yeniden topla" sonrasında baştan oynatılır. */
 @media (prefers-reduced-motion: no-preference) {
-  .map-line {
+  .map-fg.is-drawing .map-line {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     animation: map-draw 1.1s ease-out forwards;
     animation-delay: calc(0.25s + var(--i, 0) * 0.14s);
   }
 
-  .map-mid,
-  .map-node,
-  .map-label:not(.map-label--hub) {
+  .map-fg.is-drawing .map-mid,
+  .map-fg.is-drawing .map-node,
+  .map-fg.is-drawing .map-label:not(.map-label--hub) {
     opacity: 0;
     animation: map-fade 0.5s ease-out forwards;
     animation-delay: calc(0.9s + var(--i, 0) * 0.14s);
@@ -241,6 +297,12 @@
     min-height: 48px;
     padding: 12px 18px;
     font-size: 0.98rem;
+  }
+
+  .map-scatter {
+    min-height: 44px;
+    right: 0;
+    bottom: 0;
   }
 
   /* Harita küçüldüğünde modül etiketleri okunamayacak kadar küçülür;

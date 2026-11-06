@@ -88,7 +88,7 @@
           <rect class="map-pattern" width="720" height="620" fill="url(#p-field)" mask="url(#m-fade)"/>
           <rect class="map-pattern" width="720" height="620" fill="url(#p-land)" mask="url(#m-land)"/>
 
-          <g class="map-fg">
+          <g class="map-fg is-drawing">
           <circle class="map-hub-glow" cx="250" cy="290" r="34"/>
 
           <g style="--i:0"><path class="map-line" pathLength="1" d="M250 290Q300 120 450 95"/><circle class="map-mid" cx="325" cy="156" r="2.4"/><circle class="map-node" cx="450" cy="95" r="5"/><text class="map-label" x="462" y="99">01 · CLAUDE CODE'U KUR</text></g>
@@ -105,107 +105,10 @@
           </g>
         </svg>
         </div>
+        <button class="map-scatter" type="button" hidden><span class="map-scatter__dot" aria-hidden="true"></span>Dağıt, yeniden topla</button>
       </figure>
     </section>
 
-    <!-- Ders şeridi + yayın kartı -->
-    <section class="container" aria-label="Kursun dersleri ve ilk sitemin yayını">
-      <div class="overview">
-        <div class="strip-box">
-          <p class="eyebrow strip-box__label">Ders şeridi — her parça bir ders</p>
-          <div class="strip" id="strip">
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m1-d1" data-tip="Modül 01 · Terminalin, tarayıcıda" aria-label="Modül 01: Terminalin, tarayıcıda" title="Modül 01 · Terminalin, tarayıcıda"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d2" data-tip="Modül 01 · İlk dosyan" aria-label="Modül 01: İlk dosyan" title="Modül 01 · İlk dosyan"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d3" data-tip="Modül 01 · O dosya nereye gitti?" aria-label="Modül 01: O dosya nereye gitti?" title="Modül 01 · O dosya nereye gitti?"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d4" data-tip="Modül 01 · Claude yanlış yaptığında" aria-label="Modül 01: Claude yanlış yaptığında" title="Modül 01 · Claude yanlış yaptığında"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d5" data-tip="Modül 01 · Claude neye izinli" aria-label="Modül 01: Claude neye izinli" title="Modül 01 · Claude neye izinli"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d6" data-tip="Modül 01 · Modül 1 özeti" aria-label="Modül 01: Modül 1 özeti" title="Modül 01 · Modül 1 özeti"></a>
-              </div>
-              <span class="strip__num">01</span>
-            </div>
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m2-d1" data-tip="Modül 02 · Bir prompt'un anatomisi" aria-label="Modül 02: Bir prompt'un anatomisi" title="Modül 02 · Bir prompt'un anatomisi"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d2" data-tip="Modül 02 · Netlik kaldıracı" aria-label="Modül 02: Netlik kaldıracı" title="Modül 02 · Netlik kaldıracı"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d3" data-tip="Modül 02 · Bağlam pencereleri ve /clear" aria-label="Modül 02: Bağlam pencereleri ve /clear" title="Modül 02 · Bağlam pencereleri ve /clear"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d4" data-tip="Modül 02 · Slash komutları" aria-label="Modül 02: Slash komutları" title="Modül 02 · Slash komutları"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d5" data-tip="Modül 02 · @file ve @directory" aria-label="Modül 02: @file ve @directory" title="Modül 02 · @file ve @directory"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d6" data-tip="Modül 02 · Modül 2 özeti" aria-label="Modül 02: Modül 2 özeti" title="Modül 02 · Modül 2 özeti"></a>
-              </div>
-              <span class="strip__num">02</span>
-            </div>
-            <div class="strip__group" style="--count:5">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m3-d1" data-tip="Modül 03 · Bir diff okuma" aria-label="Modül 03: Bir diff okuma" title="Modül 03 · Bir diff okuma"></a>
-                <a class="strip__cell" href="yolculuk.html#m3-d2" data-tip="Modül 03 · Düzenlemeleri kabul etme ve ayarlama" aria-label="Modül 03: Düzenlemeleri kabul etme ve ayarlama" title="Modül 03 · Düzenlemeleri kabul etme ve ayarlama"></a>
-                <a class="strip__cell" href="yolculuk.html#m3-d3" data-tip="Modül 03 · Açıklama isteme" aria-label="Modül 03: Açıklama isteme" title="Modül 03 · Açıklama isteme"></a>
-                <a class="strip__cell" href="yolculuk.html#m3-d4" data-tip="Modül 03 · Küçük refaktörler" aria-label="Modül 03: Küçük refaktörler" title="Modül 03 · Küçük refaktörler"></a>
-                <a class="strip__cell" href="yolculuk.html#m3-d5" data-tip="Modül 03 · Modül 3 özeti" aria-label="Modül 03: Modül 3 özeti" title="Modül 03 · Modül 3 özeti"></a>
-              </div>
-              <span class="strip__num">03</span>
-            </div>
-            <div class="strip__group" style="--count:5">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m4-d1" data-tip="Modül 04 · Planlama neden önemli" aria-label="Modül 04: Planlama neden önemli" title="Modül 04 · Planlama neden önemli"></a>
-                <a class="strip__cell" href="yolculuk.html#m4-d2" data-tip="Modül 04 · Dosyalar arası düzenlemeler" aria-label="Modül 04: Dosyalar arası düzenlemeler" title="Modül 04 · Dosyalar arası düzenlemeler"></a>
-                <a class="strip__cell" href="yolculuk.html#m4-d3" data-tip="Modül 04 · Görevleri parçalara bölme" aria-label="Modül 04: Görevleri parçalara bölme" title="Modül 04 · Görevleri parçalara bölme"></a>
-                <a class="strip__cell" href="yolculuk.html#m4-d4" data-tip="Modül 04 · Kendi diff'ini gözden geçirme" aria-label="Modül 04: Kendi diff'ini gözden geçirme" title="Modül 04 · Kendi diff'ini gözden geçirme"></a>
-                <a class="strip__cell" href="yolculuk.html#m4-d5" data-tip="Modül 04 · Modül 4 özeti" aria-label="Modül 04: Modül 4 özeti" title="Modül 04 · Modül 4 özeti"></a>
-              </div>
-              <span class="strip__num">04</span>
-            </div>
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m5-d1" data-tip="Modül 05 · Localhost ile yayındaki web" aria-label="Modül 05: Localhost ile yayındaki web" title="Modül 05 · Localhost ile yayındaki web"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d2" data-tip="Modül 05 · Git: ihtiyacın olan beş komut" aria-label="Modül 05: Git: ihtiyacın olan beş komut" title="Modül 05 · Git: ihtiyacın olan beş komut"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d3" data-tip="Modül 05 · Vercel'e deploy" aria-label="Modül 05: Vercel'e deploy" title="Modül 05 · Vercel'e deploy"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d4" data-tip="Modül 05 · Ortam değişkenleri ve sırlar" aria-label="Modül 05: Ortam değişkenleri ve sırlar" title="Modül 05 · Ortam değişkenleri ve sırlar"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d5" data-tip="Modül 05 · Alan adları, HTTPS ve gerçekten yayınlama" aria-label="Modül 05: Alan adları, HTTPS ve gerçekten yayınlama" title="Modül 05 · Alan adları, HTTPS ve gerçekten yayınlama"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d6" data-tip="Modül 05 · Modül 5 özeti" aria-label="Modül 05: Modül 5 özeti" title="Modül 05 · Modül 5 özeti"></a>
-              </div>
-              <span class="strip__num">05</span>
-            </div>
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m6-d1" data-tip="Modül 06 · CLAUDE.md: projeni Claude'a öğret" aria-label="Modül 06: CLAUDE.md: projeni Claude'a öğret" title="Modül 06 · CLAUDE.md: projeni Claude'a öğret"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d2" data-tip="Modül 06 · Slash komutları ve subagent'lar" aria-label="Modül 06: Slash komutları ve subagent'lar" title="Modül 06 · Slash komutları ve subagent'lar"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d3" data-tip="Modül 06 · Hooks: sıkıcı kısımları otomatikleştir" aria-label="Modül 06: Hooks: sıkıcı kısımları otomatikleştir" title="Modül 06 · Hooks: sıkıcı kısımları otomatikleştir"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d4" data-tip="Modül 06 · MCP: Claude'a yeni araçlar ver" aria-label="Modül 06: MCP: Claude'a yeni araçlar ver" title="Modül 06 · MCP: Claude'a yeni araçlar ver"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d5" data-tip="Modül 06 · Terminalin ötesi: Agent SDK" aria-label="Modül 06: Terminalin ötesi: Agent SDK" title="Modül 06 · Terminalin ötesi: Agent SDK"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d6" data-tip="Modül 06 · Modül 6 özeti" aria-label="Modül 06: Modül 6 özeti" title="Modül 06 · Modül 6 özeti"></a>
-              </div>
-              <span class="strip__num">06</span>
-            </div>
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m7-d1" data-tip="Modül 07 · Bitirme projesinin brief'i" aria-label="Modül 07: Bitirme projesinin brief'i" title="Modül 07 · Bitirme projesinin brief'i"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d2" data-tip="Modül 07 · Sayfaları kur, ilk gün deploy et" aria-label="Modül 07: Sayfaları kur, ilk gün deploy et" title="Modül 07 · Sayfaları kur, ilk gün deploy et"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d3" data-tip="Modül 07 · Gerçek içerikle doldur" aria-label="Modül 07: Gerçek içerikle doldur" title="Modül 07 · Gerçek içerikle doldur"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d4" data-tip="Modül 07 · Sana ulaşmanın bir yolunu ekle" aria-label="Modül 07: Sana ulaşmanın bir yolunu ekle" title="Modül 07 · Sana ulaşmanın bir yolunu ekle"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d5" data-tip="Modül 07 · Cilala, gözden geçir ve yayınla" aria-label="Modül 07: Cilala, gözden geçir ve yayınla" title="Modül 07 · Cilala, gözden geçir ve yayınla"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d6" data-tip="Modül 07 · Modül 7 özeti: yayınladın" aria-label="Modül 07: Modül 7 özeti: yayınladın" title="Modül 07 · Modül 7 özeti: yayınladın"></a>
-              </div>
-              <span class="strip__num">07</span>
-            </div>
-          </div>
-          <p class="strip-tip" id="strip-tip" aria-live="polite">Bir parçanın üzerine gelince ders adı görünür; tıklayınca o derse gidersiniz.</p>
-        </div>
-
-        <a class="launch-card" href="yolculuk.html#yayin-gunu">
-          <div>
-            <p class="eyebrow dash">6 Kasım 2026</p>
-            <h2>İlk sitem yayında</h2>
-            <p>Öğrendiklerimi uygulayarak hazırladığım bu siteyi GitHub Pages üzerinden yayına aldım.</p>
-          </div>
-          <div class="launch-card__foot">
-            <span>Yayın günü</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </div>
-        </a>
-      </div>
-    </section>
 
     <!-- Eğitim Modülleri (kartlar assets/js/modules.js içindeki veriden üretilir) -->
     <section class="section container modules" aria-labelledby="modules-title" data-modules-carousel>

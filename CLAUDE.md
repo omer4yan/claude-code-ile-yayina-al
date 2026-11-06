@@ -11,7 +11,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 ## Sayfalar (her sayfanın iki dilde karşılığı var)
 | Türkçe (kök) | İngilizce | İçerik |
 |---|---|---|
-| `index.html` | `en/index.html` | Giriş alanı (serif başlık + noktalı harita), 40 parçalı ders şeridi, "İlk sitem yayında" kartı, Eğitim Modülleri carousel'i, kısa hakkımda, iletişim |
+| `index.html` | `en/index.html` | Giriş alanı (serif başlık + canlı noktalı harita), Eğitim Modülleri carousel'i, kısa hakkımda, iletişim. Ders şeridi ve "İlk sitem yayında" kartı kullanıcının isteğiyle kaldırıldı (yayın günü yolculuk sayfasında). |
 | `yolculuk.html` | `en/yolculuk.html` | Solda müfredat, ortada 7 modül + "Yayın günü", sağda "Bu modülde" ve "Çalışma döngüm" |
 | `hakkimda.html` | `en/hakkimda.html` | Fotoğraf, hakkımda metni (eğitim paragrafı dahil) ve butonlar. Unvan satırı ve deneyim/eğitim/sertifika/beceri/dil bölümleri kullanıcının isteğiyle kaldırıldı. |
 
@@ -41,7 +41,11 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 
 ## Ana sayfa haritası (canlı)
 - Satır içi SVG (çizgiler, düğümler, etiketler) + `<canvas class="map-dots">` (noktalı alan). Gerçek coğrafya değil, soyut bir alan. Merkez "ORVENA", düğümler 7 modülün adları. Şehir/konum/topluluk iddiası ekleme.
-- `assets/js/map.js`: noktaları canvas'a çizer ve fare imlecinden kaçırır; `.map-fg` grubu imleci izleyerek kayar; `.map-flow` içinde ORVENA'dan modüllere akan noktalar üretir. Kara şekilleri SVG'deki `#m-land` maskesinden okunur.
+- `assets/js/map.js` (kullanıcının paylaştığı referans ekran videolarına göre):
+  - İmleç: noktalar imlecin etrafındaki dairenin kenarına itilir (ortada boşluk, kenarda halka), yer değiştiren noktalar vurgu rengine döner ve yavaşça geri gelerek iz bırakır (`HOLE_R`, `PUSH`, `EASE_BACK`, `HEAT_DECAY`).
+  - `.map-fg` grubu imleci izleyerek kayar; `.map-flow` içinde ORVENA'dan modüllere akan noktalar üretilir.
+  - "Dağıt, yeniden topla" düğmesi (`.map-scatter`, varsayılan `hidden`, JS açar): noktalar ~0,7 sn'de dışarı saçılır, ~1 sn'den itibaren kırmızı olarak geri dönüp yerleşir ve griye döner; ~3,9 sn'de çizgiler `is-drawing` sınıfı yeniden eklenerek baştan çizilir. Saçılma sırasında `.map-fg.is-scattered` modül grupları ve akan noktaları gizler; merkez ve ORVENA etiketi görünür kalır.
+  - Kara şekilleri SVG'deki `#m-land` maskesinden okunur.
 - Renkler tema değişkenlerinden (`--map-dot`, `--map-node-bg`, `--accent`); tema değişince canvas yeniden çizilir.
 - `prefers-reduced-motion` açıkken hareket yok (noktalar durağan çizilir). JavaScript yoksa SVG içindeki `.map-pattern` desen yedeği görünür.
 - Harita altında açıklama satırı yok. 640px altında modül etiketleri gizlenir (okunamayacak kadar küçülüyor).
@@ -57,7 +61,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 
 ## Dersler ve bağlantılar
 - Her modülde `.lessons` listesi var; her dersin kimliği `m{modül}-d{ders}` (örn. `#m3-d2`). Toplam 40 ders.
-- Sol müfredat, sağdaki "Bu modülde" kartı ve ana sayfadaki 40 parçalı şerit bu kimliklere bağlanır. Yeni ders eklenirse hepsini, iki dilde de güncelle.
+- Sol müfredat ve sağdaki "Bu modülde" kartı bu kimliklere bağlanır. Yeni ders eklenirse ikisini de, iki dilde güncelle.
 - Sağ kart, JS ile soldaki müfredattan üretilir.
 
 ## Stil
@@ -73,5 +77,5 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 
 ## Sınırlar
 - Bağlantılar göreli olmalı (site alt klasörden yayınlanıyor).
-- Kaynak ve referans klasörleri (`CV/`, `Fotoğraf/`, `Logo/`, kurs notları, tasarım ekran görüntüleri) `.gitignore` ile depo dışında; bunları commit'leme. `git add -A` yerine dosyaları adıyla ekle ya da önce `git status` ile kontrol et.
+- Kaynak ve referans klasörleri (`CV/`, `Fotoğraf/`, `Logo/`, kurs notları, tasarım ekran görüntüleri, `video/`) `.gitignore` ile depo dışında; bunları commit'leme. `git add -A` yerine dosyaları adıyla ekle ya da önce `git status` ile kontrol et.
 - Yayınlamadan (push / Pages ayarı) önce kullanıcıdan onay al.

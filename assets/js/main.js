@@ -102,28 +102,6 @@
     if (scrollToId(id, true)) e.preventDefault();
   });
 
-  /* ---------- Ana sayfa: ders şeridi ipucu ---------- */
-  var strip = document.getElementById("strip");
-  var tip = document.getElementById("strip-tip");
-  if (strip && tip) {
-    var defaultTip = tip.innerHTML;
-    var showTip = function (cell) {
-      var text = cell.getAttribute("data-tip") || "";
-      var parts = text.split(" · ");
-      tip.innerHTML = "";
-      var strong = document.createElement("strong");
-      strong.textContent = parts[0];
-      tip.appendChild(strong);
-      if (parts[1]) tip.appendChild(document.createTextNode(" · " + parts.slice(1).join(" · ")));
-    };
-    strip.querySelectorAll(".strip__cell").forEach(function (cell) {
-      cell.removeAttribute("title");
-      cell.addEventListener("mouseenter", function () { showTip(cell); });
-      cell.addEventListener("focus", function () { showTip(cell); });
-    });
-    strip.addEventListener("mouseleave", function () { tip.innerHTML = defaultTip; });
-  }
-
   /* ---------- Yolculuk sayfası ---------- */
   var curriculumBox = document.querySelector(".curriculum__box");
   if (!curriculumBox) return;

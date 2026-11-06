@@ -88,7 +88,7 @@
           <rect class="map-pattern" width="720" height="620" fill="url(#p-field)" mask="url(#m-fade)"/>
           <rect class="map-pattern" width="720" height="620" fill="url(#p-land)" mask="url(#m-land)"/>
 
-          <g class="map-fg">
+          <g class="map-fg is-drawing">
           <circle class="map-hub-glow" cx="250" cy="290" r="34"/>
 
           <g style="--i:0"><path class="map-line" pathLength="1" d="M250 290Q300 120 450 95"/><circle class="map-mid" cx="325" cy="156" r="2.4"/><circle class="map-node" cx="450" cy="95" r="5"/><text class="map-label" x="462" y="99">01 · INSTALL CLAUDE CODE</text></g>
@@ -105,107 +105,10 @@
           </g>
         </svg>
         </div>
+        <button class="map-scatter" type="button" hidden><span class="map-scatter__dot" aria-hidden="true"></span>Scatter, regather</button>
       </figure>
     </section>
 
-    <!-- Lesson strip + launch card -->
-    <section class="container" aria-label="The course's lessons and the launch of my first website">
-      <div class="overview">
-        <div class="strip-box">
-          <p class="eyebrow strip-box__label">Lesson strip — each segment is one lesson</p>
-          <div class="strip" id="strip">
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m1-d1" data-tip="Module 01 · Terminal, in your browser" aria-label="Module 01: Terminal, in your browser" title="Module 01 · Terminal, in your browser"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d2" data-tip="Module 01 · Your first file" aria-label="Module 01: Your first file" title="Module 01 · Your first file"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d3" data-tip="Module 01 · Where did that file go?" aria-label="Module 01: Where did that file go?" title="Module 01 · Where did that file go?"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d4" data-tip="Module 01 · When Claude gets it wrong" aria-label="Module 01: When Claude gets it wrong" title="Module 01 · When Claude gets it wrong"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d5" data-tip="Module 01 · What Claude is allowed to do" aria-label="Module 01: What Claude is allowed to do" title="Module 01 · What Claude is allowed to do"></a>
-                <a class="strip__cell" href="yolculuk.html#m1-d6" data-tip="Module 01 · Module 1 summary" aria-label="Module 01: Module 1 summary" title="Module 01 · Module 1 summary"></a>
-              </div>
-              <span class="strip__num">01</span>
-            </div>
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m2-d1" data-tip="Module 02 · Anatomy of a prompt" aria-label="Module 02: Anatomy of a prompt" title="Module 02 · Anatomy of a prompt"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d2" data-tip="Module 02 · The clarity lever" aria-label="Module 02: The clarity lever" title="Module 02 · The clarity lever"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d3" data-tip="Module 02 · Context windows and /clear" aria-label="Module 02: Context windows and /clear" title="Module 02 · Context windows and /clear"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d4" data-tip="Module 02 · Slash commands" aria-label="Module 02: Slash commands" title="Module 02 · Slash commands"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d5" data-tip="Module 02 · @file and @directory" aria-label="Module 02: @file and @directory" title="Module 02 · @file and @directory"></a>
-                <a class="strip__cell" href="yolculuk.html#m2-d6" data-tip="Module 02 · Module 2 summary" aria-label="Module 02: Module 2 summary" title="Module 02 · Module 2 summary"></a>
-              </div>
-              <span class="strip__num">02</span>
-            </div>
-            <div class="strip__group" style="--count:5">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m3-d1" data-tip="Module 03 · Reading a diff" aria-label="Module 03: Reading a diff" title="Module 03 · Reading a diff"></a>
-                <a class="strip__cell" href="yolculuk.html#m3-d2" data-tip="Module 03 · Accepting and adjusting edits" aria-label="Module 03: Accepting and adjusting edits" title="Module 03 · Accepting and adjusting edits"></a>
-                <a class="strip__cell" href="yolculuk.html#m3-d3" data-tip="Module 03 · Asking for explanations" aria-label="Module 03: Asking for explanations" title="Module 03 · Asking for explanations"></a>
-                <a class="strip__cell" href="yolculuk.html#m3-d4" data-tip="Module 03 · Small refactors" aria-label="Module 03: Small refactors" title="Module 03 · Small refactors"></a>
-                <a class="strip__cell" href="yolculuk.html#m3-d5" data-tip="Module 03 · Module 3 summary" aria-label="Module 03: Module 3 summary" title="Module 03 · Module 3 summary"></a>
-              </div>
-              <span class="strip__num">03</span>
-            </div>
-            <div class="strip__group" style="--count:5">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m4-d1" data-tip="Module 04 · Why planning matters" aria-label="Module 04: Why planning matters" title="Module 04 · Why planning matters"></a>
-                <a class="strip__cell" href="yolculuk.html#m4-d2" data-tip="Module 04 · Edits across files" aria-label="Module 04: Edits across files" title="Module 04 · Edits across files"></a>
-                <a class="strip__cell" href="yolculuk.html#m4-d3" data-tip="Module 04 · Breaking tasks into pieces" aria-label="Module 04: Breaking tasks into pieces" title="Module 04 · Breaking tasks into pieces"></a>
-                <a class="strip__cell" href="yolculuk.html#m4-d4" data-tip="Module 04 · Reviewing your own diff" aria-label="Module 04: Reviewing your own diff" title="Module 04 · Reviewing your own diff"></a>
-                <a class="strip__cell" href="yolculuk.html#m4-d5" data-tip="Module 04 · Module 4 summary" aria-label="Module 04: Module 4 summary" title="Module 04 · Module 4 summary"></a>
-              </div>
-              <span class="strip__num">04</span>
-            </div>
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m5-d1" data-tip="Module 05 · Localhost vs. the live web" aria-label="Module 05: Localhost vs. the live web" title="Module 05 · Localhost vs. the live web"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d2" data-tip="Module 05 · Git: the five commands you need" aria-label="Module 05: Git: the five commands you need" title="Module 05 · Git: the five commands you need"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d3" data-tip="Module 05 · Deploying to Vercel" aria-label="Module 05: Deploying to Vercel" title="Module 05 · Deploying to Vercel"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d4" data-tip="Module 05 · Environment variables and secrets" aria-label="Module 05: Environment variables and secrets" title="Module 05 · Environment variables and secrets"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d5" data-tip="Module 05 · Domains, HTTPS and really going live" aria-label="Module 05: Domains, HTTPS and really going live" title="Module 05 · Domains, HTTPS and really going live"></a>
-                <a class="strip__cell" href="yolculuk.html#m5-d6" data-tip="Module 05 · Module 5 summary" aria-label="Module 05: Module 5 summary" title="Module 05 · Module 5 summary"></a>
-              </div>
-              <span class="strip__num">05</span>
-            </div>
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m6-d1" data-tip="Module 06 · CLAUDE.md: teach Claude your project" aria-label="Module 06: CLAUDE.md: teach Claude your project" title="Module 06 · CLAUDE.md: teach Claude your project"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d2" data-tip="Module 06 · Slash commands and subagents" aria-label="Module 06: Slash commands and subagents" title="Module 06 · Slash commands and subagents"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d3" data-tip="Module 06 · Hooks: automate the boring parts" aria-label="Module 06: Hooks: automate the boring parts" title="Module 06 · Hooks: automate the boring parts"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d4" data-tip="Module 06 · MCP: give Claude new tools" aria-label="Module 06: MCP: give Claude new tools" title="Module 06 · MCP: give Claude new tools"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d5" data-tip="Module 06 · Beyond the terminal: Agent SDK" aria-label="Module 06: Beyond the terminal: Agent SDK" title="Module 06 · Beyond the terminal: Agent SDK"></a>
-                <a class="strip__cell" href="yolculuk.html#m6-d6" data-tip="Module 06 · Module 6 summary" aria-label="Module 06: Module 6 summary" title="Module 06 · Module 6 summary"></a>
-              </div>
-              <span class="strip__num">06</span>
-            </div>
-            <div class="strip__group" style="--count:6">
-              <div class="strip__cells">
-                <a class="strip__cell" href="yolculuk.html#m7-d1" data-tip="Module 07 · The capstone brief" aria-label="Module 07: The capstone brief" title="Module 07 · The capstone brief"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d2" data-tip="Module 07 · Build the pages, deploy on day one" aria-label="Module 07: Build the pages, deploy on day one" title="Module 07 · Build the pages, deploy on day one"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d3" data-tip="Module 07 · Fill it with real content" aria-label="Module 07: Fill it with real content" title="Module 07 · Fill it with real content"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d4" data-tip="Module 07 · Add a way to reach you" aria-label="Module 07: Add a way to reach you" title="Module 07 · Add a way to reach you"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d5" data-tip="Module 07 · Polish, review and publish" aria-label="Module 07: Polish, review and publish" title="Module 07 · Polish, review and publish"></a>
-                <a class="strip__cell" href="yolculuk.html#m7-d6" data-tip="Module 07 · Module 7 summary: you shipped" aria-label="Module 07: Module 7 summary: you shipped" title="Module 07 · Module 7 summary: you shipped"></a>
-              </div>
-              <span class="strip__num">07</span>
-            </div>
-          </div>
-          <p class="strip-tip" id="strip-tip" aria-live="polite">Hover over a segment to see the lesson title; click it to go to that lesson.</p>
-        </div>
-
-        <a class="launch-card" href="yolculuk.html#yayin-gunu">
-          <div>
-            <p class="eyebrow dash">6 November 2026</p>
-            <h2>My first website is live</h2>
-            <p>I built this website by putting what I learned into practice and published it on GitHub Pages.</p>
-          </div>
-          <div class="launch-card__foot">
-            <span>Launch day</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </div>
-        </a>
-      </div>
-    </section>
 
     <!-- Course Modules (cards are generated from the data in assets/js/modules.js) -->
     <section class="section container modules" aria-labelledby="modules-title" data-modules-carousel data-base="../">
