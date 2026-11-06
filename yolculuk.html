@@ -6,6 +6,7 @@
   <title>Öğrenme Yolculuğum — Ömer Ayan</title>
   <meta name="description" content="'Claude Code ile Yayına Al' kursunun yedi modülünde öğrendiklerim ve ilk sitemi yayına aldığım gün.">
   <meta name="theme-color" content="#0b0b0b">
+  <script>(function(){var t;try{t=localStorage.getItem("theme");}catch(e){}if(t!=="light"&&t!=="dark"){t="dark";}document.documentElement.setAttribute("data-theme",t);})();</script>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +22,10 @@
         <span class="brand__mark" aria-hidden="true">ÖA</span>
         <span>Ömer Ayan</span>
       </a>
+      <button class="theme-toggle" type="button" aria-label="Aydınlık moda geç" title="Aydınlık moda geç">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menüyü aç">
         <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -64,76 +69,76 @@
           <div class="cur-module" data-module="m1">
             <a class="cur-module__head" href="#m1"><span class="cur-badge">01</span><span class="cur-module__name">Claude Code'u kur</span><span class="cur-module__count">6 ders</span></a>
             <ul class="cur-lessons">
-              <li>Terminalin, tarayıcıda</li>
-              <li>İlk dosyan</li>
-              <li>O dosya nereye gitti?</li>
-              <li>Claude yanlış yaptığında</li>
-              <li>Claude neye izinli</li>
-              <li>Modül 1 özeti</li>
+              <li><a href="#m1-d1">Terminalin, tarayıcıda</a></li>
+              <li><a href="#m1-d2">İlk dosyan</a></li>
+              <li><a href="#m1-d3">O dosya nereye gitti?</a></li>
+              <li><a href="#m1-d4">Claude yanlış yaptığında</a></li>
+              <li><a href="#m1-d5">Claude neye izinli</a></li>
+              <li><a href="#m1-d6">Modül 1 özeti</a></li>
             </ul>
           </div>
           <div class="cur-module" data-module="m2">
             <a class="cur-module__head" href="#m2"><span class="cur-badge">02</span><span class="cur-module__name">İlk prompt'un</span><span class="cur-module__count">6 ders</span></a>
             <ul class="cur-lessons">
-              <li>Bir prompt'un anatomisi</li>
-              <li>Netlik kaldıracı</li>
-              <li>Bağlam pencereleri ve /clear</li>
-              <li>Slash komutları</li>
-              <li>@file ve @directory</li>
-              <li>Modül 2 özeti</li>
+              <li><a href="#m2-d1">Bir prompt'un anatomisi</a></li>
+              <li><a href="#m2-d2">Netlik kaldıracı</a></li>
+              <li><a href="#m2-d3">Bağlam pencereleri ve /clear</a></li>
+              <li><a href="#m2-d4">Slash komutları</a></li>
+              <li><a href="#m2-d5">@file ve @directory</a></li>
+              <li><a href="#m2-d6">Modül 2 özeti</a></li>
             </ul>
           </div>
           <div class="cur-module" data-module="m3">
             <a class="cur-module__head" href="#m3"><span class="cur-badge">03</span><span class="cur-module__name">Tek dosyada düzenlemeler</span><span class="cur-module__count">5 ders</span></a>
             <ul class="cur-lessons">
-              <li>Bir diff okuma</li>
-              <li>Düzenlemeleri kabul etme ve ayarlama</li>
-              <li>Açıklama isteme</li>
-              <li>Küçük refaktörler</li>
-              <li>Modül 3 özeti</li>
+              <li><a href="#m3-d1">Bir diff okuma</a></li>
+              <li><a href="#m3-d2">Düzenlemeleri kabul etme ve ayarlama</a></li>
+              <li><a href="#m3-d3">Açıklama isteme</a></li>
+              <li><a href="#m3-d4">Küçük refaktörler</a></li>
+              <li><a href="#m3-d5">Modül 3 özeti</a></li>
             </ul>
           </div>
           <div class="cur-module" data-module="m4">
             <a class="cur-module__head" href="#m4"><span class="cur-badge">04</span><span class="cur-module__name">Çok sayfalı bir site kur</span><span class="cur-module__count">5 ders</span></a>
             <ul class="cur-lessons">
-              <li>Planlama neden önemli</li>
-              <li>Dosyalar arası düzenlemeler</li>
-              <li>Görevleri parçalara bölme</li>
-              <li>Kendi diff'ini gözden geçirme</li>
-              <li>Modül 4 özeti</li>
+              <li><a href="#m4-d1">Planlama neden önemli</a></li>
+              <li><a href="#m4-d2">Dosyalar arası düzenlemeler</a></li>
+              <li><a href="#m4-d3">Görevleri parçalara bölme</a></li>
+              <li><a href="#m4-d4">Kendi diff'ini gözden geçirme</a></li>
+              <li><a href="#m4-d5">Modül 4 özeti</a></li>
             </ul>
           </div>
           <div class="cur-module" data-module="m5">
             <a class="cur-module__head" href="#m5"><span class="cur-badge">05</span><span class="cur-module__name">İlk projeni yayına alma</span><span class="cur-module__count">6 ders</span></a>
             <ul class="cur-lessons">
-              <li>Localhost ile yayındaki web</li>
-              <li>Git: ihtiyacın olan beş komut</li>
-              <li>Vercel'e deploy</li>
-              <li>Ortam değişkenleri ve sırlar</li>
-              <li>Alan adları, HTTPS ve gerçekten yayınlama</li>
-              <li>Modül 5 özeti</li>
+              <li><a href="#m5-d1">Localhost ile yayındaki web</a></li>
+              <li><a href="#m5-d2">Git: ihtiyacın olan beş komut</a></li>
+              <li><a href="#m5-d3">Vercel'e deploy</a></li>
+              <li><a href="#m5-d4">Ortam değişkenleri ve sırlar</a></li>
+              <li><a href="#m5-d5">Alan adları, HTTPS ve gerçekten yayınlama</a></li>
+              <li><a href="#m5-d6">Modül 5 özeti</a></li>
             </ul>
           </div>
           <div class="cur-module" data-module="m6">
             <a class="cur-module__head" href="#m6"><span class="cur-badge">06</span><span class="cur-module__name">Hooks, MCP ve iş akışı</span><span class="cur-module__count">6 ders</span></a>
             <ul class="cur-lessons">
-              <li>CLAUDE.md: projeni Claude'a öğret</li>
-              <li>Slash komutları ve subagent'lar</li>
-              <li>Hooks: sıkıcı kısımları otomatikleştir</li>
-              <li>MCP: Claude'a yeni araçlar ver</li>
-              <li>Terminalin ötesi: Agent SDK</li>
-              <li>Modül 6 özeti</li>
+              <li><a href="#m6-d1">CLAUDE.md: projeni Claude'a öğret</a></li>
+              <li><a href="#m6-d2">Slash komutları ve subagent'lar</a></li>
+              <li><a href="#m6-d3">Hooks: sıkıcı kısımları otomatikleştir</a></li>
+              <li><a href="#m6-d4">MCP: Claude'a yeni araçlar ver</a></li>
+              <li><a href="#m6-d5">Terminalin ötesi: Agent SDK</a></li>
+              <li><a href="#m6-d6">Modül 6 özeti</a></li>
             </ul>
           </div>
           <div class="cur-module" data-module="m7">
             <a class="cur-module__head" href="#m7"><span class="cur-badge">07</span><span class="cur-module__name">Bitirme projesi: kendi siteni yayınla</span><span class="cur-module__count">6 ders</span></a>
             <ul class="cur-lessons">
-              <li>Bitirme projesinin brief'i</li>
-              <li>Sayfaları kur, ilk gün deploy et</li>
-              <li>Gerçek içerikle doldur</li>
-              <li>Sana ulaşmanın bir yolunu ekle</li>
-              <li>Cilala, gözden geçir ve yayınla</li>
-              <li>Modül 7 özeti: yayınladın</li>
+              <li><a href="#m7-d1">Bitirme projesinin brief'i</a></li>
+              <li><a href="#m7-d2">Sayfaları kur, ilk gün deploy et</a></li>
+              <li><a href="#m7-d3">Gerçek içerikle doldur</a></li>
+              <li><a href="#m7-d4">Sana ulaşmanın bir yolunu ekle</a></li>
+              <li><a href="#m7-d5">Cilala, gözden geçir ve yayınla</a></li>
+              <li><a href="#m7-d6">Modül 7 özeti: yayınladın</a></li>
             </ul>
           </div>
           <div class="cur-module cur-extra" data-module="yayin-gunu">
@@ -178,6 +183,15 @@
         </header>
         <div class="module__body">
           <p>Kursa terminalle tanışarak başladım. İlk alıştırmalar tarayıcıda çalışan bir pratik terminalinde yapılıyordu; bulunduğum klasörü sormayı, içindekileri listelemeyi ve yeni bir proje klasörü oluşturup içine girmeyi burada öğrendim.</p>
+          <h3>Dersler</h3>
+          <ol class="lessons">
+            <li id="m1-d1"><span class="n">1</span><div><strong>Terminalin, tarayıcıda</strong><p>Tarayıcıdaki pratik terminalinde <span class="inline-code">pwd</span>, <span class="inline-code">ls</span>, <span class="inline-code">mkdir</span> ve <span class="inline-code">cd</span> ile ilk proje klasörü.</p></div></li>
+            <li id="m1-d2"><span class="n">2</span><div><strong>İlk dosyan</strong><p>Claude'dan <span class="inline-code">hello.txt</span> dosyasını istemek, ardından <span class="inline-code">ls</span> ve <span class="inline-code">cat</span> ile sonucu doğrulamak.</p></div></li>
+            <li id="m1-d3"><span class="n">3</span><div><strong>O dosya nereye gitti?</strong><p>Çalışma dizini kavramı; dosyaların nereye kaydedildiği ve <span class="inline-code">cd ..</span> ile bir üst klasöre çıkmak.</p></div></li>
+            <li id="m1-d4"><span class="n">4</span><div><strong>Claude yanlış yaptığında</strong><p><span class="inline-code">Esc</span> ile durdurmak, <span class="inline-code">/rewind</span> ile geri almak, gözlem ve beklentiyi birlikte söylemek, gerekirse <span class="inline-code">/clear</span> ile yeniden başlamak.</p></div></li>
+            <li id="m1-d5"><span class="n">5</span><div><strong>Claude neye izinli</strong><p>Onay ekranını okumak, izin modları ve "always allow" izninin kapsamı.</p></div></li>
+            <li id="m1-d6"><span class="n">6</span><div><strong>Modül 1 özeti</strong><p>Konum, istek, kontrol zihinsel modeli ve temel komutların hızlı başvurusu.</p></div></li>
+          </ol>
           <h3>Bu modülde öğrendiklerim</h3>
           <ul class="learned">
             <li><span class="inline-code">pwd</span>, <span class="inline-code">ls</span>, <span class="inline-code">mkdir</span>, <span class="inline-code">cd</span> ve <span class="inline-code">cat</span> ile nerede olduğumu bulmayı, klasörler arasında gezinmeyi ve dosyaların içeriğini kontrol etmeyi öğrendim.</li>
@@ -220,6 +234,15 @@
         </header>
         <div class="module__body">
           <p>Bu modülde Claude Code'u kendi bilgisayarıma kurdum ve ilk gerçek prompt'umla <span class="inline-code">index.html</span> adında tek sayfalık bir web sayfası oluşturdum. Asıl öğrendiğim şey ise iyi bir isteğin nasıl kurulduğuydu.</p>
+          <h3>Dersler</h3>
+          <ol class="lessons">
+            <li id="m2-d1"><span class="n">1</span><div><strong>Bir prompt'un anatomisi</strong><p>Claude Code'un Windows'a kurulumu, ilk <span class="inline-code">index.html</span> ve "nerede, ne, neden" şablonu.</p></div></li>
+            <li id="m2-d2"><span class="n">2</span><div><strong>Netlik kaldıracı</strong><p>Belirsiz istek yerine dosyayı ve özelliği adlandırmak; emin olunmadığında önce öneri istemek.</p></div></li>
+            <li id="m2-d3"><span class="n">3</span><div><strong>Bağlam pencereleri ve /clear</strong><p>Bağlamın ne olduğu; <span class="inline-code">/clear</span> ile <span class="inline-code">/compact</span> arasındaki fark.</p></div></li>
+            <li id="m2-d4"><span class="n">4</span><div><strong>Slash komutları</strong><p><span class="inline-code">/clear</span>, <span class="inline-code">/compact</span>, <span class="inline-code">/rewind</span>, <span class="inline-code">/help</span>, <span class="inline-code">/model</span>, <span class="inline-code">/init</span> ve <span class="inline-code">/exit</span>.</p></div></li>
+            <li id="m2-d5"><span class="n">5</span><div><strong>@file ve @directory</strong><p><span class="inline-code">@</span> ile doğru dosyayı veya klasörü işaret etmek, bağlamı tutumlu kullanmak.</p></div></li>
+            <li id="m2-d6"><span class="n">6</span><div><strong>Modül 2 özeti</strong><p>İş konusunda belirli, bağlam konusunda tutumlu prompt'lar.</p></div></li>
+          </ol>
           <h3>Bu modülde öğrendiklerim</h3>
           <ul class="learned">
             <li>Bir prompt'u "nerede, ne ve gerektiğinde neden" sorularıyla kurmayı öğrendim. Amacı eklemek, Claude'un ilgili kararları da doğru yönde vermesine yardım ediyor.</li>
@@ -257,6 +280,14 @@
         </header>
         <div class="module__body">
           <p>Bu modülde bir değişikliği onaylamadan önce ne yapacağını okumayı öğrendim. Önerilen her düzenleme bir teklif; kabul etmek, düzeltmek ya da reddetmek benim kararım.</p>
+          <h3>Dersler</h3>
+          <ol class="lessons">
+            <li id="m3-d1"><span class="n">1</span><div><strong>Bir diff okuma</strong><p><span class="inline-code">-</span> ve <span class="inline-code">+</span> satırları; büyük bir diff'i dosya, kapsam ve kaldırılanlar sırasıyla taramak.</p></div></li>
+            <li id="m3-d2"><span class="n">2</span><div><strong>Düzenlemeleri kabul etme ve ayarlama</strong><p>Öneriyi kabul etmek, kısa bir geri bildirimle düzeltmek ya da reddetmek.</p></div></li>
+            <li id="m3-d3"><span class="n">3</span><div><strong>Açıklama isteme</strong><p>Değiştirmeden önce dosyayı ve önerilen değişikliği açıklatmak.</p></div></li>
+            <li id="m3-d4"><span class="n">4</span><div><strong>Küçük refaktörler</strong><p>Görünümü değiştirmeden kodu toparlamak; renkleri CSS değişkenlerine taşımak.</p></div></li>
+            <li id="m3-d5"><span class="n">5</span><div><strong>Modül 3 özeti</strong><p>İste → diff'i oku → kabul et ya da düzelt → sayfayı kontrol et.</p></div></li>
+          </ol>
           <h3>Bu modülde öğrendiklerim</h3>
           <ul class="learned">
             <li>Diff'te <span class="inline-code">-</span> ile başlayan satırların kaldırıldığını, <span class="inline-code">+</span> ile başlayanların eklendiğini öğrendim. Büyük bir diff'i "hangi dosya, ne kadar değişiklik, ne kaldırılıyor" sırasıyla taramayı not ettim.</li>
@@ -295,6 +326,14 @@
         </header>
         <div class="module__body">
           <p>Site birden fazla sayfaya çıktığında bir değişiklik başka dosyaları da etkiliyor. Bu modülde düzenlemeye geçmeden önce plan istemeyi ve işi küçük, kontrol edilebilir parçalara bölmeyi öğrendim.</p>
+          <h3>Dersler</h3>
+          <ol class="lessons">
+            <li id="m4-d1"><span class="n">1</span><div><strong>Planlama neden önemli</strong><p>Düzenlemeden önce dosya listesi ve sıra içeren bir plan istemek; plan modu.</p></div></li>
+            <li id="m4-d2"><span class="n">2</span><div><strong>Dosyalar arası düzenlemeler</strong><p>Ortak menüyü bütün sayfalara tutarlı biçimde eklemek ve bağlantıları denemek.</p></div></li>
+            <li id="m4-d3"><span class="n">3</span><div><strong>Görevleri parçalara bölme</strong><p>Büyük işi doğal adımlara bölmek, her adımdan sonra durup incelemek.</p></div></li>
+            <li id="m4-d4"><span class="n">4</span><div><strong>Kendi diff'ini gözden geçirme</strong><p>Siteyi baştan sona gezmek; eksiksizlik, tutarlılık, bağlantılar ve gerçek içerik kontrolü.</p></div></li>
+            <li id="m4-d5"><span class="n">5</span><div><strong>Modül 4 özeti</strong><p>Planla → değiştir → diff'i gözden geçir → sayfaları kontrol et.</p></div></li>
+          </ol>
           <h3>Bu modülde öğrendiklerim</h3>
           <ul class="learned">
             <li>Düzenleme yerine önce plan istemeyi; hangi dosyalara hangi sırayla dokunulacağını listeletmeyi ve planı kapsam, sıra ve sınır açısından okumayı öğrendim.</li>
@@ -333,6 +372,15 @@
         </header>
         <div class="module__body">
           <p>Bilgisayarımdaki dosyalar başkasının ekranında açılmıyor. Bu modülde bir siteyi yerel dosyalardan herkese açık bir web adresine taşımanın temel akışını öğrendim.</p>
+          <h3>Dersler</h3>
+          <ol class="lessons">
+            <li id="m5-d1"><span class="n">1</span><div><strong>Localhost ile yayındaki web</strong><p><span class="inline-code">file://</span>, <span class="inline-code">localhost</span> ve herkese açık HTTPS adresi arasındaki fark.</p></div></li>
+            <li id="m5-d2"><span class="n">2</span><div><strong>Git: ihtiyacın olan beş komut</strong><p><span class="inline-code">init</span>, <span class="inline-code">add</span>, <span class="inline-code">commit</span>, <span class="inline-code">remote add</span> ve <span class="inline-code">push</span>; açıklayıcı commit mesajları.</p></div></li>
+            <li id="m5-d3"><span class="n">3</span><div><strong>Vercel'e deploy</strong><p>GitHub deposunu barındırıcıya bağlamak; 404 hatasında dosya adını ve yolunu incelemek.</p></div></li>
+            <li id="m5-d4"><span class="n">4</span><div><strong>Ortam değişkenleri ve sırlar</strong><p>Sırları koddan ve depodan uzak tutmak; sızan bir anahtarı değiştirmek.</p></div></li>
+            <li id="m5-d5"><span class="n">5</span><div><strong>Alan adları, HTTPS ve gerçekten yayınlama</strong><p>Alan adı kaydı, A ve CNAME kayıtları, HTTPS ve "yabancının turu".</p></div></li>
+            <li id="m5-d6"><span class="n">6</span><div><strong>Modül 5 özeti</strong><p>Commit → push → dağıtımı doğrula → kontrol et.</p></div></li>
+          </ol>
           <h3>Bu modülde öğrendiklerim</h3>
           <ul class="learned">
             <li><span class="inline-code">file://</span>, <span class="inline-code">localhost</span> ve herkese açık bir HTTPS adresi arasındaki farkı öğrendim.</li>
@@ -373,6 +421,15 @@
         </header>
         <div class="module__body">
           <p>Bu modül, tek tek istek vermekten çalışma biçimini düzenlemeye geçişti. Ortak amaç doğru bilgiyi kalıcı hâle getirmek ve tekrarlanan işleri uygun araçla azaltmaktı.</p>
+          <h3>Dersler</h3>
+          <ol class="lessons">
+            <li id="m6-d1"><span class="n">1</span><div><strong>CLAUDE.md: projeni Claude'a öğret</strong><p>Projeyi, çalıştırma yolunu, tercihleri ve sınırları kalıcı bir talimat dosyasına yazmak.</p></div></li>
+            <li id="m6-d2"><span class="n">2</span><div><strong>Slash komutları ve subagent'lar</strong><p>Sık kullanılan isteği komut olarak kaydetmek; büyük işi odaklı bir yardımcıya devretmek.</p></div></li>
+            <li id="m6-d3"><span class="n">3</span><div><strong>Hooks: sıkıcı kısımları otomatikleştir</strong><p>Belirli bir olayda komut çalıştıran otomasyonlar ve bunları test etmek.</p></div></li>
+            <li id="m6-d4"><span class="n">4</span><div><strong>MCP: Claude'a yeni araçlar ver</strong><p>Dış araç ve veri kaynaklarına en az erişimle bağlanmak.</p></div></li>
+            <li id="m6-d5"><span class="n">5</span><div><strong>Terminalin ötesi: Agent SDK</strong><p>Elle doğrulanmış bir iş akışını programa taşımak.</p></div></li>
+            <li id="m6-d6"><span class="n">6</span><div><strong>Modül 6 özeti</strong><p>Tekrarı doğru yere taşımak: proje notu, komut, otomasyon ya da bağlantı.</p></div></li>
+          </ol>
           <h3>Bu modülde öğrendiklerim</h3>
           <ul class="learned">
             <li><span class="inline-code">CLAUDE.md</span> ile projeyi, tercihleri ve sınırları kalıcı bir talimat dosyasına yazmayı öğrendim.</li>
@@ -413,6 +470,15 @@
         </header>
         <div class="module__body">
           <p>Son modülün hedefi, gerçekten kullanılabilecek ve başkalarıyla paylaşılabilecek küçük bir siteyi planlayıp yayınlamaktı. Önceki modüllerde öğrendiklerimin hepsi burada bir araya geldi.</p>
+          <h3>Dersler</h3>
+          <ol class="lessons">
+            <li id="m7-d1"><span class="n">1</span><div><strong>Bitirme projesinin brief'i</strong><p>Gerçekten kullanılacak küçük bir site biçimi seçmek ve önce sayfa planını okumak.</p></div></li>
+            <li id="m7-d2"><span class="n">2</span><div><strong>Sayfaları kur, ilk gün deploy et</strong><p>Önce iskelet ve ortak menü, ardından erken dağıtım.</p></div></li>
+            <li id="m7-d3"><span class="n">3</span><div><strong>Gerçek içerikle doldur</strong><p>Yer tutucuları gerçek bilgilerle değiştirmek, kendi görselini eklemek, gerçekleri korumak.</p></div></li>
+            <li id="m7-d4"><span class="n">4</span><div><strong>Sana ulaşmanın bir yolunu ekle</strong><p>Net iletişim bağlantıları; gerekirse bir form servisi ve uçtan uca test.</p></div></li>
+            <li id="m7-d5"><span class="n">5</span><div><strong>Cilala, gözden geçir ve yayınla</strong><p>Mobil, bağlantılar, HTTPS ve içerik kontrolüyle bilinçli bir yayın kararı.</p></div></li>
+            <li id="m7-d6"><span class="n">6</span><div><strong>Modül 7 özeti: yayınladın</strong><p>Planla → anlat → incele → kontrol et → yayınla → tekrarla döngüsü.</p></div></li>
+          </ol>
           <h3>Bu modülde öğrendiklerim</h3>
           <ul class="learned">
             <li>Gerçekten kullanacağım bir site biçimi seçip kapsamı küçük tutmayı ve inşa etmeden önce sayfa planını okumayı öğrendim.</li>
@@ -487,14 +553,14 @@
     <aside class="rail" aria-label="Modül özeti">
       <div class="rail-card rail-card--module">
         <h2>Bu modülde</h2>
-        <p class="rail-card__sub" id="rail-module-name">Claude Code'u kur</p>
+        <p class="rail-card__sub" id="rail-module-name"><a href="#m1">Claude Code'u kur</a></p>
         <ol class="rail-lessons" id="rail-lessons">
-          <li><span class="n">1</span>Terminalin, tarayıcıda</li>
-          <li><span class="n">2</span>İlk dosyan</li>
-          <li><span class="n">3</span>O dosya nereye gitti?</li>
-          <li><span class="n">4</span>Claude yanlış yaptığında</li>
-          <li><span class="n">5</span>Claude neye izinli</li>
-          <li><span class="n">6</span>Modül 1 özeti</li>
+          <li><a href="#m1-d1"><span class="n">1</span>Terminalin, tarayıcıda</a></li>
+          <li><a href="#m1-d2"><span class="n">2</span>İlk dosyan</a></li>
+          <li><a href="#m1-d3"><span class="n">3</span>O dosya nereye gitti?</a></li>
+          <li><a href="#m1-d4"><span class="n">4</span>Claude yanlış yaptığında</a></li>
+          <li><a href="#m1-d5"><span class="n">5</span>Claude neye izinli</a></li>
+          <li><a href="#m1-d6"><span class="n">6</span>Modül 1 özeti</a></li>
         </ol>
       </div>
       <div class="rail-card">
