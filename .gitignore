@@ -15,3 +15,7 @@ Thumbs.db
 desktop.ini
 .vscode/
 .claude/settings.local.json
+
+# Logo kaynağı ve tasarım referansı (yalnızca işlenmiş logo assets/img altında yayınlanır)
+Logo/
+anasayfa dizaynı/

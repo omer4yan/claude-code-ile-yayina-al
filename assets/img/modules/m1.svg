@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e2532"/><stop offset=".55" stop-color="#2c2a2c"/><stop offset="1" stop-color="#3b2a21"/></linearGradient>
+    <radialGradient id="warm" cx=".92" cy="1" r=".8"><stop offset="0" stop-color="#ffa064" stop-opacity=".95"/><stop offset=".45" stop-color="#e8622c" stop-opacity=".42"/><stop offset="1" stop-color="#e8622c" stop-opacity="0"/></radialGradient>
+    <radialGradient id="cool" cx=".04" cy="0" r=".75"><stop offset="0" stop-color="#ece4d6" stop-opacity=".32"/><stop offset="1" stop-color="#ece4d6" stop-opacity="0"/></radialGradient>
+    <filter id="soft" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="12"/></filter>
+    <filter id="drop" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".38"/></filter>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <rect width="640" height="400" fill="url(#warm)"/>
+  <rect width="640" height="400" fill="url(#cool)"/>
+  <ellipse cx="320" cy="338" rx="190" ry="16" fill="#000" opacity=".45" filter="url(#soft)"/>
+
+  <!-- Proje klasörü kartı -->
+  <g filter="url(#drop)">
+    <path d="M398 226h40l12 12h66a12 12 0 0 1 12 12v58a12 12 0 0 1-12 12H398a12 12 0 0 1-12-12v-70a12 12 0 0 1 12-12z" fill="#e2d6c4"/>
+    <rect x="386" y="246" width="142" height="74" rx="12" fill="#efe7da"/>
+    <rect x="404" y="270" width="78" height="9" rx="3" fill="#2a2f38"/>
+    <rect x="404" y="288" width="52" height="7" rx="3" fill="#cfc4b3"/>
+  </g>
+
+  <!-- Terminal penceresi -->
+  <g filter="url(#drop)">
+    <rect x="150" y="76" width="300" height="212" rx="16" fill="#191d25" stroke="#3a414d"/>
+    <path d="M166 76h268a16 16 0 0 1 16 16v20H150V92a16 16 0 0 1 16-16z" fill="#242a34"/>
+    <circle cx="172" cy="94" r="5" fill="#4a515e"/><circle cx="189" cy="94" r="5" fill="#4a515e"/><circle cx="206" cy="94" r="5" fill="#4a515e"/>
+    <rect x="174" y="136" width="10" height="10" rx="2" fill="#e8622c"/><rect x="194" y="136" width="96" height="10" rx="3" fill="#efe7da"/>
+    <rect x="194" y="158" width="64" height="8" rx="3" fill="#6b7280"/>
+    <rect x="174" y="184" width="10" height="10" rx="2" fill="#e8622c"/><rect x="194" y="184" width="170" height="10" rx="3" fill="#efe7da"/>
+    <rect x="194" y="206" width="118" height="8" rx="3" fill="#6b7280"/>
+    <rect x="174" y="232" width="10" height="10" rx="2" fill="#e8622c"/><rect x="194" y="228" width="13" height="18" rx="2" fill="#e8622c"/>
+  </g>
+</svg>

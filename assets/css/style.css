@@ -325,18 +325,10 @@ pre {
   letter-spacing: -0.01em;
 }
 
-.brand__mark {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0;
+.brand__logo {
+  width: 32px;
+  height: 32px;
+  flex: none;
 }
 
 .nav {
@@ -588,118 +580,253 @@ pre {
   font-weight: 600;
 }
 
-/* ---------- Modül listesi (içindekiler) ---------- */
+/* ---------- Eğitim Modülleri: carousel + kart ---------- */
 
-.toc {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.modules .section-head {
+  align-items: flex-end;
 }
 
-.toc__item {
-  border-bottom: 1px solid var(--line);
+.modules__meta {
+  margin: 10px 0 0;
 }
 
-.toc__link {
-  display: grid;
-  grid-template-columns: 92px 88px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 28px;
-  padding: 26px 8px;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.toc__link:hover {
-  background: rgba(255, 255, 255, 0.025);
-}
-
-.toc__num {
-  font-family: var(--font-mono);
-  font-size: clamp(2rem, 3.6vw, 2.8rem);
-  color: var(--accent);
-  line-height: 1;
-}
-
-.toc__title {
-  display: block;
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
-  font-weight: 600;
-}
-
-.toc__sub {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--dim);
-  margin-top: 6px;
-}
-
-.toc__desc {
-  display: block;
-  color: var(--accent);
-  opacity: 0.92;
-  margin: 8px 0 0;
-  font-size: 0.98rem;
-  line-height: 1.55;
-}
-
-.toc__end {
+.carousel__nav {
   display: flex;
-  align-items: center;
-  gap: 18px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--muted);
-  white-space: nowrap;
+  gap: 10px;
 }
 
-.toc__end svg {
+.carousel__btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, opacity 0.2s;
+}
+
+.carousel__btn svg {
   width: 20px;
   height: 20px;
-  color: var(--text);
-  transition: transform 0.2s;
 }
 
-.toc__link:hover .toc__end svg {
+.carousel__btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.carousel__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.carousel {
+  position: relative;
+  margin-top: 28px;
+}
+
+.carousel__track {
+  --gap: 20px;
+  --per-view: 3;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 18px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
+  column-gap: var(--gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel__track:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: 12px;
+}
+
+.carousel__slide {
+  scroll-snap-align: start;
+  display: flex;
+  min-width: 0;
+}
+
+.mcard {
+  --card-bg: #141416;
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+:root[data-theme="light"] .mcard {
+  --card-bg: #ffffff;
+}
+
+.mcard:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-line);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+.mcard:has(.mcard__link:focus-visible) {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.mcard__cover {
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(135deg, #1e2532, #3b2a21);
+  overflow: hidden;
+}
+
+.mcard__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mcard__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 24px 20px;
+}
+
+.mcard__no {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.mcard__title {
+  margin: 0 0 8px;
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 1.95rem;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+.mcard__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Bütün kartı tıklanabilir yapan görünmez katman */
+.mcard__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.mcard__link:focus-visible {
+  outline: none;
+}
+
+.mcard__highlight {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  min-height: 1.4em;
+}
+
+.mcard__desc {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  min-height: calc(1.6em * 3);
+}
+
+.mcard__meta {
+  list-style: none;
+  margin: auto 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.mcard__meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.mcard__meta svg {
+  width: 17px;
+  height: 17px;
+}
+
+.mcard__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.mcard__cta {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+
+.mcard__foot-end {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.mcard__foot-end svg {
+  width: 20px;
+  height: 20px;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+
+.mcard:hover .mcard__foot-end svg {
   transform: translateX(4px);
 }
 
-/* Modül simgesi: 3x3 ızgarada modül numarası kadar dolu kare */
-.glyph {
-  width: 88px;
-  height: 88px;
-  padding: 14px;
-  background: var(--panel-2);
-  border: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
-}
-
-.glyph span {
-  background: var(--panel-3);
-  border-radius: 2px;
-}
-
-.glyph[data-n="1"] span:nth-child(-n + 1),
-.glyph[data-n="2"] span:nth-child(-n + 2),
-.glyph[data-n="3"] span:nth-child(-n + 3),
-.glyph[data-n="4"] span:nth-child(-n + 4),
-.glyph[data-n="5"] span:nth-child(-n + 5),
-.glyph[data-n="6"] span:nth-child(-n + 6),
-.glyph[data-n="7"] span:nth-child(-n + 7) {
-  background: var(--accent);
-}
-
-.glyph--sm {
-  width: 40px;
-  height: 40px;
-  padding: 7px;
-  gap: 2px;
-  border-radius: 8px;
+.modules__fallback {
+  margin-top: 20px;
+  color: var(--muted);
 }
 
 /* ---------- Ana sayfa: kısa hakkımda ---------- */
@@ -1994,29 +2121,6 @@ pre {
     letter-spacing: 0.04em;
   }
 
-  .toc__link {
-    grid-template-columns: 56px minmax(0, 1fr) auto;
-    gap: 14px 16px;
-    padding: 22px 0;
-    align-items: start;
-  }
-
-  .toc__link .glyph {
-    display: none;
-  }
-
-  .toc__num {
-    font-size: 1.7rem;
-    padding-top: 2px;
-  }
-
-  .toc__end span {
-    display: none;
-  }
-
-  .toc__end {
-    padding-top: 6px;
-  }
 
   .about-teaser {
     grid-template-columns: minmax(0, 1fr);
@@ -2052,5 +2156,42 @@ pre {
   *::before,
   *::after {
     transition: none !important;
+  }
+}
+
+/* Eğitim Modülleri: duyarlı carousel */
+@media (max-width: 1023px) {
+  .carousel__track {
+    --per-view: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .carousel__nav {
+    display: none;
+  }
+
+  /* Bir tam kart + sonraki kartın bir kısmı; kartlar kenara kadar kayar */
+  .carousel__track {
+    --gap: 14px;
+    grid-auto-columns: 84%;
+    margin: 0 calc(-1 * var(--gutter));
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
+
+  .mcard__title {
+    font-size: 1.75rem;
+  }
+
+  .mcard__body {
+    padding: 20px 20px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mcard:hover {
+    transform: none;
   }
 }

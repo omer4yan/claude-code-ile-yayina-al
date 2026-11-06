@@ -7,10 +7,12 @@
   <meta name="description" content="Ömer Ayan'ın kişisel sitesi: bilgi teknolojileri teknik destek deneyimi, yapay zekâ merakı ve 'Claude Code ile Yayına Al' kursundaki öğrenme yolculuğu.">
   <meta name="theme-color" content="#0b0b0b">
   <script>(function(){var t;try{t=localStorage.getItem("theme");}catch(e){}if(t!=="light"&&t!=="dark"){t="dark";}document.documentElement.setAttribute("data-theme",t);})();</script>
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/orvena-logo-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -18,9 +20,9 @@
 
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="brand" href="index.html" aria-label="Ömer Ayan — Ana Sayfa">
-        <span class="brand__mark" aria-hidden="true">ÖA</span>
-        <span>Ömer Ayan</span>
+      <a class="brand" href="index.html" aria-label="Orvena — Ana Sayfa">
+        <img class="brand__logo" src="assets/img/orvena-logo-192.png" alt="" width="32" height="32">
+        <span>Orvena</span>
       </a>
       <button class="theme-toggle" type="button" aria-label="Aydınlık moda geç" title="Aydınlık moda geç">
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -157,92 +159,26 @@
       </div>
     </section>
 
-    <!-- Modül listesi -->
-    <section class="section container" aria-labelledby="toc-title">
+    <!-- Eğitim Modülleri (kartlar assets/js/modules.js içindeki veriden üretilir) -->
+    <section class="section container modules" aria-labelledby="modules-title" data-modules-carousel>
       <div class="section-head">
-        <h2 id="toc-title">Öğrenme yolculuğum</h2>
-        <span class="eyebrow">Claude Code ile Yayına Al</span>
+        <div>
+          <h2 id="modules-title">Eğitim Modülleri</h2>
+          <p class="eyebrow modules__meta">7 modül · 40 ders · ≈133 dk okuma</p>
+        </div>
+        <div class="carousel__nav">
+          <button class="carousel__btn" type="button" data-carousel="prev" aria-controls="modules-track" aria-label="Önceki modül">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="carousel__btn" type="button" data-carousel="next" aria-controls="modules-track" aria-label="Sonraki modül">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
       </div>
-      <ol class="toc">
-        <li class="toc__item">
-          <a class="toc__link" href="yolculuk.html#m1">
-            <span class="toc__num">01</span>
-            <span class="glyph" data-n="1" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
-            <span>
-              <span class="toc__title">Claude Code'u kur</span>
-              <span class="toc__sub">Terminalde ilk adımlar</span>
-              <span class="toc__desc">Terminalle tanıştım; Claude'dan ilk dosyamı isteyip sonucu kendim kontrol etmeyi öğrendim.</span>
-            </span>
-            <span class="toc__end"><span>6 ders</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-        </li>
-        <li class="toc__item">
-          <a class="toc__link" href="yolculuk.html#m2">
-            <span class="toc__num">02</span>
-            <span class="glyph" data-n="2" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
-            <span>
-              <span class="toc__title">İlk prompt'un</span>
-              <span class="toc__desc">Claude Code'u kendi bilgisayarıma kurdum; açık ve net istekler yazmayı öğrendim.</span>
-            </span>
-            <span class="toc__end"><span>6 ders</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-        </li>
-        <li class="toc__item">
-          <a class="toc__link" href="yolculuk.html#m3">
-            <span class="toc__num">03</span>
-            <span class="glyph" data-n="3" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
-            <span>
-              <span class="toc__title">Tek dosyada düzenlemeler</span>
-              <span class="toc__desc">Önerilen değişiklikleri diff üzerinden okumayı, kabul etmeyi ya da düzeltmeyi öğrendim.</span>
-            </span>
-            <span class="toc__end"><span>5 ders</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-        </li>
-        <li class="toc__item">
-          <a class="toc__link" href="yolculuk.html#m4">
-            <span class="toc__num">04</span>
-            <span class="glyph" data-n="4" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
-            <span>
-              <span class="toc__title">Çok sayfalı bir site kur</span>
-              <span class="toc__desc">Birden fazla sayfayı etkileyen değişiklikleri önce planlayıp küçük adımlarla uygulamayı öğrendim.</span>
-            </span>
-            <span class="toc__end"><span>5 ders</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-        </li>
-        <li class="toc__item">
-          <a class="toc__link" href="yolculuk.html#m5">
-            <span class="toc__num">05</span>
-            <span class="glyph" data-n="5" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
-            <span>
-              <span class="toc__title">İlk projeni yayına alma</span>
-              <span class="toc__desc">Bir siteyi bilgisayarımdan herkese açık bir web adresine taşımanın temel akışını öğrendim.</span>
-            </span>
-            <span class="toc__end"><span>6 ders</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-        </li>
-        <li class="toc__item">
-          <a class="toc__link" href="yolculuk.html#m6">
-            <span class="toc__num">06</span>
-            <span class="glyph" data-n="6" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
-            <span>
-              <span class="toc__title">Hooks, MCP ve iş akışı</span>
-              <span class="toc__desc">Çalışma biçimimi düzenleyen araçları tanıdım; kendi işlerimde kullanmayı denemeye devam ediyorum.</span>
-            </span>
-            <span class="toc__end"><span>6 ders</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-        </li>
-        <li class="toc__item">
-          <a class="toc__link" href="yolculuk.html#m7">
-            <span class="toc__num">07</span>
-            <span class="glyph" data-n="7" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
-            <span>
-              <span class="toc__title">Bitirme projesi: kendi siteni yayınla</span>
-              <span class="toc__desc">Kendi küçük sitemi planlamayı, gerçek içerikle doldurmayı ve yayına hazırlamayı öğrendim.</span>
-            </span>
-            <span class="toc__end"><span>6 ders</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-        </li>
-      </ol>
+      <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Eğitim Modülleri">
+        <ul class="carousel__track" id="modules-track" tabindex="0" aria-label="Modül kartları; sol ve sağ ok tuşlarıyla kaydırılabilir"></ul>
+      </div>
+      <noscript><p class="modules__fallback">Modülleri görmek için <a href="yolculuk.html">Öğrenme Yolculuğum</a> sayfasına gidebilirsiniz.</p></noscript>
     </section>
 
     <!-- Kısa hakkımda -->
@@ -294,6 +230,7 @@
     </div>
   </footer>
 
+  <script src="assets/js/modules.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>
