@@ -63,7 +63,9 @@
         </div>
       </div>
 
-      <figure class="hero2__map">
+      <figure class="hero2__map" data-map>
+        <div class="map-stage">
+        <canvas class="map-dots" aria-hidden="true"></canvas>
         <svg viewBox="0 0 720 620" role="img" aria-labelledby="map-title">
           <title id="map-title">Orvena başlangıç noktasını kursun 7 modülüne bağlayan dekoratif harita</title>
           <defs>
@@ -83,9 +85,10 @@
               </g>
             </mask>
           </defs>
-          <rect width="720" height="620" fill="url(#p-field)" mask="url(#m-fade)"/>
-          <rect width="720" height="620" fill="url(#p-land)" mask="url(#m-land)"/>
+          <rect class="map-pattern" width="720" height="620" fill="url(#p-field)" mask="url(#m-fade)"/>
+          <rect class="map-pattern" width="720" height="620" fill="url(#p-land)" mask="url(#m-land)"/>
 
+          <g class="map-fg">
           <circle class="map-hub-glow" cx="250" cy="290" r="34"/>
 
           <g style="--i:0"><path class="map-line" pathLength="1" d="M250 290Q300 120 450 95"/><circle class="map-mid" cx="325" cy="156" r="2.4"/><circle class="map-node" cx="450" cy="95" r="5"/><text class="map-label" x="462" y="99">01 · CLAUDE CODE'U KUR</text></g>
@@ -96,13 +99,12 @@
           <g style="--i:5"><path class="map-line" pathLength="1" d="M250 290Q320 380 310 530"/><circle class="map-mid" cx="300" cy="395" r="2.4"/><circle class="map-node" cx="310" cy="530" r="5"/><text class="map-label" x="322" y="534">06 · HOOKS, MCP VE İŞ AKIŞI</text></g>
           <g style="--i:6"><path class="map-line" pathLength="1" d="M250 290Q150 330 120 470"/><circle class="map-mid" cx="167.5" cy="355" r="2.4"/><circle class="map-node" cx="120" cy="470" r="5"/><text class="map-label" x="132" y="474">07 · BİTİRME PROJESİ</text></g>
 
+          <g class="map-flow" aria-hidden="true"></g>
           <circle class="map-hub" cx="250" cy="290" r="7"/>
           <text class="map-label map-label--hub" x="236" y="282" text-anchor="end">ORVENA</text>
+          </g>
         </svg>
-        <figcaption class="hero2__legend">
-          <span><i class="legend-dot" aria-hidden="true"></i>Başlangıç noktası</span>
-          <span><i class="legend-dot legend-dot--node" aria-hidden="true"></i>Kursun 7 modülü (temsili)</span>
-        </figcaption>
+        </div>
       </figure>
     </section>
 
@@ -277,6 +279,7 @@
   </footer>
 
   <script src="assets/js/modules.js" defer></script>
+  <script src="assets/js/map.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

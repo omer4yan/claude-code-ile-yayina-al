@@ -962,6 +962,19 @@ pre {
   line-clamp: 3;
   overflow: hidden;
   min-height: calc(1.6em * 3);
+  /* İki yana yasla; satır yüksekliği 3 satırlık sınırla uyumlu kalsın diye ortak kurala eklenmedi */
+  text-align: justify;
+  text-align-last: left;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+@media (max-width: 640px) {
+  .mcard__desc {
+    text-align: left;
+    -webkit-hyphens: manual;
+    hyphens: manual;
+  }
 }
 
 .mcard__meta {
@@ -1993,14 +2006,7 @@ pre {
   font-size: clamp(2.4rem, 6vw, 4.2rem);
   font-weight: 600;
   letter-spacing: -0.03em;
-  margin: 18px 0 8px;
-}
-
-.about-hero__role {
-  color: var(--accent);
-  font-weight: 500;
-  font-size: 1.1rem;
-  margin-bottom: 28px;
+  margin: 18px 0 28px;
 }
 
 .about-hero__text p {
@@ -2014,194 +2020,6 @@ pre {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 28px;
-}
-
-.xp {
-  margin-top: 28px;
-}
-
-.xp__company {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  align-items: baseline;
-  margin-bottom: 22px;
-}
-
-.xp__company h3 {
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
-  font-weight: 600;
-}
-
-.roles {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.role {
-  position: relative;
-  padding: 0 0 36px 40px;
-}
-
-.role::before {
-  content: "";
-  position: absolute;
-  left: 9px;
-  top: 26px;
-  bottom: 0;
-  width: 1px;
-  background: var(--line-strong);
-}
-
-.role:last-child::before {
-  display: none;
-}
-
-.role::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 6px;
-  width: 19px;
-  height: 19px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  background: var(--bg);
-}
-
-.role:first-child::after {
-  background: var(--accent);
-}
-
-.role__head {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 4px 16px;
-  align-items: baseline;
-}
-
-.role__head h4 {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.role__date {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-}
-
-.role ul {
-  margin: 14px 0 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 10px;
-}
-
-.role ul li {
-  padding: 14px 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: var(--panel);
-  color: var(--text-soft);
-  font-size: 0.97rem;
-  line-height: 1.6;
-}
-
-.role ul li strong {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.cards-2 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 28px;
-}
-
-.info-card {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: var(--panel);
-  padding: 22px;
-}
-
-.info-card .eyebrow {
-  font-size: 0.7rem;
-}
-
-.info-card h3 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 10px 0 4px;
-}
-
-.info-card p {
-  margin: 0;
-  color: var(--muted);
-}
-
-.cert-list {
-  list-style: none;
-  margin: 28px 0 0;
-  padding: 0;
-}
-
-.cert-list li {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 6px 24px;
-  align-items: baseline;
-  padding: 18px 4px;
-  border-bottom: 1px solid var(--line);
-}
-
-.cert-list strong {
-  font-weight: 600;
-}
-
-.cert-list span {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.cert-list .cert-date {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 28px;
-  padding: 0;
-  list-style: none;
-}
-
-.tags li {
-  padding: 9px 14px;
-  border: 1px solid var(--line-strong);
-  border-radius: 10px;
-  background: var(--panel);
-  font-size: 0.93rem;
-}
-
-.lang-line {
-  margin-top: 22px;
-  color: var(--muted);
-}
-
-.lang-line strong {
-  color: var(--text);
 }
 
 /* =========================================================
@@ -2415,21 +2233,6 @@ pre {
     max-width: 300px;
   }
 
-  .cards-2 {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .cert-list li {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .role {
-    padding-left: 32px;
-  }
-
-  .footer-note {
-    flex-direction: column;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -13,7 +13,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 |---|---|---|
 | `index.html` | `en/index.html` | Giriş alanı (serif başlık + noktalı harita), 40 parçalı ders şeridi, "İlk sitem yayında" kartı, Eğitim Modülleri carousel'i, kısa hakkımda, iletişim |
 | `yolculuk.html` | `en/yolculuk.html` | Solda müfredat, ortada 7 modül + "Yayın günü", sağda "Bu modülde" ve "Çalışma döngüm" |
-| `hakkimda.html` | `en/hakkimda.html` | Fotoğraf, hakkımda metni, deneyim, eğitim, sertifikalar, teknik beceriler |
+| `hakkimda.html` | `en/hakkimda.html` | Fotoğraf, hakkımda metni (eğitim paragrafı dahil) ve butonlar. Unvan satırı ve deneyim/eğitim/sertifika/beceri/dil bölümleri kullanıcının isteğiyle kaldırıldı. |
 
 - Ortak dosyalar: `assets/css/style.css`, `assets/css/home.css` (yalnızca ana sayfa giriş alanı), `assets/js/main.js`, `assets/js/modules.js`, `assets/img/`.
 - `en/` içindeki sayfalar ortak dosyalara `../assets/` ile bağlanır.
@@ -39,10 +39,13 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 - Footer: solda "© 2026 Orvena · Türkçe · English", sağda "Claude Code yardımıyla hazırlandı · GitHub Pages'te yayında" (EN: "Built with the help of Claude Code · Published on GitHub Pages"). Yatırım uyarısı kullanılmaz.
 - E-posta: omer.4yan@gmail.com · GitHub: github.com/omer4yan · LinkedIn: linkedin.com/in/omer-ayan
 
-## Ana sayfa haritası
-- Giriş alanındaki noktalı harita satır içi SVG'dir; gerçek coğrafya değil, soyut bir alan. Merkez "ORVENA", düğümler 7 modülün adları. Şehir/konum/topluluk iddiası ekleme.
-- Renkler tema değişkenlerinden (`--map-dot`, `--map-node-bg`, `--accent`). Çizgiler sırayla çizilir; `prefers-reduced-motion` açıkken animasyon yok.
-- 640px altında modül etiketleri gizlenir (okunamayacak kadar küçülüyor).
+## Ana sayfa haritası (canlı)
+- Satır içi SVG (çizgiler, düğümler, etiketler) + `<canvas class="map-dots">` (noktalı alan). Gerçek coğrafya değil, soyut bir alan. Merkez "ORVENA", düğümler 7 modülün adları. Şehir/konum/topluluk iddiası ekleme.
+- `assets/js/map.js`: noktaları canvas'a çizer ve fare imlecinden kaçırır; `.map-fg` grubu imleci izleyerek kayar; `.map-flow` içinde ORVENA'dan modüllere akan noktalar üretir. Kara şekilleri SVG'deki `#m-land` maskesinden okunur.
+- Renkler tema değişkenlerinden (`--map-dot`, `--map-node-bg`, `--accent`); tema değişince canvas yeniden çizilir.
+- `prefers-reduced-motion` açıkken hareket yok (noktalar durağan çizilir). JavaScript yoksa SVG içindeki `.map-pattern` desen yedeği görünür.
+- Harita altında açıklama satırı yok. 640px altında modül etiketleri gizlenir (okunamayacak kadar küçülüyor).
+- Butonlar ilk ekranda görünsün diye başlık boyutu `min(vw, vh)` ile sınırlanır; değiştirirken 1366×657 ve 390×664 görünür alanlarda kontrol et.
 
 ## Eğitim Modülleri (ana sayfa carousel'i)
 - Tek veri kaynağı: `assets/js/modules.js` içindeki `MODULES` dizisi; her modülün `tr` ve `en` metinleri yan yana. Kartlar `createModuleCard()` ile üretilir.
@@ -64,7 +67,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 - Vurgu: koyuda `#e8622c`, aydınlıkta `#bf3a1b`. Beyaz yazılı dolgular (butonlar, rozetler) `--accent-fill` kullanır (beyaz metinle ≥4.5:1). Terminal kutuları iki temada da koyu kalır.
 - Yazı tipleri: Instrument Serif (ana sayfa başlığı ve kart başlıkları; yalnızca ana sayfalarda yüklenir), Inter (metin), JetBrains Mono (etiketler, numaralar, kod).
 - Ortak kenar boşluğu `--gutter`: masaüstü 56px, ≤1023px 28px, ≤640px 20px. En geniş sayfa `--maxw: 1440px`. Üst menü, giriş alanı, bölümler ve footer aynı kenar çizgisinde.
-- Uzun paragraflar iki yana yaslı (`text-align: justify`, son satır sola, `hyphens: auto`), en fazla ~68ch; 640px altında sola hizalı. Başlıklar, menü, butonlar, kısa etiketler, kart açıklamaları, deneyim maddeleri ve footer yaslanmaz.
+- Uzun paragraflar iki yana yaslı (`text-align: justify`, son satır sola, `hyphens: auto`), en fazla ~68ch; 640px altında sola hizalı. Carousel kart açıklamaları da yaslıdır (3 satır sınırıyla uyumlu ayrı kural, 640px altında sola). Başlıklar, menü, butonlar, kısa etiketler ve footer yaslanmaz.
 - Üst menü: 72px (≤760px 68px); 1080px ve altında açılır menü. "İletişim →" vurgu butonu menünün sonunda; İletişim ayrıca menüde tekrarlanmaz.
 - Referans sitelerin logosu, metinleri ve marka öğeleri kopyalanmaz.
 
