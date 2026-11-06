@@ -1,0 +1,37 @@
+/* Reference homepage: spacious editorial typography, existing themes retained. */
+.home-page { font-size: 20px; }
+/* Başlık yüksekliği ve kenar boşluğu değişkenle verilir; açılır menü ve carousel de aynı değerleri kullanır */
+.home-page { --header-h: 72px; --gutter: 23px; }
+.home-page .container { max-width: 1552px; }
+.home-page .brand { font-size: 22px; gap: 16px; }
+.home-page .brand__logo { width: 38px; height: 38px; }
+.home-page .nav a { font-size: 20px; padding: 10px 18px; }
+.home-page .theme-toggle { width: 55px; height: 55px; margin-left: 10px; }
+.home-page .hero { padding-top: 30px; padding-bottom: 64px; }
+.home-page .hero__meta { padding-bottom: 24px; }
+.home-page .hero__meta .eyebrow { font-size: 14px; letter-spacing: .28em; }
+.home-page .hero__title { font-size: clamp(100px, 13.4vw, 208px); font-weight: 600; line-height: .9; letter-spacing: -.045em; margin: 34px 0 42px; }
+.home-page .hero__lead { max-width: 510px; font-size: 30px; line-height: 1.35; margin-bottom: 24px; }
+.home-page .hero__intro { max-width: 810px; font-size: 21px; line-height: 1.65; margin-bottom: 36px; }
+.home-page .hero__actions { gap: 14px; }
+.home-page .hero__actions .btn { min-height: 65px; padding: 16px 27px; font-size: 20px; border-radius: 15px; }
+.home-page .hero__actions .btn svg { margin-left: 5px; }
+@media (max-width: 960px) {
+ .home-page .nav a { font-size: 16px; padding-inline: 12px; }
+ .home-page .hero__title { font-size: clamp(100px, 17vw, 160px); }
+ .home-page .hero__lead { font-size: 26px; }
+ .home-page .hero__intro { font-size: 18px; }
+}
+@media (max-width: 760px) {
+ .home-page { font-size: 17px; --header-h: 68px; --gutter: 20px; }
+ .home-page .brand { font-size: 20px; gap: 10px; }
+ .home-page .brand__logo { width: 32px; height: 32px; }
+ .home-page .theme-toggle { width: 44px; height: 44px; }
+ .home-page .hero { padding-top: 28px; padding-bottom: 48px; }
+ .home-page .hero__meta { align-items: flex-start; gap: 10px; padding-bottom: 18px; }
+ .home-page .hero__meta .eyebrow { font-size: 10px; letter-spacing: .16em; }
+ .home-page .hero__title { font-size: clamp(80px, 23vw, 150px); margin: 30px 0; }
+ .home-page .hero__lead { font-size: 24px; max-width: 30ch; }
+ .home-page .hero__intro { font-size: 17px; margin-bottom: 28px; }
+ .home-page .hero__actions .btn { min-height: 52px; padding: 12px 18px; font-size: 16px; }
+}
