@@ -158,15 +158,22 @@
   var routes = [].map.call(fg.querySelectorAll(".map-line"), function (path) {
     return { path: path, len: path.getTotalLength() };
   });
-  var PER_ROUTE = 3, FLOW_MS = 2600;
+  // Her çizgide birkaç nokta; her noktanın arkasında küçülerek sönen kısa bir kuyruk var.
+  // Saydamlık style ile verilir (CSS kuralı SVG özniteliğini ezdiği için öznitelik kullanılmaz).
+  var PER_ROUTE = 3, FLOW_MS = 2400;
+  var TAIL = [{ lag: 0, r: 3.4, a: 1 }, { lag: 0.035, r: 2.6, a: 0.5 }, { lag: 0.07, r: 1.9, a: 0.25 }];
   var particles = [];
   routes.forEach(function (route, ri) {
     for (var k = 0; k < PER_ROUTE; k++) {
-      var c = document.createElementNS(SVGNS, "circle");
-      c.setAttribute("class", "map-flow-dot");
-      c.setAttribute("r", "3.2");
-      flow.appendChild(c);
-      particles.push({ el: c, route: route, phase: k / PER_ROUTE + ri * 0.137 });
+      var parts = TAIL.map(function (seg) {
+        var c = document.createElementNS(SVGNS, "circle");
+        c.setAttribute("class", "map-flow-dot");
+        c.setAttribute("r", String(seg.r));
+        c.style.opacity = "0";
+        flow.appendChild(c);
+        return { el: c, lag: seg.lag, a: seg.a };
+      });
+      particles.push({ parts: parts, route: route, phase: k / PER_ROUTE + ri * 0.137 });
     }
   });
   var flowStart = performance.now() + 1500; // çizgiler çizildikten sonra başlar
@@ -175,11 +182,18 @@
     var ramp = Math.max(0, Math.min(1, (now - flowStart) / 600));
     for (var i = 0; i < particles.length; i++) {
       var p = particles[i];
-      var t = ((t0 + p.phase) % 1 + 1) % 1;
-      var pt = p.route.path.getPointAtLength(t * p.route.len);
-      p.el.setAttribute("cx", pt.x.toFixed(1));
-      p.el.setAttribute("cy", pt.y.toFixed(1));
-      p.el.setAttribute("opacity", (Math.sin(Math.PI * t) * ramp).toFixed(2));
+      var head = ((t0 + p.phase) % 1 + 1) % 1;
+      for (var j = 0; j < p.parts.length; j++) {
+        var part = p.parts[j];
+        var t = head - part.lag;
+        if (t < 0) { part.el.style.opacity = "0"; continue; }
+        var pt = p.route.path.getPointAtLength(t * p.route.len);
+        part.el.setAttribute("cx", pt.x.toFixed(1));
+        part.el.setAttribute("cy", pt.y.toFixed(1));
+        // uçlarda yumuşakça belirip söner
+        var edge = Math.min(1, t / 0.12, (1 - t) / 0.12);
+        part.el.style.opacity = (edge * part.a * ramp).toFixed(2);
+      }
     }
   };
 

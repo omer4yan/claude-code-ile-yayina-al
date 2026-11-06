@@ -5,7 +5,12 @@
    Bu yüzden başlık boyutu ekran genişliğinin yanında yüksekliğine göre de sınırlanır.
    ========================================================= */
 
+/* Giriş alanı en az ekran yüksekliği kadar: sayfa ilk açıldığında sonraki bölüm
+   ("Eğitim Modülleri") görünmez; içerik dikeyde ortalanır. */
 .hero2 {
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
+  align-content: center;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   align-items: start;
@@ -117,10 +122,14 @@
   fill: var(--accent);
 }
 
-/* ORVENA'dan modüllere akan noktalar */
+/* ORVENA'dan modüllere akan noktalar (saydamlık JS tarafından style ile verilir) */
 .map-flow-dot {
   fill: var(--accent);
-  opacity: 0;
+}
+
+/* Çizgi ortasındaki sabit işaretler akan noktalarla karışmasın diye gösterilmez */
+.map-mid {
+  display: none;
 }
 
 /* "Dağıt, yeniden topla": saçılma sırasında çizgiler, düğümler ve akan noktalar gizlenir;

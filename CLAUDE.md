@@ -46,6 +46,9 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
   - `.map-fg` grubu imleci izleyerek kayar; `.map-flow` içinde ORVENA'dan modüllere akan noktalar üretilir.
   - "Dağıt, yeniden topla" düğmesi (`.map-scatter`, varsayılan `hidden`, JS açar): noktalar ~0,7 sn'de dışarı saçılır, ~1 sn'den itibaren kırmızı olarak geri dönüp yerleşir ve griye döner; ~3,9 sn'de çizgiler `is-drawing` sınıfı yeniden eklenerek baştan çizilir. Saçılma sırasında `.map-fg.is-scattered` modül grupları ve akan noktaları gizler; merkez ve ORVENA etiketi görünür kalır.
   - Kara şekilleri SVG'deki `#m-land` maskesinden okunur.
+  - Akan noktaların saydamlığı `style.opacity` ile verilir. SVG `opacity` özniteliği kullanma: CSS kuralı özniteliği ezer ve noktalar görünmez olur (daha önce yaşandı). Testte öznitelik değil `getComputedStyle(...).opacity` ölç.
+  - Çizgi ortasındaki sabit `.map-mid` işaretleri gizlidir (akan noktalarla karışıyordu).
+- Giriş alanı (`.hero2`) en az ekran yüksekliği kadardır (`min-height: calc(100svh - var(--header-h))`): sayfa ilk açıldığında "Eğitim Modülleri" başlığı görünmemeli. Değiştirirken bunu da kontrol et.
 - Renkler tema değişkenlerinden (`--map-dot`, `--map-node-bg`, `--accent`); tema değişince canvas yeniden çizilir.
 - `prefers-reduced-motion` açıkken hareket yok (noktalar durağan çizilir). JavaScript yoksa SVG içindeki `.map-pattern` desen yedeği görünür.
 - Harita altında açıklama satırı yok. 640px altında modül etiketleri gizlenir (okunamayacak kadar küçülüyor).
