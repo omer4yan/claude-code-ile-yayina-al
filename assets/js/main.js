@@ -132,6 +132,22 @@
     });
   }
 
+  // Müfredat modülleri açılır/kapanır: başlangıçta kapalı, başlığa tıklayınca açılır.
+  // JavaScript yoksa HTML'deki hâliyle (açık) kalır.
+  var setModuleOpen = function (btn, open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    var mod = btn.closest(".cur-module");
+    if (mod) mod.classList.toggle("is-collapsed", !open);
+  };
+  var hashModule = (location.hash.match(/^#(m\d+)-d\d+$/) || [])[1];
+  curriculumBox.querySelectorAll(".cur-module__head[aria-controls]").forEach(function (btn) {
+    var mod = btn.closest(".cur-module");
+    setModuleOpen(btn, !!(hashModule && mod && mod.getAttribute("data-module") === hashModule));
+    btn.addEventListener("click", function () {
+      setModuleOpen(btn, btn.getAttribute("aria-expanded") !== "true");
+    });
+  });
+
   // Dar ekranda müfredattan bir bağlantıya tıklanınca paneli kapat
   curriculumBox.addEventListener("click", function (e) {
     if (!desktop.matches && e.target.closest("a")) curriculumBox.removeAttribute("open");

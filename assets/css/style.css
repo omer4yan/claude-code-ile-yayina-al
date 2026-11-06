@@ -1173,13 +1173,65 @@ pre {
   display: flex;
   align-items: center;
   gap: 12px;
+  width: 100%;
   padding: 10px;
+  border: 0;
   border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
   line-height: 1.3;
+  cursor: pointer;
   transition: background-color 0.2s;
+}
+
+/* Açılır/kapanır modül: ok sağa (kapalı) / aşağı (açık) */
+.cur-module__chev {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  transition: transform 0.25s ease;
+}
+
+.cur-module__head[aria-expanded="true"] .cur-module__chev {
+  transform: rotate(90deg);
+}
+
+/* Ders listesi yükseklik geçişiyle açılır; kapalıyken klavyeyle de erişilemez */
+.cur-lessons-wrap {
+  display: grid;
+  grid-template-rows: 1fr;
+  margin: 2px 0 6px;
+  overflow: hidden; /* kırpma kapsayıcıda: liste soldaki noktaları kesmesin */
+  opacity: 1;
+  transition: grid-template-rows 0.3s ease, margin 0.3s ease, opacity 0.3s ease, visibility 0s;
+}
+
+.cur-lessons-wrap > .cur-lessons {
+  min-height: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.cur-module.is-collapsed .cur-lessons-wrap {
+  grid-template-rows: 0fr;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 0.3s ease, margin 0.3s ease, opacity 0.2s ease, visibility 0s 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cur-lessons-wrap,
+  .cur-module.is-collapsed .cur-lessons-wrap,
+  .cur-module__chev {
+    transition: none;
+  }
 }
 
 .cur-module__head:hover {

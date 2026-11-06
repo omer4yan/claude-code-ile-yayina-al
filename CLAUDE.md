@@ -65,6 +65,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 ## Dersler ve bağlantılar
 - Her modülde `.lessons` listesi var; her dersin kimliği `m{modül}-d{ders}` (örn. `#m3-d2`). Toplam 40 ders.
 - Sol müfredat ve sağdaki "Bu modülde" kartı bu kimliklere bağlanır. Yeni ders eklenirse ikisini de, iki dilde güncelle.
+- Müfredat modülleri açılır/kapanır (kullanıcının paylaştığı referans videoya göre): modül başlığı `<button class="cur-module__head" aria-expanded aria-controls="cur-mN">`, dersler `.cur-lessons-wrap#cur-mN` içinde. JS tüm modülleri kapalı başlatır (`.cur-module.is-collapsed`); sayfa `#mN-dK` ile açılırsa o modül açık gelir. Birden fazla modül aynı anda açık olabilir. JS yoksa hepsi açık kalır. Modül başlığı sayfayı kaydırmaz; dersler bağlantıdır.
 - Sağ kart, JS ile soldaki müfredattan üretilir.
 
 ## Stil
