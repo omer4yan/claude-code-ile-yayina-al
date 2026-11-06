@@ -47,6 +47,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/
 - Inter (metin) + JetBrains Mono (etiketler, numaralar, kod).
 - Referans sitenin logosu, metinleri ve marka öğeleri kopyalanmaz.
 - Kırılımlar: 1200px (3 sütun → tek sütun), 960px, 760px (hamburger menü).
+- Üst menü ölçüleri (72px, mobilde 68px; logo 38/32px; menü yazısı 20px) tüm sayfalarda ortak, `style.css` içindeki "Ortak üst menü ölçüleri" bölümünde. `home.css` yalnızca ana sayfanın giriş alanını büyütür.
 
 ## Sınırlar
 - Bağlantılar göreli olmalı (site alt klasörden yayınlanıyor).

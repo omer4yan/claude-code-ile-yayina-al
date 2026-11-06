@@ -19,3 +19,7 @@ desktop.ini
 # Logo kaynağı ve tasarım referansı (yalnızca işlenmiş logo assets/img altında yayınlanır)
 Logo/
 anasayfa dizaynı/
+
+# Diğer tasarım referansı klasörleri (yayınlanmaz)
+anasayfa tasarımı/
+eski anasayfa tasarımı/
