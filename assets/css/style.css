@@ -1818,6 +1818,33 @@ pre {
   line-height: 1.55;
 }
 
+/* Ders sayfası hazır olan derslerde "Dersi aç" bağlantısı */
+.lesson-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.lesson-open:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lesson-open svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.15s;
+}
+
+.lesson-open:hover svg {
+  transform: translateX(2px);
+}
+
 .rail-lessons .n {
   flex: none;
   width: 24px;

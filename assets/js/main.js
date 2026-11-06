@@ -142,7 +142,9 @@
   var hashModule = (location.hash.match(/^#(m\d+)-d\d+$/) || [])[1];
   curriculumBox.querySelectorAll(".cur-module__head[aria-controls]").forEach(function (btn) {
     var mod = btn.closest(".cur-module");
-    setModuleOpen(btn, !!(hashModule && mod && mod.getAttribute("data-module") === hashModule));
+    // Ders sayfasında geçerli modül (data-open) açık gelir
+    var openIt = !!mod && (mod.hasAttribute("data-open") || (!!hashModule && mod.getAttribute("data-module") === hashModule));
+    setModuleOpen(btn, openIt);
     btn.addEventListener("click", function () {
       setModuleOpen(btn, btn.getAttribute("aria-expanded") !== "true");
     });
@@ -152,6 +154,9 @@
   curriculumBox.addEventListener("click", function (e) {
     if (!desktop.matches && e.target.closest("a")) curriculumBox.removeAttribute("open");
   });
+
+  // Ders sayfası: kaydırma takibi lesson.js'te; buradan sonrası yalnızca yolculuk sayfası için
+  if (document.body.hasAttribute("data-lesson-page")) return;
 
   var sections = Array.prototype.slice.call(document.querySelectorAll(".module[id]"));
   var lessonItems = Array.prototype.slice.call(document.querySelectorAll(".lessons li[id]"));
