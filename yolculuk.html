@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Öğrenme Yolculuğum — Ömer Ayan</title>
+  <meta name="description" content="'Claude Code ile Yayına Al' kursunun yedi modülünde öğrendiklerim ve ilk sitemi yayına aldığım gün.">
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#ana-icerik">İçeriğe geç</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Ömer Ayan — Ana Sayfa">
+        <span class="brand__mark" aria-hidden="true">ÖA</span>
+        <span>Ömer Ayan</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menüyü aç">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Ana menü">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="yolculuk.html" aria-current="page">Öğrenme Yolculuğum</a>
+        <a href="hakkimda.html">Hakkımda</a>
+        <a href="#iletisim">İletişim</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Tablet ve mobil: modüller arası hızlı geçiş -->
+  <nav class="chips-bar" aria-label="Modüller">
+    <div class="chips-bar__inner">
+      <a href="#m1" data-target="m1">01</a>
+      <a href="#m2" data-target="m2">02</a>
+      <a href="#m3" data-target="m3">03</a>
+      <a href="#m4" data-target="m4">04</a>
+      <a href="#m5" data-target="m5">05</a>
+      <a href="#m6" data-target="m6">06</a>
+      <a href="#m7" data-target="m7">07</a>
+      <a href="#yayin-gunu" data-target="yayin-gunu">Yayın</a>
+    </div>
+  </nav>
+
+  <div class="journey">
+    <!-- Sol: müfredat -->
+    <aside class="curriculum" aria-label="Müfredat">
+      <a class="curriculum__back" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        Ana Sayfa
+      </a>
+      <details class="curriculum__box" open>
+        <summary>
+          <span>Müfredat</span>
+          <span><span class="summary-meta">7 modül · 40 ders</span><svg class="summary-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+        </summary>
+        <div class="curriculum__list">
+          <div class="cur-module" data-module="m1">
+            <a class="cur-module__head" href="#m1"><span class="cur-badge">01</span><span class="cur-module__name">Claude Code'u kur</span><span class="cur-module__count">6 ders</span></a>
+            <ul class="cur-lessons">
+              <li>Terminalin, tarayıcıda</li>
+              <li>İlk dosyan</li>
+              <li>O dosya nereye gitti?</li>
+              <li>Claude yanlış yaptığında</li>
+              <li>Claude neye izinli</li>
+              <li>Modül 1 özeti</li>
+            </ul>
+          </div>
+          <div class="cur-module" data-module="m2">
+            <a class="cur-module__head" href="#m2"><span class="cur-badge">02</span><span class="cur-module__name">İlk prompt'un</span><span class="cur-module__count">6 ders</span></a>
+            <ul class="cur-lessons">
+              <li>Bir prompt'un anatomisi</li>
+              <li>Netlik kaldıracı</li>
+              <li>Bağlam pencereleri ve /clear</li>
+              <li>Slash komutları</li>
+              <li>@file ve @directory</li>
+              <li>Modül 2 özeti</li>
+            </ul>
+          </div>
+          <div class="cur-module" data-module="m3">
+            <a class="cur-module__head" href="#m3"><span class="cur-badge">03</span><span class="cur-module__name">Tek dosyada düzenlemeler</span><span class="cur-module__count">5 ders</span></a>
+            <ul class="cur-lessons">
+              <li>Bir diff okuma</li>
+              <li>Düzenlemeleri kabul etme ve ayarlama</li>
+              <li>Açıklama isteme</li>
+              <li>Küçük refaktörler</li>
+              <li>Modül 3 özeti</li>
+            </ul>
+          </div>
+          <div class="cur-module" data-module="m4">
+            <a class="cur-module__head" href="#m4"><span class="cur-badge">04</span><span class="cur-module__name">Çok sayfalı bir site kur</span><span class="cur-module__count">5 ders</span></a>
+            <ul class="cur-lessons">
+              <li>Planlama neden önemli</li>
+              <li>Dosyalar arası düzenlemeler</li>
+              <li>Görevleri parçalara bölme</li>
+              <li>Kendi diff'ini gözden geçirme</li>
+              <li>Modül 4 özeti</li>
+            </ul>
+          </div>
+          <div class="cur-module" data-module="m5">
+            <a class="cur-module__head" href="#m5"><span class="cur-badge">05</span><span class="cur-module__name">İlk projeni yayına alma</span><span class="cur-module__count">6 ders</span></a>
+            <ul class="cur-lessons">
+              <li>Localhost ile yayındaki web</li>
+              <li>Git: ihtiyacın olan beş komut</li>
+              <li>Vercel'e deploy</li>
+              <li>Ortam değişkenleri ve sırlar</li>
+              <li>Alan adları, HTTPS ve gerçekten yayınlama</li>
+              <li>Modül 5 özeti</li>
+            </ul>
+          </div>
+          <div class="cur-module" data-module="m6">
+            <a class="cur-module__head" href="#m6"><span class="cur-badge">06</span><span class="cur-module__name">Hooks, MCP ve iş akışı</span><span class="cur-module__count">6 ders</span></a>
+            <ul class="cur-lessons">
+              <li>CLAUDE.md: projeni Claude'a öğret</li>
+              <li>Slash komutları ve subagent'lar</li>
+              <li>Hooks: sıkıcı kısımları otomatikleştir</li>
+              <li>MCP: Claude'a yeni araçlar ver</li>
+              <li>Terminalin ötesi: Agent SDK</li>
+              <li>Modül 6 özeti</li>
+            </ul>
+          </div>
+          <div class="cur-module" data-module="m7">
+            <a class="cur-module__head" href="#m7"><span class="cur-badge">07</span><span class="cur-module__name">Bitirme projesi: kendi siteni yayınla</span><span class="cur-module__count">6 ders</span></a>
+            <ul class="cur-lessons">
+              <li>Bitirme projesinin brief'i</li>
+              <li>Sayfaları kur, ilk gün deploy et</li>
+              <li>Gerçek içerikle doldur</li>
+              <li>Sana ulaşmanın bir yolunu ekle</li>
+              <li>Cilala, gözden geçir ve yayınla</li>
+              <li>Modül 7 özeti: yayınladın</li>
+            </ul>
+          </div>
+          <div class="cur-module cur-extra" data-module="yayin-gunu">
+            <a class="cur-module__head" href="#yayin-gunu"><span class="cur-badge">★</span><span class="cur-module__name">Yayın günü</span><span class="cur-module__count">6 Kasım</span></a>
+          </div>
+        </div>
+      </details>
+    </aside>
+
+    <!-- Orta: içerik -->
+    <main class="content" id="ana-icerik">
+      <header class="page-hero">
+        <nav class="breadcrumb" aria-label="Konum">
+          <a href="index.html">Ana Sayfa</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          <span>Öğrenme Yolculuğum</span>
+        </nav>
+        <h1>Öğrenme yolculuğum</h1>
+        <div class="hero-chips">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>7 modül</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>40 ders</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6-6-6M12 19h8"/></svg>Claude Code ile Yayına Al</span>
+        </div>
+      </header>
+
+      <div class="page-intro">
+        <p>Kursun yedi modülünü bitirdim; burada her modülde öğrendiklerimi kendi notlarımdan derledim. Öğrenmeye ve uygulamaya devam ediyorum.</p>
+        <p>Kurs, terminalde ilk komutları yazmaktan başlayıp kendi sitemi yayınlamaya kadar uzanan bir yol izliyor. Her modülün altında, notlarımdan seçtiğim bir örnek ve aklımda kalan ana fikir yer alıyor.</p>
+      </div>
+
+      <!-- MODÜL 01 -->
+      <section class="module" id="m1" aria-labelledby="m1-title">
+        <header class="module-hero">
+          <nav class="breadcrumb" aria-label="Konum">
+            <span>Yolculuğum</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            <span>Modül 01</span>
+          </nav>
+          <h2 id="m1-title">Claude Code'u kur</h2>
+          <p class="module-hero__sub">Terminalde ilk adımlar</p>
+          <div class="hero-chips"><span class="chip">6 ders</span><span class="chip">Modül 01</span></div>
+        </header>
+        <div class="module__body">
+          <p>Kursa terminalle tanışarak başladım. İlk alıştırmalar tarayıcıda çalışan bir pratik terminalinde yapılıyordu; bulunduğum klasörü sormayı, içindekileri listelemeyi ve yeni bir proje klasörü oluşturup içine girmeyi burada öğrendim.</p>
+          <h3>Bu modülde öğrendiklerim</h3>
+          <ul class="learned">
+            <li><span class="inline-code">pwd</span>, <span class="inline-code">ls</span>, <span class="inline-code">mkdir</span>, <span class="inline-code">cd</span> ve <span class="inline-code">cat</span> ile nerede olduğumu bulmayı, klasörler arasında gezinmeyi ve dosyaların içeriğini kontrol etmeyi öğrendim.</li>
+            <li>Claude'dan sıradan bir cümleyle dosya oluşturmasını istemeyi; "yaptım" demesiyle yetinmeyip dosyayı açıp içeriğini kendim doğrulamayı öğrendim.</li>
+            <li>Bir şey ters gittiğinde <span class="inline-code">Esc</span> ile durdurmayı, <span class="inline-code">/rewind</span> ile geri dönmeyi, <span class="inline-code">/clear</span> ile temiz bir konuşma açmayı öğrendim. <span class="inline-code">/rewind</span>'ın bir yedek olmadığını da not ettim.</li>
+            <li>Onay ekranlarını alışkanlıkla geçmek yerine hangi dosyaya ne yapılacağını okumayı ve izin modları arasındaki farkı öğrendim.</li>
+          </ul>
+          <figure class="terminal">
+            <div class="terminal__bar"><span class="terminal__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="terminal__title">Notlarımdan · Modül 01</span></div>
+<pre><code><span class="prompt">$ </span>pwd
+<span class="out">~</span>
+<span class="prompt">$ </span>mkdir my-first-project
+<span class="prompt">$ </span>cd my-first-project
+<span class="prompt">$ </span>claude "make a file called hello.txt that says hello"
+<span class="out">[OK] wrote hello.txt</span>
+<span class="prompt">$ </span>cat hello.txt
+<span class="out">hello</span></code></pre>
+          </figure>
+          <div class="takeaway">
+            <span class="takeaway__label">Aklımda kalan</span>
+            <p>Konum, istek, kontrol: Önce nerede olduğumu bilirim, sonra ne istediğimi açıkça söylerim, en sonunda sonucu kendim kontrol ederim.</p>
+          </div>
+          <a class="next-card" href="#m2">
+            <span><small>Sonraki</small><strong>Modül 02 — İlk prompt'un</strong></span>
+            <span class="next-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- MODÜL 02 -->
+      <section class="module" id="m2" aria-labelledby="m2-title">
+        <header class="module-hero">
+          <nav class="breadcrumb" aria-label="Konum">
+            <span>Yolculuğum</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            <span>Modül 02</span>
+          </nav>
+          <h2 id="m2-title">İlk prompt'un</h2>
+          <div class="hero-chips"><span class="chip">6 ders</span><span class="chip">Modül 02</span></div>
+        </header>
+        <div class="module__body">
+          <p>Bu modülde Claude Code'u kendi bilgisayarıma kurdum ve ilk gerçek prompt'umla <span class="inline-code">index.html</span> adında tek sayfalık bir web sayfası oluşturdum. Asıl öğrendiğim şey ise iyi bir isteğin nasıl kurulduğuydu.</p>
+          <h3>Bu modülde öğrendiklerim</h3>
+          <ul class="learned">
+            <li>Bir prompt'u "nerede, ne ve gerektiğinde neden" sorularıyla kurmayı öğrendim. Amacı eklemek, Claude'un ilgili kararları da doğru yönde vermesine yardım ediyor.</li>
+            <li>"Daha iyi yap" gibi belirsiz istekler yerine dosyayı ve değişecek özelliği adlandırmanın farkını gördüm. Netlik, uzunluk demek değil.</li>
+            <li>Bağlamın sınırsız olmadığını; ilgisiz bir göreve geçerken <span class="inline-code">/clear</span>, aynı görev uzadığında <span class="inline-code">/compact</span> kullanmayı öğrendim.</li>
+            <li><span class="inline-code">/help</span>, <span class="inline-code">/model</span> ve <span class="inline-code">/init</span> gibi slash komutlarını ve <span class="inline-code">@</span> ile doğru dosyayı işaret etmeyi tanıdım.</li>
+          </ul>
+          <figure class="terminal">
+            <div class="terminal__bar"><span class="terminal__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="terminal__title">Notlarımdan · Modül 02</span></div>
+<pre><code><span class="prompt">&gt; </span>in index.html, add a section at the bottom with a way to contact me,
+  because I want to share this page with friends</code></pre>
+            <p class="terminal__note">Nerede (index.html), ne (iletişim bölümü) ve neden (arkadaşlarla paylaşmak) aynı cümlede.</p>
+          </figure>
+          <div class="takeaway">
+            <span class="takeaway__label">Aklımda kalan</span>
+            <p>Atlamadan önce bak: Emin değilsem önce incelemesini ve öneri sunmasını isterim; hangi değişikliğin yapılacağını sonra ben seçerim.</p>
+          </div>
+          <a class="next-card" href="#m3">
+            <span><small>Sonraki</small><strong>Modül 03 — Tek dosyada düzenlemeler</strong></span>
+            <span class="next-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- MODÜL 03 -->
+      <section class="module" id="m3" aria-labelledby="m3-title">
+        <header class="module-hero">
+          <nav class="breadcrumb" aria-label="Konum">
+            <span>Yolculuğum</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            <span>Modül 03</span>
+          </nav>
+          <h2 id="m3-title">Tek dosyada düzenlemeler</h2>
+          <div class="hero-chips"><span class="chip">5 ders</span><span class="chip">Modül 03</span></div>
+        </header>
+        <div class="module__body">
+          <p>Bu modülde bir değişikliği onaylamadan önce ne yapacağını okumayı öğrendim. Önerilen her düzenleme bir teklif; kabul etmek, düzeltmek ya da reddetmek benim kararım.</p>
+          <h3>Bu modülde öğrendiklerim</h3>
+          <ul class="learned">
+            <li>Diff'te <span class="inline-code">-</span> ile başlayan satırların kaldırıldığını, <span class="inline-code">+</span> ile başlayanların eklendiğini öğrendim. Büyük bir diff'i "hangi dosya, ne kadar değişiklik, ne kaldırılıyor" sırasıyla taramayı not ettim.</li>
+            <li>Bir öneriyi kabul etmek, "a little smaller" gibi kısa bir geri bildirimle düzeltmek ya da reddetmek arasında bilinçli seçim yapmayı öğrendim.</li>
+            <li>Anlamadığım bir kısmı değiştirmeden önce Claude'dan açıklama istemenin karar vermeyi kolaylaştırdığını gördüm. Açıklama, sonucu kontrol etmenin yerini almıyor.</li>
+            <li>Refaktörün, görünümü ve davranışı koruyarak kodu toparlamak olduğunu; renkleri adlandırılmış CSS değişkenlerinde toplamak gibi küçük adımlarla ilerlemeyi öğrendim.</li>
+          </ul>
+          <figure class="terminal">
+            <div class="terminal__bar"><span class="terminal__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="terminal__title">Notlarımdan · Modül 03</span></div>
+<pre><code><span class="prompt">&gt; </span>in index.html, put the colours in named variables
+  at the top of the style block,
+  without changing how the page looks</code></pre>
+            <p class="terminal__note">Küçük bir refaktör: kod toparlanır, sayfanın görünümü aynı kalır.</p>
+          </figure>
+          <div class="takeaway">
+            <span class="takeaway__label">Aklımda kalan</span>
+            <p>İste → diff'i oku → kabul et ya da düzelt → sayfayı kontrol et. Değişiklik ne kadar küçükse incelemesi o kadar kolay.</p>
+          </div>
+          <a class="next-card" href="#m4">
+            <span><small>Sonraki</small><strong>Modül 04 — Çok sayfalı bir site kur</strong></span>
+            <span class="next-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- MODÜL 04 -->
+      <section class="module" id="m4" aria-labelledby="m4-title">
+        <header class="module-hero">
+          <nav class="breadcrumb" aria-label="Konum">
+            <span>Yolculuğum</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            <span>Modül 04</span>
+          </nav>
+          <h2 id="m4-title">Çok sayfalı bir site kur</h2>
+          <div class="hero-chips"><span class="chip">5 ders</span><span class="chip">Modül 04</span></div>
+        </header>
+        <div class="module__body">
+          <p>Site birden fazla sayfaya çıktığında bir değişiklik başka dosyaları da etkiliyor. Bu modülde düzenlemeye geçmeden önce plan istemeyi ve işi küçük, kontrol edilebilir parçalara bölmeyi öğrendim.</p>
+          <h3>Bu modülde öğrendiklerim</h3>
+          <ul class="learned">
+            <li>Düzenleme yerine önce plan istemeyi; hangi dosyalara hangi sırayla dokunulacağını listeletmeyi ve planı kapsam, sıra ve sınır açısından okumayı öğrendim.</li>
+            <li>Ortak menü gibi paylaşılan bir öğenin bütün sayfalarda tutarlı olması gerektiğini; bağlantıları tarayıcıda tek tek denemeyi öğrendim.</li>
+            <li>"Tüm sitemi kur" gibi büyük işleri doğal adımlara bölmeyi ve her adımdan sonra durup sonucu incelemeyi öğrendim.</li>
+            <li>İş bittiğinde siteyi ilk kez gelen bir ziyaretçi gözüyle gezmeyi; yer tutucuları, yarım bölümleri ve unutulmuş bağlantıları aramayı öğrendim.</li>
+          </ul>
+          <figure class="terminal">
+            <div class="terminal__bar"><span class="terminal__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="terminal__title">Notlarımdan · Modül 04</span></div>
+<pre><code><span class="prompt">&gt; </span>I want to add a second page called projects.html
+  and link to it from my home page. Plan the change first:
+  list the files you would touch and in what order.
+  Do not edit anything yet.</code></pre>
+          </figure>
+          <div class="takeaway">
+            <span class="takeaway__label">Aklımda kalan</span>
+            <p>Planla → değiştir → diff'i gözden geçir → sayfaları kontrol et. "Bitti" demeden önce sonuca gerçekten bakmak gerekiyor.</p>
+          </div>
+          <a class="next-card" href="#m5">
+            <span><small>Sonraki</small><strong>Modül 05 — İlk projeni yayına alma</strong></span>
+            <span class="next-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- MODÜL 05 -->
+      <section class="module" id="m5" aria-labelledby="m5-title">
+        <header class="module-hero">
+          <nav class="breadcrumb" aria-label="Konum">
+            <span>Yolculuğum</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            <span>Modül 05</span>
+          </nav>
+          <h2 id="m5-title">İlk projeni yayına alma</h2>
+          <div class="hero-chips"><span class="chip">6 ders</span><span class="chip">Modül 05</span></div>
+        </header>
+        <div class="module__body">
+          <p>Bilgisayarımdaki dosyalar başkasının ekranında açılmıyor. Bu modülde bir siteyi yerel dosyalardan herkese açık bir web adresine taşımanın temel akışını öğrendim.</p>
+          <h3>Bu modülde öğrendiklerim</h3>
+          <ul class="learned">
+            <li><span class="inline-code">file://</span>, <span class="inline-code">localhost</span> ve herkese açık bir HTTPS adresi arasındaki farkı öğrendim.</li>
+            <li>Git'in beş temel komutuyla projenin geçmişini tutmayı ve GitHub'a göndermeyi öğrendim. Commit mesajının gelecekteki bana bir not olduğunu da.</li>
+            <li>Kursta bir GitHub deposunu Vercel'e bağlayıp yayınlama akışını gördüm; bir sayfa 404 verdiğinde dosya adını ve yolunu karşılaştırmayı öğrendim.</li>
+            <li>Parola ve API anahtarı gibi sırların koda ve depoya girmemesi gerektiğini; sızan bir anahtarın silinerek değil, değiştirilerek çözüleceğini öğrendim.</li>
+            <li>Alan adı, DNS kayıtları (A ve CNAME) ve HTTPS'in nasıl bir araya geldiğini; yayından önce siteyi başka bir cihazda gezmeyi öğrendim.</li>
+          </ul>
+          <figure class="terminal">
+            <div class="terminal__bar"><span class="terminal__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="terminal__title">Notlarımdan · Git'in beş komutu</span></div>
+<pre><code><span class="prompt">$ </span>git init
+<span class="prompt">$ </span>git add .
+<span class="prompt">$ </span>git commit -m "mesaj"
+<span class="prompt">$ </span>git remote add origin &lt;url&gt;
+<span class="prompt">$ </span>git push -u origin main</code></pre>
+          </figure>
+          <div class="takeaway">
+            <span class="takeaway__label">Aklımda kalan</span>
+            <p>Commit → push → dağıtımı doğrula → canlı siteyi kontrol et. Bu beceriler komut ezberlemekten çok, her adımın ne yaptığını anlamakla ilgili.</p>
+          </div>
+          <a class="next-card" href="#m6">
+            <span><small>Sonraki</small><strong>Modül 06 — Hooks, MCP ve iş akışı</strong></span>
+            <span class="next-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- MODÜL 06 -->
+      <section class="module" id="m6" aria-labelledby="m6-title">
+        <header class="module-hero">
+          <nav class="breadcrumb" aria-label="Konum">
+            <span>Yolculuğum</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            <span>Modül 06</span>
+          </nav>
+          <h2 id="m6-title">Hooks, MCP ve iş akışı</h2>
+          <div class="hero-chips"><span class="chip">6 ders</span><span class="chip">Modül 06</span></div>
+        </header>
+        <div class="module__body">
+          <p>Bu modül, tek tek istek vermekten çalışma biçimini düzenlemeye geçişti. Ortak amaç doğru bilgiyi kalıcı hâle getirmek ve tekrarlanan işleri uygun araçla azaltmaktı.</p>
+          <h3>Bu modülde öğrendiklerim</h3>
+          <ul class="learned">
+            <li><span class="inline-code">CLAUDE.md</span> ile projeyi, tercihleri ve sınırları kalıcı bir talimat dosyasına yazmayı öğrendim.</li>
+            <li>Sık kullanılan bir isteği özel slash komutu olarak kaydetmeyi; büyük ve kendi içinde tamamlanabilen işleri subagent'lara devretmeyi tanıdım.</li>
+            <li>Hook'ların belirli bir olay gerçekleştiğinde tanımlanan komutu çalıştırdığını; bunun "her seferinde şunu yap" demekten farklı olduğunu öğrendim.</li>
+            <li>MCP ile Claude'a dış araç ve veri kaynakları bağlanabileceğini, bunu en az erişimle yapmak gerektiğini öğrendim.</li>
+            <li>Agent SDK ile bir iş akışının programa taşınabileceğini, ama önce elle doğrulanması gerektiğini gördüm.</li>
+          </ul>
+          <div class="note">
+            <p>Bu araçları tanıdım; kendi işlerimde nasıl kullanacağımı denemeye ve öğrenmeye devam ediyorum.</p>
+          </div>
+          <figure class="terminal">
+            <div class="terminal__bar"><span class="terminal__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="terminal__title">Notlarımdan · Modül 06</span></div>
+<pre><code><span class="prompt">&gt; </span>create a slash command called /check
+  that looks over all my pages for broken links and missing menus</code></pre>
+          </figure>
+          <div class="takeaway">
+            <span class="takeaway__label">Aklımda kalan</span>
+            <p>Tekrarı doğru yere taşı: Bilgi tekrar ediyorsa proje notuna, istek tekrar ediyorsa bir komuta, mekanik iş tekrar ediyorsa test edilmiş bir otomasyona.</p>
+          </div>
+          <a class="next-card" href="#m7">
+            <span><small>Sonraki</small><strong>Modül 07 — Bitirme projesi: kendi siteni yayınla</strong></span>
+            <span class="next-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- MODÜL 07 -->
+      <section class="module" id="m7" aria-labelledby="m7-title">
+        <header class="module-hero">
+          <nav class="breadcrumb" aria-label="Konum">
+            <span>Yolculuğum</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            <span>Modül 07</span>
+          </nav>
+          <h2 id="m7-title">Bitirme projesi: kendi siteni yayınla</h2>
+          <div class="hero-chips"><span class="chip">6 ders</span><span class="chip">Modül 07</span></div>
+        </header>
+        <div class="module__body">
+          <p>Son modülün hedefi, gerçekten kullanılabilecek ve başkalarıyla paylaşılabilecek küçük bir siteyi planlayıp yayınlamaktı. Önceki modüllerde öğrendiklerimin hepsi burada bir araya geldi.</p>
+          <h3>Bu modülde öğrendiklerim</h3>
+          <ul class="learned">
+            <li>Gerçekten kullanacağım bir site biçimi seçip kapsamı küçük tutmayı ve inşa etmeden önce sayfa planını okumayı öğrendim.</li>
+            <li>Önce bütün sayfaların iskeletini kurup yayın akışını erkenden doğrulamayı öğrendim.</li>
+            <li>Yer tutucuları kendi bilgilerimle değiştirmeyi; metinlerin kulağa doğal gelmesini isterken gerçeklerin aynen korunmasını önemsemeyi öğrendim.</li>
+            <li>Ziyaretçinin bana ulaşabileceği net bir yol eklemeyi; yayından önce mobil görünümü, bağlantıları ve içeriği son kez kontrol etmeyi öğrendim.</li>
+          </ul>
+          <figure class="terminal">
+            <div class="terminal__bar"><span class="terminal__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="terminal__title">Notlarımdan · Modül 07</span></div>
+<pre><code><span class="prompt">&gt; </span>review my whole site as if you are about to publish it.
+  List anything unfinished, inconsistent, broken on mobile,
+  or confusing, and the three most worth fixing first.
+  Do not change anything yet.</code></pre>
+          </figure>
+          <div class="takeaway">
+            <span class="takeaway__label">Aklımda kalan</span>
+            <p>Planla → ne istediğini anlat → diff'i incele → sonucu kontrol et → tamamlanan parçayı yayınla → tekrarla.</p>
+          </div>
+          <a class="next-card" href="#yayin-gunu">
+            <span><small>Sonraki</small><strong>Yayın günü — 6 Kasım 2026</strong></span>
+            <span class="next-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- YAYIN GÜNÜ -->
+      <section class="module" id="yayin-gunu" aria-labelledby="yayin-title">
+        <header class="module-hero">
+          <nav class="breadcrumb" aria-label="Konum">
+            <span>Yolculuğum</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            <span>Modül 07'den sonra</span>
+          </nav>
+          <h2 id="yayin-title">Yayın günü</h2>
+          <p class="module-hero__sub">İlk sitemi yayına aldığım gün</p>
+          <div class="hero-chips"><span class="chip">6 Kasım 2026</span><span class="chip">GitHub Pages</span></div>
+        </header>
+        <div class="module__body">
+          <p>6 Kasım 2026, ilk sitemi yayına aldığım gün. Kursun bitirme modülünde öğrendiklerimi kendi sitemde uygulamak istedim ve bu süreçte Claude Code'dan yardım aldım. Site hazır olduğunda GitHub depomun <strong>Settings → Pages</strong> bölümünden yayını etkinleştirdim ve sitem GitHub Pages üzerinden canlıya çıktı.</p>
+          <p>Kursta yayınlama akışını Vercel üzerinden öğrenmiştim; ilk sitem için GitHub Pages'i kullandım. Şu an okuduğunuz sayfa, o yayının sonucu.</p>
+          <ol class="timeline">
+            <li>
+              <span class="timeline__dot">1</span>
+              <strong>Kursu tamamladım</strong>
+              <p>Yedi modülü bitirdikten sonra öğrendiklerimi kendi sitemde uygulamak istedim.</p>
+            </li>
+            <li>
+              <span class="timeline__dot">2</span>
+              <strong>Sitemi hazırladım</strong>
+              <p>Siteyi hazırlarken Claude Code'dan yardım aldım.</p>
+            </li>
+            <li>
+              <span class="timeline__dot">3</span>
+              <strong>Yayını etkinleştirdim</strong>
+              <p>GitHub depomda Settings → Pages bölümünden yayını açtım.</p>
+            </li>
+            <li class="is-live">
+              <span class="timeline__dot">✓</span>
+              <strong>6 Kasım 2026 · Yayında</strong>
+              <p>Sitem GitHub Pages üzerinden canlıya çıktı.</p>
+            </li>
+          </ol>
+          <div class="takeaway">
+            <span class="takeaway__label">Sırada</span>
+            <p>Bu site benim için bir başlangıç. Öğrendiklerimi uygulamaya ve kendimi geliştirmeye devam ediyorum.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Sağ: yan kartlar -->
+    <aside class="rail" aria-label="Modül özeti">
+      <div class="rail-card rail-card--module">
+        <h2>Bu modülde</h2>
+        <p class="rail-card__sub" id="rail-module-name">Claude Code'u kur</p>
+        <ol class="rail-lessons" id="rail-lessons">
+          <li><span class="n">1</span>Terminalin, tarayıcıda</li>
+          <li><span class="n">2</span>İlk dosyan</li>
+          <li><span class="n">3</span>O dosya nereye gitti?</li>
+          <li><span class="n">4</span>Claude yanlış yaptığında</li>
+          <li><span class="n">5</span>Claude neye izinli</li>
+          <li><span class="n">6</span>Modül 1 özeti</li>
+        </ol>
+      </div>
+      <div class="rail-card">
+        <h2>Çalışma döngüm</h2>
+        <ol class="loop">
+          <li>Planla</li>
+          <li>Ne istediğini anlat</li>
+          <li>Diff'i incele</li>
+          <li>Sonucu kontrol et</li>
+          <li>Tamamlanan parçayı yayınla</li>
+          <li>Tekrarla</li>
+        </ol>
+        <p class="loop-src">Modül 7 özetindeki döngü</p>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="contact" id="iletisim" style="margin-top:96px">
+    <div class="container">
+      <p class="eyebrow eyebrow--accent dash">İletişim</p>
+      <h2>Bana ulaşın</h2>
+      <p class="contact__lead">Sorularınız, önerileriniz ya da sadece bir merhaba için bana e-posta, GitHub veya LinkedIn üzerinden ulaşabilirsiniz.</p>
+      <div class="contact-grid">
+        <a class="contact-card" href="mailto:omer.4yan@gmail.com">
+          <span class="contact-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <span><span class="contact-card__label">E-posta</span><span class="contact-card__value">omer.4yan@gmail.com</span></span>
+        </a>
+        <a class="contact-card" href="https://github.com/omer4yan" target="_blank" rel="noopener noreferrer">
+          <span class="contact-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></svg></span>
+          <span><span class="contact-card__label">GitHub</span><span class="contact-card__value">github.com/omer4yan</span></span>
+        </a>
+        <a class="contact-card" href="https://www.linkedin.com/in/omer-ayan" target="_blank" rel="noopener noreferrer">
+          <span class="contact-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
+          <span><span class="contact-card__label">LinkedIn</span><span class="contact-card__value">linkedin.com/in/omer-ayan</span></span>
+        </a>
+      </div>
+      <div class="footer-note">
+        <span>© 2026 Ömer Ayan</span>
+        <span>Claude Code yardımıyla hazırlandı · GitHub Pages'te yayında</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

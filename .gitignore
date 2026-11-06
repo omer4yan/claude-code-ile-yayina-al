@@ -1,0 +1,17 @@
+# Kaynak materyaller — herkese açık depoya gönderilmez
+# (CV'de telefon, adres ve referans bilgileri var; kurs notları kişisel kullanım için)
+CV/
+Fotoğraf/
+Claude Code ile yayına al/
+site tasarımı ekran görüntüleri/
+
+# Ortam dosyaları ve sırlar
+.env
+.env.*
+
+# Sistem ve editör dosyaları
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.claude/settings.local.json
