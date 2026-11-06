@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Öğrenme Yolculuğum — Orvena</title>
   <meta name="description" content="'Claude Code ile Yayına Al' kursunun yedi modülünde öğrendiklerim ve ilk sitemi yayına aldığım gün.">
-  <meta name="theme-color" content="#0b0b0b">
-  <script>(function(){var t;try{t=localStorage.getItem("theme");}catch(e){}if(t!=="light"&&t!=="dark"){t="dark";}document.documentElement.setAttribute("data-theme",t);})();</script>
+  <meta name="theme-color" content="#131211">
+  <script>(function(){var t;try{t=localStorage.getItem("theme");}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}document.documentElement.setAttribute("data-theme",t);})();</script>
+  <link rel="alternate" hreflang="tr" href="https://omer4yan.github.io/claude-code-ile-yayina-al/yolculuk.html">
+  <link rel="alternate" hreflang="en" href="https://omer4yan.github.io/claude-code-ile-yayina-al/en/yolculuk.html">
+  <link rel="alternate" hreflang="x-default" href="https://omer4yan.github.io/claude-code-ile-yayina-al/yolculuk.html">
   <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="assets/img/favicon-64.png" sizes="64x64" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/orvena-logo-192.png">
@@ -36,7 +39,10 @@
         <a href="index.html">Ana Sayfa</a>
         <a href="yolculuk.html" aria-current="page">Öğrenme Yolculuğum</a>
         <a href="hakkimda.html">Hakkımda</a>
-        <a href="#iletisim">İletişim</a>
+        <a class="nav__lang" href="en/yolculuk.html" hreflang="en" lang="en" aria-label="English version">EN</a>
+        <a class="nav__cta" href="#iletisim">İletişim
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </nav>
     </div>
   </header>
@@ -599,9 +605,9 @@
           <span><span class="contact-card__label">LinkedIn</span><span class="contact-card__value">linkedin.com/in/omer-ayan</span></span>
         </a>
       </div>
-      <div class="footer-note">
-        <span>© 2026 Ömer Ayan</span>
-        <span>Claude Code yardımıyla hazırlandı · GitHub Pages'te yayında</span>
+      <div class="footer-bar">
+        <p class="footer-bar__left">© 2026 Orvena<span class="footer-bar__sep" aria-hidden="true">·</span><a href="yolculuk.html" hreflang="tr" lang="tr" aria-current="true">Türkçe</a><span class="footer-bar__sep" aria-hidden="true">·</span><a href="en/yolculuk.html" hreflang="en" lang="en">English</a></p>
+        <p class="footer-bar__right">Claude Code yardımıyla hazırlandı · GitHub Pages'te yayında</p>
       </div>
     </div>
   </footer>

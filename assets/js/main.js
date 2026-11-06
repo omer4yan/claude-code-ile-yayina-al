@@ -1,19 +1,26 @@
-/* Ömer Ayan — kişisel site: küçük etkileşimler */
+/* Orvena — kişisel site: küçük etkileşimler (Türkçe ve İngilizce sayfalar) */
 (function () {
   "use strict";
 
   var root = document.documentElement;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- Tema (karanlık / aydınlık) ---------- */
+  /* ---------- Dil: metinler <html lang> değerine göre ---------- */
+  var isEn = (root.getAttribute("lang") || "").toLowerCase().indexOf("en") === 0;
+  var T = isEn
+    ? { toLight: "Switch to light mode", toDark: "Switch to dark mode", menuOpen: "Open menu", menuClose: "Close menu" }
+    : { toLight: "Aydınlık moda geç", toDark: "Karanlık moda geç", menuOpen: "Menüyü aç", menuClose: "Menüyü kapat" };
+
+  /* ---------- Tema (karanlık / aydınlık) ----------
+     İlk tema <head> içindeki kısa betikle uygulanır: kayıtlı tercih, yoksa sistem teması. */
   var themeBtn = document.querySelector(".theme-toggle");
   var themeMeta = document.querySelector('meta[name="theme-color"]');
 
   var applyTheme = function (theme) {
     root.setAttribute("data-theme", theme);
-    if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#f6f5f2" : "#0b0b0b");
+    if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#f3efe7" : "#131211");
     if (themeBtn) {
-      var label = theme === "light" ? "Karanlık moda geç" : "Aydınlık moda geç";
+      var label = theme === "light" ? T.toDark : T.toLight;
       themeBtn.setAttribute("aria-label", label);
       themeBtn.setAttribute("title", label);
     }
@@ -33,19 +40,21 @@
     });
   }
 
-  /* ---------- Mobil menü ---------- */
+  /* ---------- Açılır menü (1080px ve altı) ---------- */
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("site-nav");
+  var menuMq = window.matchMedia("(max-width: 1080px)");
   if (toggle && nav) {
+    toggle.setAttribute("aria-label", T.menuOpen);
     var closeNav = function () {
       nav.classList.remove("is-open");
       toggle.setAttribute("aria-expanded", "false");
-      toggle.setAttribute("aria-label", "Menüyü aç");
+      toggle.setAttribute("aria-label", T.menuOpen);
     };
     toggle.addEventListener("click", function () {
       var open = nav.classList.toggle("is-open");
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      toggle.setAttribute("aria-label", open ? "Menüyü kapat" : "Menüyü aç");
+      toggle.setAttribute("aria-label", open ? T.menuClose : T.menuOpen);
     });
     nav.addEventListener("click", function (e) {
       if (e.target.closest("a")) closeNav();
@@ -54,7 +63,7 @@
       if (e.key === "Escape") closeNav();
     });
     window.addEventListener("resize", function () {
-      if (window.innerWidth > 760) closeNav();
+      if (!menuMq.matches) closeNav();
     });
   }
 

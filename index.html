@@ -4,9 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Orvena — Ömer Ayan</title>
-  <meta name="description" content="Ömer Ayan'ın kişisel sitesi: bilgi teknolojileri teknik destek deneyimi, yapay zekâ merakı ve 'Claude Code ile Yayına Al' kursundaki öğrenme yolculuğu.">
-  <meta name="theme-color" content="#0b0b0b">
-  <script>(function(){var t;try{t=localStorage.getItem("theme");}catch(e){}if(t!=="light"&&t!=="dark"){t="dark";}document.documentElement.setAttribute("data-theme",t);})();</script>
+  <meta name="description" content="Ömer Ayan'ın kişisel sitesi: bilgi teknolojileri teknik destek deneyimi, yapay zekâ merakı ve 'Claude Code ile Yayına Al' eğitimindeki öğrenme yolculuğu.">
+  <meta name="theme-color" content="#131211">
+  <script>(function(){var t;try{t=localStorage.getItem("theme");}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}document.documentElement.setAttribute("data-theme",t);})();</script>
+  <link rel="alternate" hreflang="tr" href="https://omer4yan.github.io/claude-code-ile-yayina-al/">
+  <link rel="alternate" hreflang="en" href="https://omer4yan.github.io/claude-code-ile-yayina-al/en/">
+  <link rel="alternate" hreflang="x-default" href="https://omer4yan.github.io/claude-code-ile-yayina-al/">
   <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="assets/img/favicon-64.png" sizes="64x64" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/orvena-logo-192.png">
@@ -37,28 +40,70 @@
         <a href="index.html" aria-current="page">Ana Sayfa</a>
         <a href="yolculuk.html">Öğrenme Yolculuğum</a>
         <a href="hakkimda.html">Hakkımda</a>
-        <a href="#iletisim">İletişim</a>
+        <a class="nav__lang" href="en/index.html" hreflang="en" lang="en" aria-label="English version">EN</a>
+        <a class="nav__cta" href="#iletisim">İletişim
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </nav>
     </div>
   </header>
 
   <main id="ana-icerik">
-    <!-- Giriş alanı -->
-    <section class="hero container" aria-labelledby="hero-title">
-      <div class="hero__meta">
-        <span class="eyebrow">Ömer Ayan / Kişisel Site</span>
-        <span class="eyebrow">7 Modül · 40 Ders</span>
+    <!-- Giriş alanı: solda başlık ve metin, sağda noktalı harita -->
+    <section class="hero2 container" aria-labelledby="hero-title">
+      <div class="hero2__copy">
+        <h1 class="hero2__title" id="hero-title">Teknolojinin Temellerinden <span class="hl">Yapay Zekâ İnovasyonuna:</span> Keşfeden, Öğreten ve <span class="hl">Değer Üreten</span> Bir Yolculuk</h1>
+        <p class="hero2__desc"><strong>Merhaba, ben Ömer.</strong> Bilgi teknolojileri teknik destek alanında edindiğim tecrübeleri, yapay zekâ teknolojilerine olan merakımla birleştiriyorum. 'Claude Code ile Yayına Al' eğitimi kapsamında edindiğim güncel yetkinlikleri pratiğe dökerek tasarlayıp hayata geçirdiğim bu platform; sürekli öğrenme ve teknolojik dönüşüm vizyonumun bir yansımasıdır.</p>
+        <div class="hero2__actions">
+          <a class="btn btn--primary" href="yolculuk.html">
+            Öğrenme yolculuğum
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="hakkimda.html">Hakkımda</a>
+        </div>
       </div>
-      <h1 class="hero__title" id="hero-title">Ömer<br>Ayan</h1>
-      <p class="hero__lead">Bilgi teknolojilerinden yapay zekâ ile üretmeye doğru öğrenmeye devam ediyorum.</p>
-      <p class="hero__intro">Merhaba, ben Ömer. Bilgi teknolojileri teknik destek alanında çalışıyorum. Yapay zekâya duyduğum merakla 'Claude Code ile Yayına Al' kursunda öğrendiklerimi uygulayarak bu siteyi hazırlayıp yayımladım. Bu, benim ilk sitem.</p>
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="yolculuk.html">
-          Öğrenme yolculuğum
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a class="btn btn--ghost" href="hakkimda.html">Hakkımda</a>
-      </div>
+
+      <figure class="hero2__map">
+        <svg viewBox="0 0 720 620" role="img" aria-labelledby="map-title">
+          <title id="map-title">Orvena başlangıç noktasını kursun 7 modülüne bağlayan dekoratif harita</title>
+          <defs>
+            <pattern id="p-field" width="14" height="14" patternUnits="userSpaceOnUse"><circle class="map-field" cx="7" cy="7" r="1.5"/></pattern>
+            <pattern id="p-land" width="14" height="14" patternUnits="userSpaceOnUse"><circle class="map-land" cx="7" cy="7" r="2"/></pattern>
+            <radialGradient id="g-fade" cx=".5" cy=".5" r=".6"><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+            <mask id="m-fade"><rect width="720" height="620" fill="url(#g-fade)"/></mask>
+            <mask id="m-land">
+              <rect width="720" height="620" fill="#000"/>
+              <g fill="#fff">
+                <path d="M120 210C150 140 260 120 330 150C410 180 430 260 400 330C370 400 300 430 230 420C150 410 90 350 95 290C98 250 105 225 120 210Z"/>
+                <path d="M420 60C480 30 600 40 650 90C690 130 670 200 610 220C550 240 470 210 440 160C415 120 400 80 420 60Z"/>
+                <path d="M430 300C500 270 620 290 660 360C700 430 660 520 580 545C500 570 430 520 410 450C395 400 395 320 430 300Z"/>
+                <path d="M90 470C130 440 230 450 270 490C300 525 270 575 210 580C150 585 90 560 75 525C65 500 70 480 90 470Z"/>
+                <circle cx="335" cy="560" r="30"/>
+                <circle cx="690" cy="260" r="20"/>
+              </g>
+            </mask>
+          </defs>
+          <rect width="720" height="620" fill="url(#p-field)" mask="url(#m-fade)"/>
+          <rect width="720" height="620" fill="url(#p-land)" mask="url(#m-land)"/>
+
+          <circle class="map-hub-glow" cx="250" cy="290" r="34"/>
+
+          <g style="--i:0"><path class="map-line" pathLength="1" d="M250 290Q300 120 450 95"/><circle class="map-mid" cx="325" cy="156" r="2.4"/><circle class="map-node" cx="450" cy="95" r="5"/><text class="map-label" x="462" y="99">01 · CLAUDE CODE'U KUR</text></g>
+          <g style="--i:1"><path class="map-line" pathLength="1" d="M250 290Q370 160 540 175"/><circle class="map-mid" cx="382.5" cy="196" r="2.4"/><circle class="map-node" cx="540" cy="175" r="5"/><text class="map-label" x="552" y="179">02 · İLK PROMPT'UN</text></g>
+          <g style="--i:2"><path class="map-line" pathLength="1" d="M250 290Q360 230 470 270"/><circle class="map-mid" cx="360" cy="255" r="2.4"/><circle class="map-node" cx="470" cy="270" r="5"/><text class="map-label" x="482" y="274">03 · TEK DOSYADA DÜZENLEMELER</text></g>
+          <g style="--i:3"><path class="map-line" pathLength="1" d="M250 290Q380 280 486 365"/><circle class="map-mid" cx="374" cy="304" r="2.4"/><circle class="map-node" cx="486" cy="365" r="5"/><text class="map-label" x="498" y="369">04 · ÇOK SAYFALI BİR SİTE KUR</text></g>
+          <g style="--i:4"><path class="map-line" pathLength="1" d="M250 290Q390 330 450 460"/><circle class="map-mid" cx="370" cy="352.5" r="2.4"/><circle class="map-node" cx="450" cy="460" r="5"/><text class="map-label" x="462" y="464">05 · İLK PROJENİ YAYINA ALMA</text></g>
+          <g style="--i:5"><path class="map-line" pathLength="1" d="M250 290Q320 380 310 530"/><circle class="map-mid" cx="300" cy="395" r="2.4"/><circle class="map-node" cx="310" cy="530" r="5"/><text class="map-label" x="322" y="534">06 · HOOKS, MCP VE İŞ AKIŞI</text></g>
+          <g style="--i:6"><path class="map-line" pathLength="1" d="M250 290Q150 330 120 470"/><circle class="map-mid" cx="167.5" cy="355" r="2.4"/><circle class="map-node" cx="120" cy="470" r="5"/><text class="map-label" x="132" y="474">07 · BİTİRME PROJESİ</text></g>
+
+          <circle class="map-hub" cx="250" cy="290" r="7"/>
+          <text class="map-label map-label--hub" x="236" y="282" text-anchor="end">ORVENA</text>
+        </svg>
+        <figcaption class="hero2__legend">
+          <span><i class="legend-dot" aria-hidden="true"></i>Başlangıç noktası</span>
+          <span><i class="legend-dot legend-dot--node" aria-hidden="true"></i>Kursun 7 modülü (temsili)</span>
+        </figcaption>
+      </figure>
     </section>
 
     <!-- Ders şeridi + yayın kartı -->
@@ -165,7 +210,7 @@
       <div class="section-head">
         <div>
           <h2 id="modules-title">Eğitim Modülleri</h2>
-          <p class="eyebrow modules__meta">7 modül · 40 ders · ≈133 dk okuma</p>
+          <p class="eyebrow modules__meta">7 modül · 40 ders</p>
         </div>
         <div class="carousel__nav">
           <button class="carousel__btn" type="button" data-carousel="prev" aria-controls="modules-track" aria-label="Önceki modül">
@@ -224,9 +269,9 @@
           <span><span class="contact-card__label">LinkedIn</span><span class="contact-card__value">linkedin.com/in/omer-ayan</span></span>
         </a>
       </div>
-      <div class="footer-note">
-        <span>© 2026 Ömer Ayan</span>
-        <span>Claude Code yardımıyla hazırlandı · GitHub Pages'te yayında</span>
+      <div class="footer-bar">
+        <p class="footer-bar__left">© 2026 Orvena<span class="footer-bar__sep" aria-hidden="true">·</span><a href="index.html" hreflang="tr" lang="tr" aria-current="true">Türkçe</a><span class="footer-bar__sep" aria-hidden="true">·</span><a href="en/index.html" hreflang="en" lang="en">English</a></p>
+        <p class="footer-bar__right">Claude Code yardımıyla hazırlandı · GitHub Pages'te yayında</p>
       </div>
     </div>
   </footer>
@@ -235,4 +280,3 @@
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>
-

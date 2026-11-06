@@ -1,55 +1,74 @@
-# Ömer Ayan — kişisel site
+# Orvena — Ömer Ayan'ın kişisel sitesi
 
-Derleme adımı olmayan statik site (HTML + CSS + biraz JS). GitHub Pages'te yayınlanır:
-https://omer4yan.github.io/claude-code-ile-yayina-al/
+Derleme adımı olmayan statik site (HTML + CSS + biraz JS), Türkçe ve İngilizce. GitHub Pages'te yayınlanır:
+https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 
 ## Marka
-- Marka adı **Orvena**; üst menüde logo + "Orvena" yazısı. Kişisel içerik (giriş başlığı, hakkımda, telif satırı) "Ömer Ayan" adıyla kalır.
+- Marka adı **Orvena**; üst menüde logo + "Orvena" yazısı. Kişisel içerik (hakkımda, giriş açıklaması) "Ömer Ayan" adıyla kalır.
 - Logo: `assets/img/orvena-logo.png` (512), `orvena-logo-192.png` (menü + apple-touch-icon), `favicon-32.png`, `favicon-64.png`.
   Kaynak `Logo/Logo.png` (depo dışında); web sürümleri kırmızı leke ve siyah sis temizlenip kırpılarak üretildi, renk `rgb(185,71,29)`.
 
-## Sayfalar
-- `index.html` — Ana sayfa: giriş alanı, 40 parçalı ders şeridi, "İlk sitem yayında" kartı, "Eğitim Modülleri" carousel'i, kısa hakkımda, iletişim
-- `yolculuk.html` — Öğrenme yolculuğu: solda müfredat, ortada 7 modül + "Yayın günü", sağda "Bu modülde" ve "Çalışma döngüm" kartları
-- `hakkimda.html` — Fotoğraf, hakkımda metni, deneyim, eğitim, sertifikalar, teknik beceriler
-- Ortak: `assets/css/style.css`, `assets/js/main.js`, `assets/img/`
+## Sayfalar (her sayfanın iki dilde karşılığı var)
+| Türkçe (kök) | İngilizce | İçerik |
+|---|---|---|
+| `index.html` | `en/index.html` | Giriş alanı (serif başlık + noktalı harita), 40 parçalı ders şeridi, "İlk sitem yayında" kartı, Eğitim Modülleri carousel'i, kısa hakkımda, iletişim |
+| `yolculuk.html` | `en/yolculuk.html` | Solda müfredat, ortada 7 modül + "Yayın günü", sağda "Bu modülde" ve "Çalışma döngüm" |
+| `hakkimda.html` | `en/hakkimda.html` | Fotoğraf, hakkımda metni, deneyim, eğitim, sertifikalar, teknik beceriler |
+
+- Ortak dosyalar: `assets/css/style.css`, `assets/css/home.css` (yalnızca ana sayfa giriş alanı), `assets/js/main.js`, `assets/js/modules.js`, `assets/img/`.
+- `en/` içindeki sayfalar ortak dosyalara `../assets/` ile bağlanır.
+- Bir sayfada içerik değişirse diğer dildeki karşılığını da güncelle; yapı, sınıflar ve kimlikler (`#m1-d1` …) iki dilde aynı kalmalı.
+
+## Dil
+- Türkçe varsayılan, İngilizce `en/` altında. `<html lang>`, `<title>`, meta description ve `rel="alternate" hreflang` her sayfada ayarlı.
+- Menüdeki dil bağlantısı (Türkçe sayfada "EN", İngilizce sayfada "TR") ve footer'daki "Türkçe · English" bağlantıları aynı sayfanın diğer dildeki karşılığına gider; aktif dil `aria-current="true"` ile işaretli.
+- `main.js` ve `modules.js` arayüz metinlerini `<html lang>` değerine göre seçer (tema/menü düğmesi etiketleri, carousel kartları).
 
 ## Görmek için
 `index.html` dosyasını tarayıcıda aç (Windows: `start index.html`).
 
 ## İçerik kuralları
-- Metinler birinci tekil şahıs, Türkçe, samimi ve abartısız.
+- Metinler birinci tekil şahıs, samimi ve abartısız. İngilizce metinler Türkçenin sadık çevirisidir; yeni bilgi eklenmez.
+- Kursun adı: **"Claude Code ile Yayına Al"** (İngilizce sayfalarda da bu Türkçe adla geçer).
+- Ana sayfa başlığı ve açıklaması kullanıcının verdiği metinlerdir; kelimeleri değiştirme. Başlıktaki vurgular `.hl` ile:
+  TR "Yapay Zekâ İnovasyonuna:" ve "Değer Üreten"; EN "AI Innovation:" ve "Value Creation".
 - Modül/ders adları ve konular yalnızca `Claude Code ile yayına al/` klasöründeki PDF notlarından alınır; uydurma yok.
 - Hakkımda bilgileri yalnızca CV'den (`CV/`) alınır. Telefon, adres ve referanslar sitede YER ALMAZ.
 - Kurs sağlayıcı adı, kurs bağlantısı, sertifika ve ilerleme bilgisi (yüzde, x/40, "tamamlandı") gösterilmez.
-- "Yedi modülü bitirdim" ifadesi yalnızca yolculuk sayfasının girişinde bir kez geçer.
+- Ana sayfa giriş alanında üst etiket ve modül/ders sayısı yok; "7 modül · 40 ders" yalnızca Eğitim Modülleri başlığının altında.
+- Footer: solda "© 2026 Orvena · Türkçe · English", sağda "Claude Code yardımıyla hazırlandı · GitHub Pages'te yayında" (EN: "Built with the help of Claude Code · Published on GitHub Pages"). Yatırım uyarısı kullanılmaz.
 - E-posta: omer.4yan@gmail.com · GitHub: github.com/omer4yan · LinkedIn: linkedin.com/in/omer-ayan
-- Modül 1: başlık "Claude Code'u kur", alt başlık "Terminalde ilk adımlar". Ders sayıları PDF'lere göre (6, 6, 5, 5, 6, 6, 6 = 40).
+
+## Ana sayfa haritası
+- Giriş alanındaki noktalı harita satır içi SVG'dir; gerçek coğrafya değil, soyut bir alan. Merkez "ORVENA", düğümler 7 modülün adları. Şehir/konum/topluluk iddiası ekleme.
+- Renkler tema değişkenlerinden (`--map-dot`, `--map-node-bg`, `--accent`). Çizgiler sırayla çizilir; `prefers-reduced-motion` açıkken animasyon yok.
+- 640px altında modül etiketleri gizlenir (okunamayacak kadar küçülüyor).
 
 ## Eğitim Modülleri (ana sayfa carousel'i)
-- Tek veri kaynağı: `assets/js/modules.js` içindeki `MODULES` dizisi; kartlar `createModuleCard()` ile üretilir. Metni yalnızca orada düzenle.
+- Tek veri kaynağı: `assets/js/modules.js` içindeki `MODULES` dizisi; her modülün `tr` ve `en` metinleri yan yana. Kartlar `createModuleCard()` ile üretilir.
+- `en/index.html` içindeki carousel bölümünde `data-base="../"` var; kapak yolları buna göre tamamlanır.
 - Süreler (dk) ders notlarındaki okuma sürelerinin toplamıdır: 34, 31, 17, 14, 11, 11, 15 = 133. Ders sayıları: 6, 6, 5, 5, 6, 6, 6.
 - Bilinmeyen alan `null` kalır, kartta o satır gösterilmez. `progress` gerçek veri yoksa `null`; sahte ilerleme gösterme.
-- Kapak görselleri `assets/img/modules/m1–m7.svg` (640×400, ortak gradyan ve palet). Yeni görsel aynı şablonu izlemeli.
+- Kapak görselleri `assets/img/modules/m1–m7.svg` (640×400, ortak gradyan ve palet).
 - Görünüm: masaüstü 3, tablet (≤1023px) 2, mobil (≤640px) 1 kart + sonrakinin bir kısmı; scroll-snap, otomatik kaydırma ve döngü yok.
-- Başlıklar "Instrument Serif" (yalnızca index.html'de yüklenir).
 
 ## Dersler ve bağlantılar
 - Her modülde `.lessons` listesi var; her dersin kimliği `m{modül}-d{ders}` (örn. `#m3-d2`). Toplam 40 ders.
-- Sol müfredat, sağdaki "Bu modülde" kartı ve ana sayfadaki 40 parçalı şerit bu kimliklere bağlanır. Yeni ders eklenirse üçünü de güncelle.
-- Sağ kart, JS ile soldaki müfredattan üretilir; ayrıca elle düzenleme gerekmez.
+- Sol müfredat, sağdaki "Bu modülde" kartı ve ana sayfadaki 40 parçalı şerit bu kimliklere bağlanır. Yeni ders eklenirse hepsini, iki dilde de güncelle.
+- Sağ kart, JS ile soldaki müfredattan üretilir.
 
 ## Stil
-- İki tema: varsayılan koyu, isteğe bağlı aydınlık. Üst menüdeki güneş/ay düğmesi `data-theme` özniteliğini değiştirir, seçim `localStorage`'da (`theme`) saklanır.
-- Renkler `:root` (koyu) ve `:root[data-theme="light"]` (aydınlık) değişkenlerinde. Yeni renk eklerken sabit değer değil, değişken kullan; iki temada da tanımla.
-- Vurgu turuncusu: koyuda `#e8622c`, aydınlıkta `#c2410c` (beyaz zeminde okunabilirlik için). Terminal kutuları iki temada da koyu kalır.
+- İki tema: kayıtlı tercih yoksa sistem teması (`prefers-color-scheme`). Üst menüdeki güneş/ay düğmesi `data-theme` özniteliğini değiştirir; seçim `localStorage`'da (`theme`) saklanır ve dil değişince de korunur.
 - Her sayfanın `<head>` bölümünde temayı erken uygulayan kısa satır içi betik var; yeni sayfa eklerken onu da kopyala.
-- Inter (metin) + JetBrains Mono (etiketler, numaralar, kod).
-- Referans sitenin logosu, metinleri ve marka öğeleri kopyalanmaz.
-- Kırılımlar: 1200px (3 sütun → tek sütun), 960px, 760px (hamburger menü).
-- Üst menü ölçüleri (72px, mobilde 68px; logo 38/32px; menü yazısı 20px) tüm sayfalarda ortak, `style.css` içindeki "Ortak üst menü ölçüleri" bölümünde. `home.css` yalnızca ana sayfanın giriş alanını büyütür.
+- Renkler `:root` (koyu: kömür zemin) ve `:root[data-theme="light"]` (aydınlık: sıcak kırık beyaz) değişkenlerinde. Yeni renk eklerken değişken kullan, iki temada da tanımla.
+- Vurgu: koyuda `#e8622c`, aydınlıkta `#bf3a1b`. Beyaz yazılı dolgular (butonlar, rozetler) `--accent-fill` kullanır (beyaz metinle ≥4.5:1). Terminal kutuları iki temada da koyu kalır.
+- Yazı tipleri: Instrument Serif (ana sayfa başlığı ve kart başlıkları; yalnızca ana sayfalarda yüklenir), Inter (metin), JetBrains Mono (etiketler, numaralar, kod).
+- Ortak kenar boşluğu `--gutter`: masaüstü 56px, ≤1023px 28px, ≤640px 20px. En geniş sayfa `--maxw: 1440px`. Üst menü, giriş alanı, bölümler ve footer aynı kenar çizgisinde.
+- Uzun paragraflar iki yana yaslı (`text-align: justify`, son satır sola, `hyphens: auto`), en fazla ~68ch; 640px altında sola hizalı. Başlıklar, menü, butonlar, kısa etiketler, kart açıklamaları, deneyim maddeleri ve footer yaslanmaz.
+- Üst menü: 72px (≤760px 68px); 1080px ve altında açılır menü. "İletişim →" vurgu butonu menünün sonunda; İletişim ayrıca menüde tekrarlanmaz.
+- Referans sitelerin logosu, metinleri ve marka öğeleri kopyalanmaz.
 
 ## Sınırlar
 - Bağlantılar göreli olmalı (site alt klasörden yayınlanıyor).
-- Kaynak materyal klasörleri `.gitignore` ile depo dışında; bunları commit'leme.
+- Kaynak ve referans klasörleri (`CV/`, `Fotoğraf/`, `Logo/`, kurs notları, tasarım ekran görüntüleri) `.gitignore` ile depo dışında; bunları commit'leme. `git add -A` yerine dosyaları adıyla ekle ya da önce `git status` ile kontrol et.
 - Yayınlamadan (push / Pages ayarı) önce kullanıcıdan onay al.
