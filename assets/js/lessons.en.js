@@ -1683,13 +1683,319 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m6`, no: 6, title: `Hooks, MCP and workflow`, lessons: [
-      { id: `m6-d1`, title: `CLAUDE.md: teach Claude your project`, minutes: 2 },
-      { id: `m6-d2`, title: `Slash commands and subagents`, minutes: 2 },
-      { id: `m6-d3`, title: `Hooks: automate the boring parts`, minutes: 2 },
-      { id: `m6-d4`, title: `MCP: give Claude new tools`, minutes: 2 },
-      { id: `m6-d5`, title: `Beyond the terminal: Agent SDK`, minutes: 2 },
-      { id: `m6-d6`, title: `Module 6 summary`, minutes: 1 }
+    { id: `m6`, no: 6, title: `Hooks, MCP and workflow`, sub: `Structure the way you work`, lessons: [
+      {
+        id: `m6-d1`, title: `CLAUDE.md: teach Claude your project`, minutes: 2, ready: true,
+        intro: [
+          `<code>CLAUDE.md</code> is a plain text file that describes the project and your working preferences. Placed in the right location, it contributes to Claude Code's project instructions and reduces the need to repeat the same explanations every session.`,
+          `You can create a starting draft with <code>/init</code>. This lesson is about developing that draft with correct and useful information.`
+        ],
+        blocks: [
+          { t: `h`, text: `What goes in it?` },
+          { t: `table`, head: [`Heading`, `What to write`], rows: [
+            [`Project`, `What it is and which pages it includes.`],
+            [`Running`, `How to open or preview the site.`],
+            [`Preferences`, `Shared style and content rules.`],
+            [`Boundaries`, `Items that must not be renamed, or must be protected.`]
+          ] },
+          { t: `code`, label: `CLAUDE.md — example`, code: `# My personal site\n- Pages: index.html, projects.html, about.html\n- To view: open index.html in a browser\n- Style: cream background, consistent heading font, no bright colours\n- My name is Ayşe; use it instead of an example name\n- Ask before renaming files` },
+          { t: `h`, text: `Step 1 — Ask Claude for a draft` },
+          { t: `code`, label: `To Claude`, code: `read my project and write a CLAUDE.md describing my pages,\nhow to open the site, and the style choices you notice` },
+          { t: `h`, text: `Step 2 — Read and complete the draft` },
+          { t: `p`, html: `Add the information Claude can't know, such as your name and personal preferences, yourself. Compare the file paths and running instructions with the real project.` },
+          { t: `practice` },
+          { t: `h`, text: `Keep it current and short` },
+          { t: `p`, html: `When the project changes, update the file too. If your home page is <code>index.html</code> but the note says <code>home.html</code>, it will mislead Claude. If you find yourself making the same correction again and again, turn it into a short project rule.` },
+          { t: `callout`, kind: `warn`, title: `An instruction file isn't a guarantee`, html: `<code>CLAUDE.md</code> is a lasting source of instructions; it's not a complete session memory or a security boundary. For important work, check through the result that the instruction was followed.` }
+        ],
+        trouble: [
+          { q: `Claude didn't follow a rule in CLAUDE.md`, a: `Check that the rule is short, clear and up to date. For important work, also remind it of the rule in your request and verify the result yourself.` },
+          { q: `There are wrong file names in the draft`, a: `The draft is a starting point. Check the real files with <code>ls</code> and fix the wrong lines.` }
+        ],
+        have: [
+          `You know the four sections of <code>CLAUDE.md</code>: project, running, preferences, boundaries.`,
+          `You learned to ask Claude for a draft and complete it with your own information.`,
+          `You learned to turn repeated corrections into a lasting rule.`
+        ],
+        note: `This site's <code>CLAUDE.md</code> grew with every new decision: the brand, the pages, the content rules and boundaries such as getting approval before publishing are written there.`,
+        next: `Next: custom slash commands and subagents.`,
+        prompt: `Which sections should a good CLAUDE.md file have for a personal website project? Could you prepare a short example template?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`, "~/my-first-project/projects.html": `<h1>Projects</h1>`, "~/my-first-project/about.html": `<h1>About me</h1>` },
+          claude: [
+            { match: `read my project and write a CLAUDE.md describing my pages, how to open the site, and the style choices you notice`,
+              write: { "~/my-first-project/CLAUDE.md": `# Personal site\n- Pages: index.html, projects.html, about.html\n- To view: open index.html in a browser\n- Style: cream background, same heading font on every page` },
+              out: [`[OK] wrote CLAUDE.md`, `Please add the information I can't know, such as your name and personal preferences.`] }
+          ],
+          try: [
+            { cmd: `ls`, desc: `the project's files` },
+            { cmd: `claude "read my project and write a CLAUDE.md describing my pages, how to open the site, and the style choices you notice"`, desc: `ask for a draft` },
+            { cmd: `cat CLAUDE.md`, desc: `read the draft` }
+          ]
+        }
+      },
+      {
+        id: `m6-d2`, title: `Slash commands and subagents`, minutes: 2, ready: true,
+        intro: [
+          `Saving repeated requests and handing large reviews to focused helpers makes your workflow more organised. In this lesson you'll get to know custom slash commands and subagents.`
+        ],
+        blocks: [
+          { t: `h`, text: `Custom slash command: save a request once` },
+          { t: `p`, html: `Alongside built-in commands such as <code>/clear</code>, you can store instructions you use often under a short name with the custom commands or skills your installation supports.` },
+          { t: `code`, label: `To Claude`, code: `create a slash command called /check\nthat looks over all my pages for broken links and missing menus` },
+          { t: `p`, html: `Read the instruction file that's created and check that the <code>/check</code> command appears in the list. The storage format and location can vary by version.` },
+          { t: `callout`, kind: `tip`, title: `State the scope`, html: `Write the command so that it reviews first and reports the findings, and you ask for fixes separately. That way the command doesn't change files on its own.` },
+          { t: `practice` },
+          { t: `h`, text: `Subagent: a focused helper` },
+          { t: `p`, html: `A subagent is a helper that examines a well-bounded task in a separate working context and reports the result back to the main conversation. It keeps the details of long file reads out of the main conversation.` },
+          { t: `code`, label: `To Claude`, code: `use a subagent to check every page for spelling mistakes\nand report back a single list; do not edit files` },
+          { t: `p`, html: `Large, self-contained jobs such as scanning every page for spelling mistakes suit this. Verify the list that comes back and choose which fixes to apply yourself.` },
+          { t: `h`, text: `When not to delegate` },
+          { t: `p`, html: `Starting a helper for a quick, small edit creates unnecessary extra work. Before delegating, state the goal, the scope, the allowed operations and the report you expect clearly.` },
+          { t: `table`, head: [`Tool`, `Main gain`], rows: [
+            [`Custom slash command`, `Calling a repeated instruction without rewriting it.`],
+            [`Subagent`, `Having a well-bounded job examined in a separate context and getting the result.`]
+          ] }
+        ],
+        trouble: [
+          { q: `The /check command doesn't appear in the list`, a: `Check the location and name of the file that was created; you may need to restart Claude Code. Since the format varies by version, look at <code>/help</code>.` },
+          { q: `The subagent changed files`, a: `Write “do not edit files” clearly in the request and undo the changes with <code>/rewind</code>.` }
+        ],
+        have: [
+          `You learned to save a request you use often as a custom slash command.`,
+          `You learned to delegate a large, independent review to a subagent.`,
+          `You know that starting a helper for small jobs is unnecessary.`
+        ],
+        note: `On this site I had the link check done the same way every time; in this lesson I learned that a repeated check like that can be turned into a custom command.`,
+        next: `Next: automating the boring parts with hooks.`,
+        prompt: `Could you explain the difference between a custom slash command and a subagent in Claude Code, and when each one is useful, with short examples?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`, `~/my-first-project/.claude`, `~/my-first-project/.claude/commands`],
+          files: { "~/my-first-project/index.html": `<nav><a href="index.html">Home</a> <a href="about.html">About</a></nav>\n<h1>Helo, I'm Ayşe</h1>`, "~/my-first-project/about.html": `<h1>About me</h1>\n<p>I am lerning to build websites.</p>` },
+          cmds: [
+            { match: `/check`, claude: true, out: [`/check report (I haven't changed anything):`, `- about.html: menu missing.`, `- No broken links found.`] }
+          ],
+          claude: [
+            { match: `create a slash command called /check that looks over all my pages for broken links and missing menus`,
+              write: { "~/my-first-project/.claude/commands/check.md": `Look over all pages for broken links and missing menus.\nReport the findings as a list. Do not edit any files.` },
+              out: [`[OK] wrote .claude/commands/check.md`, `You can now run this check by typing /check.`] },
+            { match: `use a subagent to check every page for spelling mistakes and report back a single list; do not edit files`,
+              out: [`Subagent report (no files changed):`, `- index.html: "Helo" → "Hello"`, `- about.html: "lerning" → "learning"`] }
+          ],
+          try: [
+            { cmd: `claude "create a slash command called /check that looks over all my pages for broken links and missing menus"`, desc: `save the command` },
+            { cmd: `cat .claude/commands/check.md`, desc: `read the instruction file` },
+            { cmd: `/check`, desc: `run the command` },
+            { cmd: `claude "use a subagent to check every page for spelling mistakes and report back a single list; do not edit files"`, desc: `delegate to a subagent` }
+          ]
+        }
+      },
+      {
+        id: `m6-d3`, title: `Hooks: automate the boring parts`, minutes: 2, ready: true,
+        intro: [
+          `A <strong>hook</strong> is an automation that runs a command or check you define when a particular Claude Code event happens. It frees repetitive mechanical work from depending on a reminder.`
+        ],
+        blocks: [
+          { t: `h`, text: `Event → automatic action` },
+          { t: `table`, head: [`Example event`, `Useful action`], rows: [
+            [`After a file is edited`, `Running a formatter on suitable HTML files.`],
+            [`Before a tool or command runs`, `Assessing the operation against a permission policy.`],
+            [`When a task finishes`, `Producing a notification or a sound.`]
+          ] },
+          { t: `p`, html: `Event names, matching rules and blocking behaviour depend on the configuration. Setting up a hook is not, on its own, a guarantee that blocks every risk.` },
+          { t: `h`, text: `Step 1 — Create a draft by describing the rule` },
+          { t: `code`, label: `To Claude`, code: `add a hook that tidies up the spacing in any HTML file you edit,\nso my pages stay neat without me asking` },
+          { t: `p`, html: `Review the settings file Claude proposes and the command it will run: Which files will it apply to, is the required formatter installed, what happens if there's an error?` },
+          { t: `practice` },
+          { t: `h`, text: `How is it different from an ordinary request?` },
+          { t: `p`, html: `The sentence “do this every time” depends on the model following the instruction. A hook, on the other hand, is triggered by the program on a matching event. Still, whether the command succeeds depends on permissions, file paths, the tools being installed and the right configuration.` },
+          { t: `h`, text: `Step 2 — Test it after setting it up` },
+          { t: `steps`, items: [
+            `Trigger the relevant event on a small test file.`,
+            `Check that the hook really runs and gives the expected result.`,
+            `Also consider the error and non-matching file cases.`,
+            `Review that the automatic edit doesn't change content you didn't want changed.`
+          ] }
+        ],
+        trouble: [
+          { q: `The hook doesn't run at all`, a: `Check that the settings file is in the right location and that the event name and file matching are written correctly. Make sure the tool it runs is installed on your computer.` },
+          { q: `The hook changed files I didn't want changed`, a: `Narrow the matching rule; for example only files with the <code>.html</code> extension. Check the changes with Git.` }
+        ],
+        have: [
+          `You know that a hook is an automatic action tied to an event.`,
+          `You learned to review a hook proposal for the command it will run and its scope.`,
+          `You know the steps for testing an automation you set up on a small file.`
+        ],
+        note: `In this lesson I learned the difference between a hook and a “do it every time” request: one is an action the program triggers, the other is an instruction that depends on the model remembering.`,
+        next: `Next: connecting new tools to Claude with MCP.`,
+        prompt: `What is a hook in Claude Code? Could you give 3 simple hook examples that could be useful in a website project, and briefly say what the risks of each are?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`, `~/my-first-project/.claude`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `add a hook that tidies up the spacing in any HTML file you edit, so my pages stay neat without me asking`,
+              write: { "~/my-first-project/.claude/settings.json": `{\n  "hooks": {\n    "PostToolUse": [\n      {\n        "matcher": "Edit|Write",\n        "hooks": [\n          { "type": "command", "command": "npx prettier --write \\"**/*.html\\"" }\n        ]\n      }\n    ]\n  }\n}` },
+              out: [`[OK] wrote .claude/settings.json`, `This hook runs prettier on the HTML files after Claude edits a file.`, `Note: prettier needs to be installed; review the command and its scope before approving.`] }
+          ],
+          try: [
+            { cmd: `claude "add a hook that tidies up the spacing in any HTML file you edit, so my pages stay neat without me asking"`, desc: `hook draft` },
+            { cmd: `cat .claude/settings.json`, desc: `review the setting and the command` }
+          ]
+        }
+      },
+      {
+        id: `m6-d4`, title: `MCP: give Claude new tools`, minutes: 2, ready: true,
+        intro: [
+          `<strong>MCP</strong> (Model Context Protocol) is a shared protocol that brings an AI application together with external tools and data sources. Instead of carrying information over by hand from files, designs or other services, it lets you get it through the relevant connection.`
+        ],
+        blocks: [
+          { t: `h`, text: `The idea of a standard connection` },
+          { t: `p`, html: `An MCP server offers certain tools or resources to the client. Claude Code can use those configured capabilities, to which it has been given access, in suitable tasks. The operations each connector offers are different.` },
+          { t: `h`, text: `Step 1 — Assess a connection` },
+          { t: `code`, label: `To Claude`, code: `what MCP connectors could help with my website,\nand what would each let you do?` },
+          { t: `p`, html: `First define your need: reading a design, getting a file from a cloud folder, or searching in another service? Then examine the server's source, the tools it offers and the access it asks for. Installation and sign-in methods vary by provider.` },
+          { t: `practice` },
+          { t: `h`, text: `How could your requests change?` },
+          { t: `list`, items: [
+            `“Use the photo in my cloud folder as the header image.”`,
+            `“Match the colours to this design.”`,
+            `“Search this source for relevant information for the About page.”`
+          ] },
+          { t: `p`, html: `Whether these can be done depends on the connected tool offering access to the relevant resource and operation. Setting up a connection doesn't mean unlimited access to the whole service.` },
+          { t: `h`, text: `Step 2 — Start with the least access` },
+          { t: `list`, items: [
+            `Only connect servers you trust.`,
+            `If reading is enough, don't give write permission.`,
+            `Don't paste a password or access key into the chat; use the supported secure sign-in method.`,
+            `Compare the change a tool will make in an external system with the scope of the task.`,
+            `Remove unnecessary connections and permissions.`
+          ] }
+        ],
+        trouble: [
+          { q: `The tool I connected doesn't appear`, a: `Check the MCP configuration and the sign-in step; you may need to restart Claude Code. You can ask Claude for the list of connected tools.` },
+          { q: `The tool asks for more access than I want`, a: `See whether there's a narrower access option. If there isn't, and the task doesn't need it, don't set up the connection.` }
+        ],
+        have: [
+          `You know that MCP is a shared way of connecting to external tools.`,
+          `You learned to assess a connector by need, source and the access it asks for.`,
+          `You know the principle of least access.`
+        ],
+        note: `I took this site's content from my own files. I made a note to start with read-only permission when I set up an MCP connection.`,
+        next: `Next: beyond the terminal, the Agent SDK.`,
+        prompt: `What is MCP (Model Context Protocol)? Could you explain it to a beginner with a simple analogy and list the security points to watch out for when setting up a connection?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `what MCP connectors could help with my website, and what would each let you do?`,
+              out: [`A few examples, depending on what you need:`, `- A design tool connector: I could read the colours and measurements in a design.`, `- A cloud storage connector: I could bring an image from a folder into your site.`, `- A document connector: I could search your notes for information for the About page.`, `For each one, first check the server's source and the permissions it asks for; if reading is enough, don't give write permission.`] }
+          ],
+          try: [
+            { cmd: `claude "what MCP connectors could help with my website, and what would each let you do?"`, desc: `ask about the options` }
+          ]
+        }
+      },
+      {
+        id: `m6-d5`, title: `Beyond the terminal: Agent SDK`, minutes: 2, ready: true,
+        intro: [
+          `In the terminal you steer Claude directly. The <strong>Agent SDK</strong>, on the other hand, helps you put instructions and tool use inside a program. You don't need to use it to finish this course.`
+        ],
+        blocks: [
+          { t: `h`, text: `From a conversation to a program` },
+          { t: `table`, head: [`In the terminal`, `With the Agent SDK`], rows: [
+            [`You write the request.`, `The program sends instructions and processes the results.`],
+            [`You control the steps interactively.`, `The program configures permissions, tools and checkpoints.`],
+            [`You run the session.`, `An application, scheduler or event stream can start the process.`]
+          ] },
+          { t: `callout`, kind: `info`, title: `The SDK isn't a service on its own`, html: `Scheduling and event triggering need a separate application or runtime environment. On its own, the SDK doesn't create a service that runs while your computer is off.` },
+          { t: `h`, text: `Example uses` },
+          { t: `list`, items: [
+            `Producing regular summaries from the notes in a folder.`,
+            `Running a summarising helper inside an application.`,
+            `Starting a particular review process when an event happens.`
+          ] },
+          { t: `code`, label: `To Claude`, code: `in plain language, describe one small thing I could automate\nwith the Agent SDK once I am comfortable,\nand what it would need` },
+          { t: `practice` },
+          { t: `h`, text: `When to use it` },
+          { t: `p`, html: `Consider it for tasks that repeat often, whose steps are understood, or that need to run inside a product. For one-off and exploratory work, the terminal is more direct.` },
+          { t: `h`, text: `Verify by hand first` },
+          { t: `p`, html: `Try the workflow interactively first. Understand the right input, the expected output, the permissions needed and the error cases. Then move it into automation, adding human checks and error reporting where needed.` }
+        ],
+        trouble: [
+          { q: `I don't know when to move to the SDK`, a: `If you've done the same job in the terminal several times without problems and the steps are clear, it may be ready for automation. If you're not sure, staying in the terminal is safer.` }
+        ],
+        have: [
+          `You know the difference between the terminal and the Agent SDK.`,
+          `You learned which kinds of jobs the SDK suits.`,
+          `You know why it matters to verify a process by hand before automating it.`
+        ],
+        note: `For now working in the terminal is enough for me; I noted the Agent SDK as a next step to consider when there's a repetitive job whose steps I understand well.`,
+        next: `Next: the Module 6 summary.`,
+        prompt: `Could you give 3 examples of small jobs suitable for a beginner that could be automated with the Claude Agent SDK? Briefly write what each would need.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {},
+          claude: [
+            { match: `in plain language, describe one small thing I could automate with the Agent SDK once I am comfortable, and what it would need`,
+              out: [`Example: a small program that reads the new files in a notes folder every week and writes a short summary file.`, `What it needs: an environment where the SDK is installed, a scheduler to run the program once a week,`, `permission to read the folder and write a single summary file, and a way to let you know if there's an error.`, `First try the same job by hand in the terminal a few times.`] }
+          ],
+          try: [
+            { cmd: `claude "in plain language, describe one small thing I could automate with the Agent SDK once I am comfortable, and what it would need"`, desc: `ask for an example` }
+          ]
+        }
+      },
+      {
+        id: `m6-d6`, title: `Module 6 summary`, minutes: 1, ready: true,
+        intro: [
+          `In this module you moved from giving requests one by one to structuring the way you work. The shared goal is to make the right information lasting and to reduce repeated work with the right tool.`
+        ],
+        blocks: [
+          { t: `h`, text: `The Module 6 toolkit` },
+          { t: `table`, head: [`Tool`, `What it gives you`], rows: [
+            [`<code>CLAUDE.md</code>`, `A lasting instruction file for project information, preferences and working rules.`],
+            [`Custom slash commands`, `Calling a repeated request by a short name.`],
+            [`Subagents`, `Having well-bounded jobs examined in a separate context and getting a report.`],
+            [`Hooks`, `Running a configured command or check on a matching event.`],
+            [`MCP`, `Connections giving access to external tools and data sources.`],
+            [`Agent SDK`, `Putting the model and tool flow inside a program.`]
+          ] },
+          { t: `h`, text: `The common thread: move repetition to the right place` },
+          { t: `list`, items: [
+            `If information repeats, write it in the project note (<code>CLAUDE.md</code>).`,
+            `If a request repeats, save it as a custom command.`,
+            `If a mechanical operation repeats, turn it into a tested automation (a hook).`,
+            `If you constantly need outside information, consider a suitable connection (MCP).`
+          ] },
+          { t: `callout`, kind: `tip`, title: `Don't automate every repetition right away`, html: `Understand the process first. Choose the right tool after assessing the scope, permissions, maintenance and error cases.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Adding lasting, current instructions to a project.`,
+          `Preparing reusable requests.`,
+          `Handing large reviews to focused helpers.`,
+          `Telling where event-based automation is useful.`,
+          `Planning external tool access with the least permission.`,
+          `Assessing whether a job is ready to move into a program.`
+        ],
+        note: `Move repetition to the right place: on this site, writing repeated rules into <code>CLAUDE.md</code> reduced the need to explain the same things again every session.`,
+        next: `Next: the capstone project, publishing your own site.`,
+        prompt: `In the sixth module of a Claude Code course I learned about CLAUDE.md, custom slash commands, subagents, hooks, MCP and the Agent SDK. Could you prepare a short 5-question review quiz? Give the answers at the end.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/CLAUDE.md": `# Personal site\n- Pages: index.html, projects.html, about.html\n- To view: open index.html in a browser\n- My name is Ayşe; use it instead of example names\n- Ask before renaming files` },
+          try: [
+            { cmd: `cat CLAUDE.md`, desc: `lasting instructions` }
+          ]
+        }
+      }
     ] },
     { id: `m7`, no: 7, title: `Capstone: publish your own site`, lessons: [
       { id: `m7-d1`, title: `The capstone brief`, minutes: 2 },
