@@ -398,13 +398,429 @@ window.ORVENA_LESSONS = {
         }
       ]
     },
-    { id: `m2`, no: 2, title: `İlk prompt'un`, lessons: [
-      { id: `m2-d1`, title: `Bir prompt'un anatomisi`, minutes: 7 },
-      { id: `m2-d2`, title: `Netlik kaldıracı`, minutes: 6 },
-      { id: `m2-d3`, title: `Bağlam pencereleri ve /clear`, minutes: 5 },
-      { id: `m2-d4`, title: `Slash komutları`, minutes: 5 },
-      { id: `m2-d5`, title: `@file ve @directory`, minutes: 5 },
-      { id: `m2-d6`, title: `Modül 2 özeti`, minutes: 3 }
+    { id: `m2`, no: 2, title: `İlk prompt'un`, sub: `Claude Code'u kur ve ilk sayfanı oluştur`, lessons: [
+      {
+        id: `m2-d1`, title: `Bir prompt'un anatomisi`, minutes: 7, ready: true,
+        intro: [
+          `Modül 1'deki alıştırmaları pratik terminalinde yaptın. Bu derste gerçek Claude Code'u kendi bilgisayarına kuracak ve tek bir cümleyle, tarayıcında açabileceğin bir web sayfası oluşturacaksın.`,
+          `Claude Code zaten kuruluysa <code>claude --version</code> komutunu çalıştır. Bir sürüm numarası görüyorsan doğrudan “İlk sayfan” adımına geç.`
+        ],
+        blocks: [
+          { t: `callout`, kind: `info`, title: `Hesap gereksinimi`, html: `Claude Code'u kullanmak için Anthropic'te uygun bir Claude planıyla giriş yapman gerekir. Güncel plan ve faturalandırma koşullarını kurulum sırasında Anthropic hesabında kontrol et.` },
+          { t: `h`, text: `Adım 1 — Terminali aç` },
+          { t: `p`, html: `Windows'ta <kbd>Win</kbd> + <kbd>X</kbd> tuşlarına bas ve <strong>Terminal</strong>'i seç. Bazı bilgisayarlarda bu seçenek <strong>Windows PowerShell</strong> adıyla görünür. Satırın başında <code>PS</code> yazıyorsa PowerShell'desin. Komut İstemi (CMD) kullanıyorsan kurulum komutu farklıdır; bir sonraki adımda ikisini de bulacaksın.` },
+          { t: `h`, text: `Adım 2 — Resmî yükleyiciyi çalıştır` },
+          { t: `p`, html: `Kullandığın kabuğa uygun olan <strong>tek</strong> komutu seç, kopyala, yapıştır ve <kbd>Enter</kbd>'a bas. İki komut da resmî yükleyiciyi indirip çalıştırır.` },
+          { t: `code`, label: `PowerShell`, code: `irm https://claude.ai/install.ps1 | iex` },
+          { t: `code`, label: `CMD`, code: `curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd` },
+          { t: `p`, html: `İşlem bitip komut satırı yeniden görünene kadar bekle. Bu ders Windows adımlarını izler; macOS ve Linux için kurulum komutu farklıdır.` },
+          { t: `h`, text: `Adım 3 — Kurulumu doğrula` },
+          { t: `cmd`, code: `claude --version`, expect: `2.x.x (Claude Code)` },
+          { t: `p`, html: `Bir sürüm numarası ve “Claude Code” adını görmelisin; numaranın buradaki örnekle aynı olması gerekmez. Komut bulunamazsa terminali kapatıp yeniden aç ve tekrar dene.` },
+          { t: `h`, text: `Adım 4 — Proje klasörünü hazırla` },
+          { t: `p`, html: `Modül 1'deki klasör tarayıcıdaki simülasyondaydı; gerçek bilgisayarında ayrıca oluşturman gerekir. Klasörü oluştur, içine gir ve Claude'u başlat:` },
+          { t: `code`, label: `Terminal`, code: `mkdir my-first-project\ncd my-first-project\nclaude` },
+          { t: `p`, html: `Klasör zaten varsa <code>mkdir</code> adımını atla ve konumunu <code>pwd</code> ile kontrol et. İlk çalıştırmada istenirse Claude hesabınla giriş yap, ardından terminale dön.` },
+          { t: `h`, text: `Adım 5 — İlk gerçek prompt'unu yaz` },
+          { t: `p`, html: `Claude açılınca aşağıdaki isteği <strong>tek bir mesaj</strong> olarak gönder. Satırlar yalnızca okunabilirlik için bölündü. İstersen kendi adını, öğrendiğin konuyu ve yapmak istediğin üç şeyi de mesaja ekle.` },
+          { t: `code`, label: `Claude'a`, code: `make a file called index.html - a simple one-page website about me,\nwith my name as a heading, a short paragraph about what I am learning,\nand a list of three things I want to build` },
+          { t: `p`, html: `Anlamı: “Benim hakkımda tek sayfalık basit bir web sitesi olan index.html dosyasını oluştur; başlıkta adım, öğrendiklerimle ilgili kısa bir paragraf ve yapmak istediğim üç şeyin listesi olsun.” Önerilen dosya değişikliğini incele, istenirse onayla. Sonra <code>/exit</code> ile Claude'dan çık.` },
+          { t: `h`, text: `Adım 6 — Sayfayı tarayıcıda aç` },
+          { t: `cmd`, code: `start index.html` },
+          { t: `p`, html: `Windows'ta bu komut dosyayı varsayılan uygulamasında, genellikle tarayıcıda açar. Sayfada bir başlık, kısa bir paragraf ve üç maddelik bir liste olduğunu kontrol et.` },
+          { t: `practice` },
+          { t: `h`, text: `Bu prompt neden işe yaradı?` },
+          { t: `p`, html: `İstek, Claude'un tahmin etmek zorunda kalacağı noktaları azalttı. Akılda tutman gereken şablon basit: <strong>Nerede, ne ve gerektiğinde neden?</strong>` },
+          { t: `table`, head: [`Parça`, `Bu örnekte`], rows: [
+            [`Nerede`, `<code>index.html</code> adlı dosyada.`],
+            [`Ne`, `Başlık, kısa paragraf ve üç maddelik liste içeren tek sayfalık kişisel site.`],
+            [`Neden`, `Bu örnekte belirtilmedi. Amaç bir tasarım kararını etkiliyorsa ekle.`]
+          ] },
+          { t: `p`, html: `Bunu belirsiz bir istekle karşılaştır:` },
+          { t: `code`, label: `Belirsiz istek`, code: `make me a website` },
+          { t: `p`, html: `Bu istekte konu, dosya adı, bölümler ve görünüm belli değil. Claude bunları kendisi seçer; sen de sonradan seçmediğin ayrıntıları düzeltmek zorunda kalabilirsin.` },
+          { t: `h`, text: `“Neden” karar vermeye yardım eder` },
+          { t: `code`, label: `Claude'a`, code: `in index.html, make the text bigger and darker,\nbecause I am showing this to my grandmother\nand she finds it hard to read` },
+          { t: `p`, html: `Anlamı: “index.html'de yazıyı büyüt ve koyulaştır, çünkü sayfayı büyükanneme göstereceğim ve okumakta zorlanıyor.” Gerekçe yalnızca yazı boyutunu değil, kontrast ve satır aralığı gibi ilgili kararları da doğru yöne çeker.` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `p`, html: `Claude'u yeniden başlat ve üç parçayı birlikte kullan:` },
+          { t: `code`, label: `Claude'a`, code: `in index.html, add a section at the bottom with a way to contact me,\nbecause I want to share this page with friends` },
+          { t: `p`, html: `Anlamı: “index.html'in en altına bana ulaşmanın bir yolunu içeren bir bölüm ekle, çünkü bu sayfayı arkadaşlarımla paylaşmak istiyorum.” Sayfayı tarayıcıda yenile; eklenen bölümün yerini, içeriğini ve kullandığı iletişim bilgisini kontrol et.` }
+        ],
+        trouble: [
+          { q: `“irm” ya da “&&” tanınmıyor`, a: `Komutun kullandığın kabuğa ait olup olmadığını kontrol et: <code>irm</code> PowerShell komutudur; CMD'de çalışmaz. Eski Windows PowerShell sürümlerinde <code>&&</code> geçerli değildir. Satırın başında <code>PS</code> varsa PowerShell komutunu kullan.` },
+          { q: `“claude” komutu bulunamıyor`, a: `Terminali kapatıp yeniden aç ve <code>claude --version</code> komutunu tekrar dene. Yükleyici bir PATH uyarısı verdiyse onun yönlendirmesini izle.` },
+          { q: `SSL/TLS ya da başka bir kurulum hatası`, a: `Güvenlik kontrollerini kapatmaya çalışma. Hata mesajını oku ve resmî kurulum belgelerindeki yönlendirmeyi izle.` }
+        ],
+        have: [
+          `Bilgisayarında çalışan bir Claude Code kurulumu.`,
+          `<code>my-first-project</code> klasöründe, tek cümleyle oluşturulmuş bir <code>index.html</code> sayfası.`,
+          `İyi bir isteğin şablonu: nerede, ne ve gerektiğinde neden.`
+        ],
+        note: `Bu derste isteğe “neden”i eklemenin, Claude'un yalnızca istenen değişikliği değil ilgili kararları da doğru yönde vermesine yardım ettiğini gördüm.`,
+        next: `Sırada: Net bir değişikliği istemenin pratik yolu.`,
+        prompt: `Claude Code'a iş verirken “nerede, ne ve neden” şablonunu kullanmayı öğreniyorum. “make me a website” gibi belirsiz bir isteği bu şablonla nasıl daha iyi yazarım? 3 örnek verir misin?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {},
+          cmds: [
+            { match: `start index.html`, out: [`(simülasyon) index.html varsayılan tarayıcıda açılırdı.`, `Sayfada başlık, kısa paragraf ve üç maddelik liste olup olmadığını kontrol et.`] }
+          ],
+          claude: [
+            { match: `make a file called index.html - a simple one-page website about me, with my name as a heading, a short paragraph about what I am learning, and a list of three things I want to build`,
+              write: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>About me</title></head>\n<body>\n  <h1>Your Name</h1>\n  <p>I am learning to build websites with Claude Code.</p>\n  <ul>\n    <li>A personal website</li>\n    <li>A recipe collection</li>\n    <li>A small game</li>\n  </ul>\n</body>\n</html>` },
+              out: [`[OK] wrote index.html`] },
+            { match: `in index.html, add a section at the bottom with a way to contact me, because I want to share this page with friends`,
+              write: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>About me</title></head>\n<body>\n  <h1>Your Name</h1>\n  <p>I am learning to build websites with Claude Code.</p>\n  <ul>\n    <li>A personal website</li>\n    <li>A recipe collection</li>\n    <li>A small game</li>\n  </ul>\n  <section>\n    <h2>Contact me</h2>\n    <p>Email: you@example.com</p>\n  </section>\n</body>\n</html>` },
+              out: [`[OK] edited index.html — added a "Contact me" section at the bottom`] }
+          ],
+          try: [
+            { cmd: `claude --version`, desc: `kurulum var mı?` },
+            { cmd: `claude "make a file called index.html - a simple one-page website about me, with my name as a heading, a short paragraph about what I am learning, and a list of three things I want to build"`, desc: `ilk gerçek prompt` },
+            { cmd: `cat index.html`, desc: `dosyayı oku` },
+            { cmd: `claude "in index.html, add a section at the bottom with a way to contact me, because I want to share this page with friends"`, desc: `nerede + ne + neden` },
+            { cmd: `start index.html`, desc: `tarayıcıda aç` }
+          ]
+        }
+      },
+      {
+        id: `m2-d2`, title: `Netlik kaldıracı`, minutes: 6, ready: true,
+        intro: [
+          `Bir prompt'un şeklini biliyorsun: nerede, ne ve bazen neden. Bu derste kısa ama belirli talimatlarla sonucu nasıl daha kolay kontrol edeceğini göreceksin.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Önce belirsiz bir istek dene` },
+          { t: `code`, label: `Claude'a`, code: `make my page better` },
+          { t: `p`, html: `“Daha iyi” renk, metin, düzen ya da aralık anlamına gelebilir; Claude bunların birkaçını birden değiştirebilir. Sonucu açıp incele ve kendine sor: Bu değişikliklerin hangileri gerçekten istediğimdi?` },
+          { t: `p`, html: `Karşılaştırma yapabilmek için başlangıç durumuna dön: giriş alanı boşken <kbd>Esc</kbd>'ye iki kez bas ya da <code>/rewind</code> yaz, uygun önceki noktayı ve <strong>Restore code and conversation</strong> seçeneğini seç. Geri almanın yalnızca izlenen değişiklikleri kapsadığını unutma.` },
+          { t: `h`, text: `Adım 2 — Değişikliği adlandır` },
+          { t: `code`, label: `Claude'a`, code: `in index.html, change the background to a light cream colour\nand make the heading font larger` },
+          { t: `p`, html: `Anlamı: “index.html'de arka planı açık krem rengi yap ve başlık yazısını büyüt.” Bu kez dosya da iki değişiklik de belli. Sonucu bütün sayfayı yeniden değerlendirerek değil, yalnızca bu iki özelliğe bakarak kontrol edebilirsin.` },
+          { t: `practice` },
+          { t: `h`, text: `Hızlı netlik kontrolü` },
+          { t: `list`, items: [
+            `<strong>Dosyayı adlandırdın mı?</strong>`,
+            `<strong>Gerçek değişikliği söyledin mi?</strong>`,
+            `<strong>Yeni bir şey oluşturuluyorsa yerini belirttin mi?</strong>`
+          ] },
+          { t: `p`, html: `Göndermeden önce kendine sor: Bu talimatın tek bir makul yorumu var mı? Belirli olmak uzun olmak demek değildir; sonucu değiştirmeyen bir ayrıntıyı eklemene gerek yok.` },
+          { t: `h`, text: `Belirsiz kelimelerin yerine ne yazmalı?` },
+          { t: `table`, head: [`Belirsiz ifade`, `Daha yararlı yönlendirme`], rows: [
+            [`“Daha iyi yap”`, `Özelliği adlandır: renk, boyut, aralık ya da metin.`],
+            [`“Temizle”`, `Şu an neyin yanlış olduğunu söyle.`],
+            [`“Stili düzelt”`, `Neyin yanlış göründüğünü ve ne beklediğini anlat.`],
+            [`“Biraz içerik ekle”`, `Bölümü ve kabaca hangi içeriğin ekleneceğini belirt.`]
+          ] },
+          { t: `h`, text: `Henüz ne istediğini bilmiyorsan` },
+          { t: `p`, html: `Sonucu seçemiyorsan süreç konusunda belirli ol: Claude'dan önce incelemesini ve seçenek önermesini iste.` },
+          { t: `code`, label: `Claude'a`, code: `read index.html and tell me three things you would improve,\nand why - do not change anything yet` },
+          { t: `p`, html: `Anlamı: “index.html'i oku; iyileştireceğin üç şeyi nedenleriyle söyle, henüz hiçbir şeyi değiştirme.” Önerilerden birini seç ve yalnızca o değişikliği iste. <strong>Önce bak, sonra hareket et</strong> kalıbı, istemediğin toplu değişiklikleri azaltır.` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `steps`, items: [
+            `Bilerek belirsiz bir değişiklik iste ve sonucu incele.`,
+            `Uygun geri alma yöntemiyle başlangıç durumuna dön.`,
+            `Aynı değişikliği dosya ve özellik adı vererek yeniden iste.`,
+            `İki sonucu kontrol etmek için harcadığın süreyi karşılaştır.`
+          ] }
+        ],
+        trouble: [
+          { q: `Claude istemediğim yerleri de değiştirdi`, a: `Değişikliği geri al ve isteği daralt: dosyayı, değişecek özelliği ve dokunulmaması gereken bölümü açıkça yaz. Örneğin “başlığı büyüt, paragraf metnine dokunma”.` },
+          { q: `Geri aldım ama dosya eski hâline dönmedi`, a: `<code>/rewind</code> yalnızca izlenen dosya düzenlemelerini geri alır. Terminal komutlarıyla yapılan değişiklikler kapsam dışında kalabilir; dosyayı açıp kontrol et.` }
+        ],
+        have: [
+          `Belirsiz ve net bir isteğin sonucunu karşılaştırdın.`,
+          `Göndermeden önce uygulayabileceğin üç soruluk netlik kontrolü.`,
+          `Ne istediğini bilmediğinde kullanacağın “önce incele, öneri sun, değiştirme” kalıbı.`
+        ],
+        note: `Netliğin uzunluk demek olmadığını bu derste anladım: Dosyayı ve değişecek özelliği adlandırmak çoğu zaman yeterli oluyor.`,
+        next: `Sırada: Konuşma uzadıkça bağlamı odaklı tutmak.`,
+        prompt: `“Daha iyi yap”, “temizle”, “stili düzelt” gibi belirsiz istekleri, bir web sayfası için daha net talimatlara dönüştürmeme yardım eder misin? Her biri için bir örnek yaz.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>About me</title></head>\n<body>\n  <h1>Your Name</h1>\n  <p>I am learning to build websites with Claude Code.</p>\n</body>\n</html>` },
+          claude: [
+            { match: `make my page better`, write: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>Welcome!</title>\n<style>body{font-family:Georgia;background:#203040;color:#fff;padding:60px}h1{letter-spacing:4px}</style></head>\n<body>\n  <h1>YOUR NAME</h1>\n  <p>Hello and welcome to my brand new website, where I share my journey.</p>\n  <footer>Made with care</footer>\n</body>\n</html>` },
+              out: [`[OK] edited index.html — changed the title, colours, font, heading text,`, `     rewrote the paragraph and added a footer`] },
+            { match: `in index.html, change the background to a light cream colour and make the heading font larger`, write: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>About me</title>\n<style>body{background:#fdf6e3}h1{font-size:3rem}</style></head>\n<body>\n  <h1>Your Name</h1>\n  <p>I am learning to build websites with Claude Code.</p>\n</body>\n</html>` },
+              out: [`[OK] edited index.html — background: light cream, heading: larger`] },
+            { match: `read index.html and tell me three things you would improve, and why - do not change anything yet`,
+              out: [`Değişiklik yapmadım. Üç öneri:`, `1. Arka plan rengi ekle — sayfa şu an çok sade görünüyor.`, `2. Başlığı büyüt — sayfanın konusu ilk bakışta anlaşılsın.`, `3. Bir iletişim bölümü ekle — ziyaretçi sana nasıl ulaşacağını bilsin.`, `Hangisini uygulamamı istersin?`] }
+          ],
+          try: [
+            { cmd: `cat index.html`, desc: `başlangıç hâli` },
+            { cmd: `claude "make my page better"`, desc: `belirsiz istek` },
+            { cmd: `cat index.html`, desc: `neler değişti?` },
+            { cmd: `claude "read index.html and tell me three things you would improve, and why - do not change anything yet"`, desc: `önce öneri iste` },
+            { cmd: `claude "in index.html, change the background to a light cream colour and make the heading font larger"`, desc: `net istek` }
+          ]
+        }
+      },
+      {
+        id: `m2-d3`, title: `Bağlam pencereleri ve /clear`, minutes: 5, ready: true,
+        intro: [
+          `Claude'un bir yanıt üretirken kullanabildiği konuşma ve çalışma bilgilerine <strong>bağlam</strong> denir. Bu alan büyük olabilir ama sınırsız değildir; ilgisiz geçmiş, üzerinde çalıştığın görevin odağını bulanıklaştırabilir.`
+        ],
+        blocks: [
+          { t: `h`, text: `Bağlamın içinde ne var?` },
+          { t: `p`, html: `Senin mesajların, Claude'un yanıtları, okunan dosyaların içeriği ve araç çıktıları bağlama girer. Uzun oturumlarda bazı bilgiler özetlenebilir; geçmişin her zaman eksiksiz tutulduğunu varsayma.` },
+          { t: `callout`, kind: `info`, title: `Dosya ile konuşma aynı şey değildir`, html: `Bir dosyanın içeriği okunduğunda bağlama girebilir. Konuşmayı temizlemek ise diskteki dosyayı silmez.` },
+          { t: `h`, text: `Odağın kaydığını nasıl anlarsın?` },
+          { t: `list`, items: [
+            `Claude, bitmiş eski bir işe sürekli atıfta bulunuyor.`,
+            `Küçük bir değişiklik isterken ilgisiz dosyalara yöneliyor.`
+          ] },
+          { t: `p`, html: `Bunlar bağlam karmaşasına işaret edebilir, ama tek olası neden bu değildir. Önce isteğinin açık olup olmadığını ve hangi dosyayı hedeflediğini kontrol et.` },
+          { t: `h`, text: `Yeni görev için temiz başlangıç: /clear` },
+          { t: `code`, label: `Claude oturumunda`, code: `/clear` },
+          { t: `p`, html: `İlgisiz bir göreve geçerken konuşmayı temizle. <code>/clear</code> dosyalara dokunmaz ve önceki değişiklikleri geri almaz; yalnızca konuşma bağlamını temizler. Aynı iş üzerinde küçük düzeltmeler yapıyorsan geçmişi korumak yararlı olabilir; gerçekten görev değiştirdiğinde temiz bir konuşma aç.` },
+          { t: `h`, text: `Aynı görev, uzun konuşma: /compact` },
+          { t: `code`, label: `Claude oturumunda`, code: `/compact` },
+          { t: `p`, html: `Hâlâ aynı görevi yapıyorsan ve konuşma uzadıysa, özetleyerek devam edebilirsin. <code>/compact</code> bunun içindir. Özet, önceki konuşmanın bütün ayrıntılarını koruyan bir kopya değildir.` },
+          { t: `table`, head: [`Komut`, `Ne zaman tercih edilir?`], rows: [
+            [`<code>/clear</code>`, `Yeni ya da ilgisiz bir görev; önceki konuşmanın ayrıntılarına ihtiyacın yok.`],
+            [`<code>/compact</code>`, `Aynı görev sürüyor; yararlı geçmişi özetleyip yer açmak istiyorsun.`]
+          ] },
+          { t: `callout`, kind: `tip`, title: `Karar sorusu`, html: `“Önceki konuşmadaki bilgileri bu görevde kullanacak mıyım?” Cevap evetse bağlamı koru ya da <code>/compact</code> kullan; hayırsa <code>/clear</code> ile temiz başla.` },
+          { t: `practice` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `steps`, items: [
+            `Claude'dan <code>index.html</code> içindeki renkleri değiştirmesini iste.`,
+            `Aynı konuşmada ilgisiz bir dosya iste: beş öğeli bir <code>shopping-list.md</code>.`,
+            `Ardından <code>make the heading bigger</code> yaz ve Claude'un hangi dosyaya yöneldiğini gözlemle.`,
+            `<code>/clear</code> kullan. Bu kez hedefi açıkça belirt: <code>in index.html, make the heading bigger</code>.`
+          ] },
+          { t: `p`, html: `İlk belirsiz istekte mutlaka bir hata çıkması gerekmez. Amaç, eski görevlerin etkisini ve açık bir dosya adı vermenin farkını gözlemlemek.` }
+        ],
+        trouble: [
+          { q: `/clear sonrası dosyadaki değişiklik geri gelmedi`, a: `Bu beklenen davranış: <code>/clear</code> yalnızca konuşmayı temizler, dosyalara dokunmaz. Değişikliği geri almak için <code>/rewind</code> kullan.` },
+          { q: `/compact sonrası Claude bir ayrıntıyı unuttu`, a: `Özet her ayrıntıyı korumaz. Önemli bir kuralı ya da kararı kısa bir mesajla yeniden hatırlat.` }
+        ],
+        have: [
+          `Bağlamın oturumda kullanılan bilgi olduğunu, diskteki dosyaların kendisi olmadığını biliyorsun.`,
+          `İlgisiz görevler arasında <code>/clear</code>, aynı uzun görevde <code>/compact</code> kullanmayı öğrendin.`,
+          `Hangisini seçeceğine karar vermek için tek bir soru.`
+        ],
+        note: `Benim için belirleyici soru şu oldu: Önceki konuşmadaki bilgiye bu görevde ihtiyacım var mı? Yoksa <code>/clear</code>, varsa <code>/compact</code>.`,
+        next: `Sırada: Sık kullanılan slash komutları.`,
+        prompt: `Claude Code'da bağlam penceresi nedir? /clear ve /compact komutlarını hangi durumlarda kullanmalıyım? Kısa örneklerle açıklar mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` },
+          cmds: [
+            { match: `/clear`, out: [`(simülasyon) Konuşma bağlamı temizlendi. Dosyalar olduğu gibi duruyor.`] },
+            { match: `/compact`, out: [`(simülasyon) Konuşma özetlendi; aynı görevle devam edebilirsin.`] }
+          ],
+          claude: [
+            { match: `make a file called shopping-list.md with five items`, write: { "~/my-first-project/shopping-list.md": `# Shopping list\n\n- bread\n- milk\n- eggs\n- apples\n- coffee` }, out: [`[OK] wrote shopping-list.md`] },
+            { match: `make the heading bigger`, out: [`Hangi başlığı kastediyorsun? Son çalıştığımız dosya shopping-list.md;`, `oradaki “# Shopping list” başlığını mı büyüteyim, index.html'deki başlığı mı?`] },
+            { match: `in index.html, make the heading bigger`, write: { "~/my-first-project/index.html": `<h1 style="font-size:3rem">Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` }, out: [`[OK] edited index.html — heading font-size: 3rem`] }
+          ],
+          try: [
+            { cmd: `claude "make a file called shopping-list.md with five items"`, desc: `ilgisiz bir görev` },
+            { cmd: `claude "make the heading bigger"`, desc: `belirsiz istek` },
+            { cmd: `/clear`, desc: `konuşmayı temizle` },
+            { cmd: `claude "in index.html, make the heading bigger"`, desc: `hedefi açıkça söyle` },
+            { cmd: `ls`, desc: `dosyalar duruyor mu?` }
+          ]
+        }
+      },
+      {
+        id: `m2-d4`, title: `Slash komutları`, minutes: 5, ready: true,
+        intro: [
+          `Claude'a verdiğin işlerin çoğunu doğal dille anlatırsın. <code>/</code> ile başlayan slash komutları ise oturumu yönetmek içindir: konuşmayı temizlemek, modeli seçmek, yardım almak ya da çıkmak gibi.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Komutları bul` },
+          { t: `p`, html: `Tek bir <code>/</code> yazınca kullanılabilir komutların listesi açılır. Yazmaya devam ederek listeyi daraltabilirsin; örneğin <code>/cl</code>. Komutlar kurulumuna ve sürüme göre değişebileceği için yardım ekranına bak:` },
+          { t: `code`, label: `Claude oturumunda`, code: `/help` },
+          { t: `h`, text: `İlk gün için yedi komut` },
+          { t: `table`, head: [`Komut`, `Ne yapar?`], rows: [
+            [`<code>/clear</code>`, `Konuşma bağlamını temizleyerek yeni bir başlangıç sağlar.`],
+            [`<code>/compact</code>`, `Konuşmayı özetleyip aynı görevle devam etmeye yardım eder.`],
+            [`<code>/rewind</code>`, `Geri alma menüsünü açar. Giriş alanı boşken <kbd>Esc</kbd> <kbd>Esc</kbd> de aynı işi görür.`],
+            [`<code>/help</code>`, `Yardımı ve kullanılabilir komutları gösterir.`],
+            [`<code>/model</code>`, `Etkin modeli seçmeye ya da değiştirmeye yarar.`],
+            [`<code>/init</code>`, `Projeyi anlatan bir <code>CLAUDE.md</code> kılavuzu oluşturmana yardım eder.`],
+            [`<code>/exit</code>`, `Claude Code oturumundan çıkar.`]
+          ] },
+          { t: `callout`, kind: `warn`, title: `Hatırla`, html: `<code>/clear</code> dosya değişikliklerini geri almaz. <code>/rewind</code> ise terminal komutlarının bütün etkilerini kapsayan bir yedek değildir.` },
+          { t: `h`, text: `Adım 2 — /init ile projeyi bir kez anlat` },
+          { t: `code`, label: `Claude oturumunda`, code: `/init` },
+          { t: `p`, html: `Geri döneceğin bir projede bu komutla başla. Claude proje yapısını inceler ve projenin ne olduğunu, nasıl çalışıldığını anlatan bir <code>CLAUDE.md</code> dosyası hazırlar.` },
+          { t: `p`, html: `Okuma ya da yazma izni istenirse işlemi ve dosya yolunu incele. Oluşan dosyayı mutlaka aç ve oku; yanlış ya da eksik bilgileri düzelt. <code>CLAUDE.md</code> sonraki oturumlarda proje talimatlarını aktarır; içindeki kurallar doğru olduğunda her oturumda aynı açıklamaları tekrar yapman gerekmez.` },
+          { t: `h`, text: `Adım 3 — /model ile ihtiyaca göre seç` },
+          { t: `code`, label: `Claude oturumunda`, code: `/model` },
+          { t: `p`, html: `Hesabında kullanılabilen modeller arasından seçim yapmanı sağlar. Modeller hız, yetenek ve kullanım maliyeti bakımından farklı olabilir. Başlarken varsayılan modelle devam edebilirsin.` },
+          { t: `h`, text: `Slash komutu mu, doğal dil mi?` },
+          { t: `table`, head: [`Durum`, `Ne kullanılır?`], rows: [
+            [`Oturumu yönetiyorsan`, `<code>/clear</code>, <code>/model</code> ya da <code>/exit</code> gibi bir komut.`],
+            [`Bir iş istiyorsan`, `“index.html dosyasındaki başlığı büyüt” gibi bir cümle.`]
+          ] },
+          { t: `p`, html: `Her iş için özel bir slash komutu olduğunu varsayma. Bazı kurulumlar özel komutlar ya da beceriler ekleyebilir; mevcut listeyi <code>/help</code> ile kontrol et.` },
+          { t: `practice` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `p`, html: `Proje klasöründe <code>/init</code> çalıştır. Oluşan <code>CLAUDE.md</code> dosyasını oku ve projeyi senin anlatacağın şekilde açıklayan bir satırı düzenle.` }
+        ],
+        trouble: [
+          { q: `Listede bir komutu göremiyorum`, a: `Komutlar sürüme ve kuruluma göre değişebilir. <code>/help</code> ile kullanılabilir komutları kontrol et; gerekirse Claude Code'u güncelle.` },
+          { q: `CLAUDE.md içinde yanlış bilgi var`, a: `Dosyayı aç ve düzelt. Claude'un yazdığı kılavuz bir başlangıç taslağıdır; doğruluğunu sen kontrol etmelisin.` }
+        ],
+        have: [
+          `Slash komutlarının oturumu yönettiğini, işlerin ise doğal dille istendiğini biliyorsun.`,
+          `İlk gün için yedi komutun ne yaptığını öğrendin.`,
+          `<code>/init</code> ile projeni bir kez anlatan bir <code>CLAUDE.md</code> oluşturabilirsin.`
+        ],
+        note: `<code>/init</code>'in oluşturduğu <code>CLAUDE.md</code>'yi olduğu gibi bırakmayıp okumanın ve düzeltmenin, sonraki oturumlarda zaman kazandırdığını gördüm. Bu sitenin de bir <code>CLAUDE.md</code> dosyası var.`,
+        next: `Sırada: <code>@</code> ile Claude'u doğru dosyaya ve klasöre yöneltmek.`,
+        prompt: `Claude Code'daki /clear, /compact, /rewind, /help, /model, /init ve /exit komutlarını bir tabloda karşılaştırır mısın? Her biri için bir kullanım örneği ver.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` },
+          cmds: [
+            { match: `/help`, out: [`(simülasyon) Kullanılabilir komutlardan bazıları:`, `  /clear  /compact  /rewind  /help  /model  /init  /exit`, `Gerçek listede kurulumuna göre daha fazla komut olabilir.`] },
+            { match: `/init`, claude: true, write: { "~/my-first-project/CLAUDE.md": `# my-first-project\n\nA simple personal website made while learning Claude Code.\n\n## Files\n- index.html: the one-page site\n\n## How to view\nOpen index.html in a browser.` }, out: [`[OK] wrote CLAUDE.md — projeyi inceleyip bir kılavuz taslağı hazırladım.`, `Lütfen dosyayı okuyup yanlış ya da eksik bilgileri düzelt.`] },
+            { match: `/model`, out: [`(simülasyon) Hesabında kullanılabilen modeller burada listelenir.`, `Başlarken varsayılan modelle devam edebilirsin.`] },
+            { match: `/exit`, out: [`(simülasyon) Claude Code oturumundan çıkıldı.`] }
+          ],
+          try: [
+            { cmd: `/help`, desc: `komutları gör` },
+            { cmd: `/init`, desc: `CLAUDE.md oluştur` },
+            { cmd: `cat CLAUDE.md`, desc: `kılavuzu oku` },
+            { cmd: `/model`, desc: `model seçimi` }
+          ]
+        }
+      },
+      {
+        id: `m2-d5`, title: `@file ve @directory`, minutes: 5, ready: true,
+        intro: [
+          `Bir dosyayı <code>@</code> ile işaret etmek, Claude'u isteğinle ilgili belirli bir kaynağa yöneltir. Bu özellikle bir dosyayı değiştirirken, iki kaynağı karşılaştırırken ya da bir örneğin biçimini izletirken işe yarar.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Bir dosyayı işaret et` },
+          { t: `p`, html: `Önce Claude'dan ikinci bir dosya oluşturmasını iste:` },
+          { t: `code`, label: `Claude'a`, code: `make a file called about.md\nwith a few paragraphs about what I am learning` },
+          { t: `p`, html: `Artık <code>index.html</code> ve <code>about.md</code> hakkında ayrı ayrı konuşabilirsin:` },
+          { t: `code`, label: `Claude'a`, code: `explain what @about.md says, in one sentence` },
+          { t: `p`, html: `<code>@</code> yazınca bir dosya seçici açılabilir. <code>@ab</code> gibi birkaç harfle listeyi daralt, ok tuşlarıyla dosyayı seç ve <kbd>Tab</kbd> ya da <kbd>Enter</kbd> ile tamamla. Seçimden sonra yolun doğru olduğunu kontrol et.` },
+          { t: `h`, text: `Adım 2 — Bir dosyayı kalıp olarak kullan` },
+          { t: `code`, label: `Claude'a`, code: `using @index.html as the pattern,\nmake a second page called projects.html with the same styling` },
+          { t: `p`, html: `Anlamı: “index.html'i kalıp alarak aynı stilde projects.html adlı ikinci bir sayfa yap.” Sonuçta yazı tipi, renkler ve aralıkların uyumlu olduğunu kontrol et.` },
+          { t: `callout`, kind: `info`, title: `@ şart mı?`, html: `Claude bazen <code>@</code> olmadan da ilgili dosyayı bulup okuyabilir. <code>@</code> kullanmanın kazancı, hangi kaynağı kastettiğini açıkça belirtmendir.` },
+          { t: `h`, text: `Adım 3 — Bir klasöre yönelt` },
+          { t: `p`, html: `Cevabın hangi dosyada olduğunu bilmiyorsan proje içindeki bir klasörü işaret edebilirsin. Örneğin bir <code>pages/</code> klasörün varsa:` },
+          { t: `code`, label: `Claude'a`, code: `look through @pages/\nand tell me which files mention my name` },
+          { t: `p`, html: `Klasör seçmek, klasördeki her şeyin eksiksiz yükleneceği anlamına gelmez; Claude'un ilgili dosyaları ayrıca incelemesi gerekebilir. Erişim kapsamı izinlere ve ayarlara bağlıdır.` },
+          { t: `practice` },
+          { t: `h`, text: `Bağlamı tutumlu kullan` },
+          { t: `p`, html: `Okunan dosyalar ve araç çıktıları bağlamda yer kaplar. Geniş bir klasörü inceletmek, ilgili tek bir dosyayı göstermekten daha fazla iş ve bağlam gerektirir.` },
+          { t: `list`, items: [
+            `Önemli bir ya da iki dosyayı işaret et.`,
+            `Nereye bakılacağını biliyorsan geniş bir klasör yerine ilgili dosyayı seç.`,
+            `Uzun dosyalarda ilgili bölümün adını ya da aradığın soruyu da yaz.`
+          ] },
+          { t: `callout`, kind: `tip`, title: `Bir benzetme`, html: `Toplantıda ilgili tek bir belgeyi paylaşmak odağı artırır; bütün dosya dolabını masaya boşaltmak aynı işi görmez.` },
+          { t: `h`, text: `Her mesajda gerekli mi?` },
+          { t: `p`, html: `Aynı dosya üzerinde çalışmayı sürdürüyorsan her seferinde <code>@</code> eklemen gerekmez. Dosya değiştirirken, iki kaynağı karşılaştırırken ya da bir yanlış anlaşılmayı giderirken yeniden kullan.` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `code`, label: `Claude'a`, code: `compare @index.html and @about.md -\nis anything said differently between them?` },
+          { t: `p`, html: `İki dosyada adın, öğrendiğin konular ya da yapmak istediğin projeler farklı mı anlatılmış? Yanıttaki bulguları dosyaları açarak kendin karşılaştır.` }
+        ],
+        trouble: [
+          { q: `@ yazınca dosya seçici açılmıyor`, a: `Dosya adını <code>@about.md</code> biçiminde elle yazabilirsin. Claude'u proje klasöründe başlattığını <code>pwd</code> ile kontrol et.` },
+          { q: `Claude yanlış dosyaya baktı`, a: `Seçilen yolu kontrol et ve isteği doğru dosyayla yeniden gönder. Aynı adda birden fazla dosya varsa klasör yolunu da yaz.` }
+        ],
+        have: [
+          `<code>@dosya</code> ile Claude'u belirli bir kaynağa yöneltmeyi öğrendin.`,
+          `Bir dosyayı yeni sayfa için kalıp olarak kullanabilirsin.`,
+          `Geniş bir klasör yerine ilgili dosyayı seçerek bağlamı tutumlu kullanmayı öğrendin.`
+        ],
+        note: `Bir dosyayı <code>@</code> ile açıkça seçmenin, yalnızca Claude'a değil bana da yardım ettiğini gördüm: Sonucu kontrol ederken neye bakacağımı biliyorum.`,
+        next: `Sırada: Modül 2'nin özeti ve hızlı başvuru tablosu.`,
+        prompt: `Claude Code'da @dosya ve @klasör ile bağlam vermenin faydası nedir? Bağlamı tutumlu kullanmak için 3 pratik öneri verir misin?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>\n<ul><li>A personal website</li><li>A recipe collection</li><li>A small game</li></ul>` },
+          claude: [
+            { match: `make a file called about.md with a few paragraphs about what I am learning`, write: { "~/my-first-project/about.md": `# About\n\nI am learning how to use the terminal and Claude Code.\n\nMy goal is to publish my own website.` }, out: [`[OK] wrote about.md`] },
+            { match: `explain what @about.md says, in one sentence`, out: [`about.md, terminali ve Claude Code'u öğrendiğini ve kendi siteni yayınlamayı hedeflediğini anlatıyor.`] },
+            { match: `using @index.html as the pattern, make a second page called projects.html with the same styling`, write: { "~/my-first-project/projects.html": `<h1>Projects</h1>\n<p>Things I want to build.</p>\n<ul><li>A personal website</li><li>A recipe collection</li><li>A small game</li></ul>` }, out: [`[OK] wrote projects.html — index.html ile aynı yapı ve stil`] },
+            { match: `compare @index.html and @about.md - is anything said differently between them?`, out: [`index.html yapmak istediğin üç projeyi listeliyor; about.md bunlardan söz etmiyor.`, `about.md ise siteni yayınlama hedefini anlatıyor; bu bilgi index.html'de yok.`] }
+          ],
+          try: [
+            { cmd: `claude "make a file called about.md with a few paragraphs about what I am learning"`, desc: `ikinci dosya` },
+            { cmd: `claude "explain what @about.md says, in one sentence"`, desc: `dosyayı işaret et` },
+            { cmd: `claude "using @index.html as the pattern, make a second page called projects.html with the same styling"`, desc: `kalıp olarak kullan` },
+            { cmd: `claude "compare @index.html and @about.md - is anything said differently between them?"`, desc: `iki dosyayı karşılaştır` },
+            { cmd: `ls`, desc: `hangi dosyalar var?` }
+          ]
+        }
+      },
+      {
+        id: `m2-d6`, title: `Modül 2 özeti`, minutes: 3, ready: true,
+        intro: [
+          `Bir cümleden web sayfası oluşturmayı, istediğin değişikliği açıkça anlatmayı ve konuşma bağlamını yönetmeyi öğrendin. Bu modül, Claude ile etkili iletişim kurmanın temelini oluşturdu.`
+        ],
+        blocks: [
+          { t: `h`, text: `Modül 2 hızlı başvuru` },
+          { t: `table`, head: [`Fikir`, `Pratik hamle`], rows: [
+            [`Prompt'un anatomisi`, `Nerede, ne ve gerektiğinde neden sorularını yanıtla.`],
+            [`Netlik`, `Tek bir makul yorumu hedefle; dosyayı ve değişikliği adlandır.`],
+            [`Bilmediğinde`, `Değiştirmeden önce incelemesini ve öneri sunmasını iste.`],
+            [`Bağlam penceresi`, `Oturumda kullanılan bilgidir; diskteki dosyaların kendisi değildir.`],
+            [`<code>/clear</code>`, `İlgisiz bir göreve geçerken konuşma bağlamını temizle.`],
+            [`<code>/compact</code>`, `Aynı görevde uzayan konuşmayı özetleyerek devam et.`],
+            [`<code>/init</code>`, `Projeyi açıklayan bir <code>CLAUDE.md</code> oluşturmana yardım eder.`],
+            [`<code>@dosya</code>`, `İsteğini ilgili dosyaya açıkça yönelt; seçilen yolu kontrol et.`]
+          ] },
+          { t: `h`, text: `Zihinsel model` },
+          { t: `p`, html: `İyi bir prompt, <strong>iş konusunda belirli, bağlam konusunda tutumludur</strong>. Neyi değiştirmek istediğini, hangi dosyaların ilgili olduğunu ve eski konuşmaya hâlâ ihtiyacın olup olmadığını bilinçli seç.` },
+          { t: `p`, html: `Sık karşılaşılan sorun yalnızca kötü yazılmış bir cümle değildir: Dağınık bir konuşmaya gönderilen belirsiz bir istek de sonucu zorlaştırır.` },
+          { t: `h`, text: `Saklamaya değer iki alışkanlık` },
+          { t: `p`, html: `<strong>1. Atlamadan önce bak.</strong> Emin değilsen Claude'dan değiştirmek yerine okumasını ve öneri sunmasını iste. Önce seçenekleri gör, sonra hangi değişikliğin yapılacağını sen seç.` },
+          { t: `code`, label: `Claude'a`, code: `read @index.html and suggest three improvements;\ndo not change anything yet` },
+          { t: `p`, html: `<strong>2. İsim konusunda belirli ol.</strong> “Daha iyi” ya da “temizle” yerine renk, başlık, aralık, bölüm ve dosya adı ver. İnsanların farklı anlayacağı bir talimat Claude için de belirsizdir.` },
+          { t: `code`, label: `Claude'a`, code: `in index.html, increase the main heading size\nand leave the paragraph text unchanged` },
+          { t: `h`, text: `İşe başlamadan önce kısa kontrol` },
+          { t: `list`, items: [
+            `Hangi dosya ya da klasör üzerinde çalışılacak?`,
+            `Tam olarak ne değişecek?`,
+            `Amaç, seçimi etkiliyor mu?`,
+            `İlgili bağlam var mı, yoksa yeni bir konuşma mı açılmalı?`,
+            `Sonucun doğru olduğunu nasıl kontrol edeceksin?`
+          ] },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Tahmini azaltan prompt'lar yazmak.`,
+          `<code>/clear</code> ile <code>/compact</code> arasında ihtiyaca göre seçim yapmak.`,
+          `<code>@</code> ile doğru dosyaya yöneltmek.`,
+          `Önce inceleme, sonra uygulama istemek.`,
+          `Kendi bilgisayarındaki web sayfasını açıp değişiklikleri kontrol etmek.`
+        ],
+        note: `İş konusunda belirli, bağlam konusunda tutumlu: Bu modülden aklımda kalan tek cümle bu.`,
+        next: `Sırada: Bu iletişim alışkanlıklarını kullanarak gerçek kod üzerinde değişiklik yapmak ve diff okumak.`,
+        prompt: `Claude Code kursunun ikinci modülünde prompt yazmayı (nerede/ne/neden), netliği, /clear, /compact, /init ve @dosya kullanımını öğrendim. Bu konulardan 5 soruluk kısa bir tekrar testi hazırlar mısın? Cevapları en sonda ver.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` },
+          claude: [
+            { match: `read @index.html and suggest three improvements; do not change anything yet`, out: [`Değişiklik yapmadım. Üç öneri:`, `1. Başlığı büyüt.`, `2. Yapmak istediğin projeleri bir liste olarak ekle.`, `3. En alta bir iletişim bölümü ekle.`] },
+            { match: `in index.html, increase the main heading size and leave the paragraph text unchanged`, write: { "~/my-first-project/index.html": `<h1 style="font-size:3rem">Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` }, out: [`[OK] edited index.html — heading larger, paragraph unchanged`] }
+          ],
+          try: [
+            { cmd: `claude "read @index.html and suggest three improvements; do not change anything yet"`, desc: `önce bak` },
+            { cmd: `claude "in index.html, increase the main heading size and leave the paragraph text unchanged"`, desc: `belirli ol` },
+            { cmd: `cat index.html`, desc: `sonucu kontrol et` }
+          ]
+        }
+      }
     ] },
     { id: `m3`, no: 3, title: `Tek dosyada düzenlemeler`, lessons: [
       { id: `m3-d1`, title: `Bir diff okuma`, minutes: 5 },

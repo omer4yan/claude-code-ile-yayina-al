@@ -74,6 +74,18 @@
   var run = function (line) {
     var raw = line.trim();
     if (!raw) return [];
+
+    // Derse özel komutlar (ör. "start index.html", "/clear"): sandbox.cmds içinde tanımlanır
+    var custom = null;
+    (cfg.cmds || []).forEach(function (c) { if (!custom && norm(raw) === norm(c.match)) custom = c; });
+    if (custom) {
+      if (custom.write) Object.keys(custom.write).forEach(function (p) { fs.files[p] = custom.write[p]; });
+      return custom.claude ? { claude: true, lines: custom.out || [] } : (custom.out || []).slice();
+    }
+    if (raw.charAt(0) === "/") {
+      return ["(simülasyon) " + raw.split(/\s+/)[0] + " bir Claude Code oturum komutudur; gerçek oturumda çalışır.",
+        "Bu derste denenebilen oturum komutları için aşağıdaki önerilere bak."];
+    }
     var m = raw.match(/^(\S+)\s*([\s\S]*)$/);
     var cmd = m[1];
     var rest = m[2].trim();
@@ -129,6 +141,7 @@
       case "help":
         return HELP.slice();
       case "claude": {
+        if (/^(--version|-v)$/.test(rest)) return ["2.x.x (Claude Code) — simülasyon; gerçek sürüm numarası farklı olur"];
         var q = rest.replace(/^["“'‘]/, "").replace(/["”'’]$/, "");
         if (!rest) return ["(simülasyon) Gerçek Claude Code burada etkileşimli bir oturum açar.", "Bu pratik ortamında isteği tırnak içinde ver: claude \"…\""];
         var hit = null;
