@@ -1,0 +1,47 @@
+<!doctype html>
+<!--
+  Seslendirme için ders metnini çıkarır (scripts/seslendir.ps1 kullanır; sitede bağlantısı yoktur).
+  Her dersi gerçek ders sayfasında açar ve listen.js'in okuduğu cümleleri (window.ORVENA_LISTEN_TEXT)
+  JSON olarak #out içine yazar. Tarayıcı --allow-file-access-from-files ile başlatılmalıdır.
+  Kullanım: metin-cikar.html?lang=tr&ids=m1-d1,m1-d2
+-->
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Metin çıkar</title>
+</head>
+<body>
+<pre id="out"></pre>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var lang = q.get("lang") === "en" ? "en" : "tr";
+  var ids = (q.get("ids") || "").split(",").filter(Boolean);
+  var page = lang === "en" ? "../en/ders.html" : "../ders.html";
+  var out = document.getElementById("out");
+  var res = {};
+  var i = 0;
+  var next = function () {
+    if (i >= ids.length) { out.textContent = "@@BEGIN@@" + JSON.stringify(res) + "@@END@@"; return; }
+    var id = ids[i++];
+    var f = document.createElement("iframe");
+    f.src = page + "?id=" + encodeURIComponent(id);
+    f.onload = function () {
+      try {
+        var w = f.contentWindow;
+        var L = w.ORVENA_LESSON && w.ORVENA_LESSON.lesson;
+        if (!L || L.id !== id) res[id] = { error: "ders bulunamadı" };
+        else res[id] = w.ORVENA_LISTEN_TEXT || { error: "okunacak metin yok" };
+      } catch (e) {
+        res[id] = { error: String(e) };
+      }
+      f.remove();
+      next();
+    };
+    document.body.appendChild(f);
+  };
+  next();
+})();
+</script>
+</body>
+</html>

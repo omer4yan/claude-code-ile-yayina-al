@@ -246,6 +246,69 @@
   border-radius: 4px;
 }
 
+/* Dinleme sürerken kutu ekrandan çıkınca alta yapışan oynatıcı (listen.js) */
+:root {
+  --dock-shadow: 0 -6px 28px rgba(0, 0, 0, 0.45);
+}
+
+:root[data-theme="light"] {
+  --dock-shadow: 0 -6px 28px rgba(60, 35, 20, 0.14);
+}
+
+.listen__close {
+  display: none;
+}
+
+.listen__panel.is-docked {
+  position: fixed;
+  bottom: 16px;
+  z-index: 70;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  box-shadow: var(--dock-shadow);
+  overflow: hidden;
+  animation: dock-in 0.22s ease;
+}
+
+.listen__panel.is-docked .listen__inner {
+  padding: 10px 12px;
+}
+
+.listen__panel.is-docked .listen__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+
+.listen__panel.is-docked .listen__meta strong {
+  display: none;
+}
+
+.listen__panel.is-docked .listen__close {
+  display: grid;
+  background: transparent;
+  border-color: transparent;
+  color: var(--muted);
+}
+
+.listen__panel.is-docked .listen__close:hover {
+  color: var(--text);
+  border-color: var(--line);
+}
+
+/* Bildirim, alttaki oynatıcının üstünde görünsün */
+.has-listen-dock .toast {
+  bottom: 104px;
+}
+
+@keyframes dock-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
 /* ---------- Gövde ---------- */
 .lesson-body {
   margin-top: 32px;
@@ -1105,6 +1168,38 @@
   .listen__controls {
     width: 100%;
     justify-content: center;
+  }
+
+  /* Telefonda alttaki oynatıcı tam genişlikte, tek satır */
+  .listen__panel.is-docked {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border-width: 1px 0 0;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .listen__panel.is-docked .listen__inner {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .listen__panel.is-docked .listen__icon {
+    display: none;
+  }
+
+  .listen__panel.is-docked .listen__controls {
+    width: auto;
+    gap: 4px;
+  }
+
+  .listen__panel.is-docked .listen__status {
+    font-size: 0.78rem;
+  }
+
+  .has-listen-dock .toast {
+    bottom: 88px;
   }
 
   .practice__actions,
