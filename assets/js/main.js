@@ -233,13 +233,17 @@
   var setLesson = function (id) {
     if (id === currentLesson) return;
     currentLesson = id;
-    var href = id ? "#" + id : null;
+    // Ders bağlantıları sayfa içi (#m1-d1) ya da ders sayfası (ders.html?id=m1-d1) olabilir
+    var matches = function (a) {
+      var h = a.getAttribute("href");
+      return !!id && (h === "#" + id || h === "ders.html?id=" + id);
+    };
     curLessonLinks.forEach(function (a) {
-      a.parentElement.classList.toggle("is-active", a.getAttribute("href") === href);
+      a.parentElement.classList.toggle("is-active", matches(a));
     });
     if (railList) {
       railList.querySelectorAll("a").forEach(function (a) {
-        a.parentElement.classList.toggle("is-active", a.getAttribute("href") === href);
+        a.parentElement.classList.toggle("is-active", matches(a));
       });
     }
   };

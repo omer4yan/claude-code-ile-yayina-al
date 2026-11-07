@@ -12,7 +12,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 | Türkçe (kök) | İngilizce | İçerik |
 |---|---|---|
 | `index.html` | `en/index.html` | Giriş alanı (serif başlık + canlı noktalı harita), Eğitim Modülleri carousel'i, kısa hakkımda, iletişim. Ders şeridi ve "İlk sitem yayında" kartı kullanıcının isteğiyle kaldırıldı (yayın günü yolculuk sayfasında). |
-| `yolculuk.html` | `en/yolculuk.html` | Solda müfredat, ortada 7 modül + "Yayın günü", sağda "Bu modülde" ve "Çalışma döngüm" |
+| `yolculuk.html` | `en/yolculuk.html` | TR: modül genel bakışı — solda müfredat, ortada 7 modül (ders sayısı, okuma süresi, ders satırları ders sayfasına bağlantı, "Modüle başla", "Aklımda kalan") + "Yayın günü", sağda "Bu modülde" ve "Çalışma döngüm". EN: İngilizce ders sayfaları yazılana kadar eski özet yapısında (öğrendiklerim listesi, terminal örneği); sonra TR ile aynı yapıya geçecek. |
 | `hakkimda.html` | `en/hakkimda.html` | Fotoğraf, hakkımda metni (eğitim paragrafı dahil) ve butonlar. Unvan satırı ve deneyim/eğitim/sertifika/beceri/dil bölümleri kullanıcının isteğiyle kaldırıldı. |
 
 - Ortak dosyalar: `assets/css/style.css`, `assets/css/home.css` (yalnızca ana sayfa giriş alanı), `assets/js/main.js`, `assets/js/modules.js`, `assets/img/`.
@@ -68,11 +68,11 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 - Metinler PDF notlarına dayanır, talimat diliyle ve kendi cümlelerimizle yazılır; kurs metni birebir kopyalanmaz, kurs sağlayıcı adı ve sertifika geçmez. "Benim notum" birinci tekil şahıstır ve yaşanmamış deneyim iddia etmez.
 - Sandbox simülasyondur (gerçek shell değil): `pwd`, `ls [-a]`, `mkdir`, `cd`, `cat`, `help`, `clear`; derse özel yanıtlar `sandbox.claude` (claude "…" istekleri) ve `sandbox.cmds` (`start …`, `/init`, `git …` gibi) içinde. "Şunları dene" önerilerinin hepsi çalışmalı; test ederken her öneriyi çalıştırıp "komut bulunamadı / yalnızca bu derste" çıktısı olmadığını kontrol et.
 - "Claude'da aç" isteği panoya kopyalar ve `https://claude.ai/new?q=` adresini açar (resmî olmayan adres; alan boş gelirse kullanıcı yapıştırır). Dinleme Web Speech API ile, cümle cümle.
-- Yolculuk sayfasındaki her dersin altında `ders.html?id=…` bağlantısı ("Dersi aç") var.
+- Türkçe yolculuk sayfasında her ders satırının tamamı `ders.html?id=…` bağlantısıdır (`.lesson-row`); her modülde ilk derse giden "Modüle başla" düğmesi (`.module-start`) var.
 
 ## Dersler ve bağlantılar
 - Her modülde `.lessons` listesi var; her dersin kimliği `m{modül}-d{ders}` (örn. `#m3-d2`). Toplam 40 ders.
-- Sol müfredat ve sağdaki "Bu modülde" kartı bu kimliklere bağlanır. Yeni ders eklenirse ikisini de, iki dilde güncelle.
+- Kimlikler (`#m3-d2`) yolculuk sayfasındaki ders satırlarında durur; eski bağlantılar çalışmaya devam eder. Türkçe sayfada sol müfredat ve "Bu modülde" kartındaki ders bağlantıları ders sayfasına (`ders.html?id=…`), İngilizce sayfada şimdilik `#mN-dK` kimliklerine gider. Kaydırırken ders işareti iki biçimi de tanır. Yeni ders eklenirse ikisini de, iki dilde güncelle.
 - Müfredat modülleri açılır/kapanır (kullanıcının paylaştığı referans videoya göre): modül başlığı iki parçalıdır: `<div class="cur-module__head cur-module__head--split">` içinde modül adı `<a class="cur-module__link" href="#mN">` (modülün başına gider ve o modülün derslerini açar; ders sayfasında modül adı, "Bu modülde" kartındaki ad ve giriş alanındaki "Modül N" o modülün ilk dersine, `ders.html?id=mN-d1`, gider) ve ok düğmesi `<button class="cur-module__toggle" aria-expanded aria-controls="cur-mN">` (yalnızca açar/kapatır, sayfayı kaydırmaz). Dersler `.cur-lessons-wrap#cur-mN` içinde. JS tüm modülleri kapalı başlatır (`.cur-module.is-collapsed`); sayfa `#mN-dK` ile açılırsa o modül açık gelir. Birden fazla modül aynı anda açık olabilir. JS yoksa hepsi açık kalır.
 - Sağ kart, JS ile soldaki müfredattan üretilir.
 

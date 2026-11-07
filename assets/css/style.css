@@ -1860,31 +1860,81 @@ pre {
   line-height: 1.55;
 }
 
-/* Ders sayfası hazır olan derslerde "Dersi aç" bağlantısı */
-.lesson-open {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 8px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--accent);
+/* Genel bakış: ders satırının tamamı ders sayfasına giden bağlantı */
+.lessons li > .lesson-row {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin: -14px -18px;
+  padding: 14px 18px;
+  color: inherit;
   text-decoration: none;
+  transition: background-color 0.15s;
 }
 
-.lesson-open:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.lesson-row:hover {
+  background: var(--panel-2);
 }
 
-.lesson-open svg {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.15s;
+.lesson-row__text {
+  flex: 1;
+  min-width: 0;
 }
 
-.lesson-open:hover svg {
+.lesson-row:hover strong {
+  color: var(--accent);
+}
+
+.lesson-row__desc {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+.lesson-row__min {
+  flex: none;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.lesson-row__arrow {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-top: -1px;
+  border-radius: 8px;
+  color: var(--muted);
+  transition: color 0.15s, transform 0.15s;
+}
+
+.lesson-row__arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.lesson-row:hover .lesson-row__arrow {
+  color: var(--accent);
   transform: translateX(2px);
+}
+
+/* Genel bakış: modülün ilk dersine giden düğme */
+.module-start {
+  margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+  .lesson-row__arrow {
+    display: none;
+  }
 }
 
 .rail-lessons .n {
