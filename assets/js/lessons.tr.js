@@ -2021,13 +2021,336 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m7`, no: 7, title: `Bitirme projesi: kendi siteni yayınla`, lessons: [
-      { id: `m7-d1`, title: `Bitirme projesinin brief'i`, minutes: 2 },
-      { id: `m7-d2`, title: `Sayfaları kur, ilk gün deploy et`, minutes: 2 },
-      { id: `m7-d3`, title: `Gerçek içerikle doldur`, minutes: 3 },
-      { id: `m7-d4`, title: `Sana ulaşmanın bir yolunu ekle`, minutes: 4 },
-      { id: `m7-d5`, title: `Cilala, gözden geçir ve yayınla`, minutes: 2 },
-      { id: `m7-d6`, title: `Modül 7 özeti: yayınladın`, minutes: 2 }
+    { id: `m7`, no: 7, title: `Bitirme projesi: kendi siteni yayınla`, sub: `Küçük ama gerçek bir site`, lessons: [
+      {
+        id: `m7-d1`, title: `Bitirme projesinin brief'i`, minutes: 2, ready: true,
+        intro: [
+          `Bitirme projesinde kendine ait küçük bir site planlayıp yayınlayacaksın. Hedef, gerçekten kullanabileceğin ve başkalarıyla paylaşabileceğin bitmiş bir sonuç.`
+        ],
+        blocks: [
+          { t: `h`, text: `Görevin: küçük ama gerçek bir site` },
+          { t: `p`, html: `Şu biçimlerden sana yarayan birini seç:` },
+          { t: `list`, items: [
+            `<strong>Kişisel site:</strong> kim olduğun, ne yaptığın, iletişim.`,
+            `<strong>Portfolyo:</strong> birkaç proje ve kısa açıklamaları.`,
+            `<strong>Tanıtım sayfası:</strong> bir yan proje ya da küçük bir işletme.`,
+            `<strong>Etkinlik ya da davetiye sayfası.</strong>`
+          ] },
+          { t: `p`, html: `Bir ana sayfa ve ihtiyacın olan iki ya da üç ek sayfa yeterli. Gereksiz sayfaları ve özellikleri ilk sürümün kapsamından çıkar.` },
+          { t: `h`, text: `Adım 1 — İnşa etmeden önce planla` },
+          { t: `code`, label: `Claude'a`, code: `I want to build a personal portfolio site:\na home page, a projects page, and a contact page.\nPlan the pages and the order to build them in.\nDo not write anything yet.` },
+          { t: `p`, html: `Anlamı: “Kişisel bir portfolyo sitesi yapmak istiyorum: bir ana sayfa, bir projeler sayfası ve bir iletişim sayfası. Sayfaları ve yapılış sırasını planla. Henüz hiçbir şey yazma.”` },
+          { t: `practice` },
+          { t: `h`, text: `Adım 2 — Planı oku` },
+          { t: `list`, items: [
+            `İstediğin sayfaların hepsi planda var mı?`,
+            `Ortak görünüm, menü ve bağlantılar düşünülmüş mü?`,
+            `İnşa sırası anlaşılır mı?`
+          ] },
+          { t: `p`, html: `Yanlış varsayımları, dosyalar oluşturulmadan önce düzelt.` },
+          { t: `h`, text: `İnce dilimler hâlinde yayınla` },
+          { t: `p`, html: `Önce basit ve gezinilebilir bir iskelet oluştur. Sonra bir sayfanın gerçek içeriğini, ardından diğer içerikleri ve iletişimi ekle. Tamamlanan her parçada diff'i, yerel sonucu ve dağıtımdan sonra canlı siteyi kontrol et.` },
+          { t: `callout`, kind: `info`, title: `Kişisel bilgilerde acele etme`, html: `İlk sürümü küçük tutmak yayınlama akışını erkenden doğrulamanı sağlar. Bunun için kişisel ya da gizli bilgileri aceleyle paylaşman gerekmez; yayınlanacak içeriği bilerek seç.` }
+        ],
+        trouble: [
+          { q: `Ne tür bir site yapacağıma karar veremiyorum`, a: `Gerçekten kullanacağın bir sonucu seç: Birine bağlantısını göndermek isteyeceğin bir sayfa. Emin değilsen kişisel bir siteyle başla; en az sayfayla tamamlanır.` }
+        ],
+        have: [
+          `Bitirme projesi için bir biçim seçtin.`,
+          `Kapsamı küçük tutmanın ve sayfa planını önce okumanın önemini biliyorsun.`,
+          `İnce dilimlerle ilerleme planın var: iskelet, içerik, iletişim.`
+        ],
+        note: `Benim bitirme projem bu site: Orvena. Ana sayfa, Öğrenme Yolculuğum ve Hakkımda sayfalarından oluşuyor; Türkçe ve İngilizce.`,
+        next: `Sırada: Bütün sayfaların iskeletini kurmak ve ilk gün yayınlamak.`,
+        prompt: `Kişisel bir portfolyo sitesi yapmak istiyorum: ana sayfa, projeler ve iletişim. İlk sürüm için kapsamı küçük tutan bir sayfa planı ve yapım sırası önerir misin?`,
+        sandbox: {
+          cwd: `~`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: {},
+          claude: [
+            { match: `I want to build a personal portfolio site: a home page, a projects page, and a contact page. Plan the pages and the order to build them in. Do not write anything yet`,
+              out: [`Plan (henüz dosya yazmadım):`, `1. Üç sayfanın iskeleti: index.html, projects.html, contact.html — her birinde başlık ve ortak menü.`, `2. Ana sayfanın gerçek içeriği: adın ve kısa bir tanıtım.`, `3. Projeler sayfası: 2–3 proje ve kısa açıklamaları.`, `4. İletişim sayfası: e-posta ve profil bağlantıları.`, `Her adımdan sonra yayınlayıp kontrol etmeni öneririm.`] }
+          ],
+          try: [
+            { cmd: `cd my-portfolio`, desc: `proje klasörüne gir` },
+            { cmd: `claude "I want to build a personal portfolio site: a home page, a projects page, and a contact page. Plan the pages and the order to build them in. Do not write anything yet."`, desc: `planı iste` },
+            { cmd: `ls`, desc: `henüz dosya yok` }
+          ]
+        }
+      },
+      {
+        id: `m7-d2`, title: `Sayfaları kur, ilk gün deploy et`, minutes: 2, ready: true,
+        intro: [
+          `Plan hazır. Önce bütün sayfaların kaba biçimini ve aralarındaki bağlantıları oluşturacaksın. Ardından yayınlama akışını, içerik henüz basitken doğrulayacaksın.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Önce bütün iskeleti kur` },
+          { t: `code`, label: `Claude'a`, code: `build the skeleton of my site: a home, projects, and contact page,\neach with just a heading and one placeholder line,\nand a shared menu linking all three` },
+          { t: `p`, html: `Anlamı: “Sitemin iskeletini kur: ana sayfa, projeler ve iletişim sayfaları; her birinde yalnızca bir başlık ve bir yer tutucu satır olsun, üçünü birbirine bağlayan ortak bir menü de olsun.” Diff'leri oku. Her sayfayı aç; başlıkların ve menü bağlantılarının doğru olduğunu kontrol et.` },
+          { t: `callout`, kind: `tip`, title: `Önce bütün, sonra ayrıntı`, html: `Bir sayfayı diğerleri oluşmadan kusursuzlaştırmaya çalışma. Önce bütün sitenin yapısını gör.` },
+          { t: `practice` },
+          { t: `h`, text: `Adım 2 — Erken yayınla` },
+          { t: `code`, label: `Claude'a`, code: `set up git, push this to a new GitHub repo,\nand walk me through getting it live on Vercel` },
+          { t: `p`, html: `Anlamı: “Git'i kur, bunu yeni bir GitHub deposuna gönder ve Vercel'de yayına almam için bana adım adım yol göster.” Depo hedefini, görünürlüğü ve gönderilecek dosyaları kontrol et. Barındırıcıdaki proje kökünü ve dağıtım ayarlarını doğrula. İlk dağıtımın tamamlandığını ve verilen adresin açıldığını gör.` },
+          { t: `callout`, kind: `warn`, title: `Yer tutucu, gerçek bilgi değildir`, html: `İskeletin herkese açık olmasını istemiyorsan sağlayıcının önizleme ya da erişim kısıtlaması seçeneklerini değerlendir. Henüz tamamlanmamış örnek içeriği gerçek bilgi gibi sunma.` },
+          { t: `h`, text: `Adım 3 — Kilometre taşını kaydet` },
+          { t: `p`, html: `Çalışan iskeleti açıklayıcı bir commit mesajıyla kaydet ve uzak depoya gönder. Canlı ya da önizleme adresinde bütün sayfaları yeniden gez. Bu commit, sonraki değişiklikleri karşılaştırabileceğin bir sürüm kaydıdır.` }
+        ],
+        trouble: [
+          { q: `Menüdeki bir bağlantı canlı sitede 404 veriyor`, a: `Bağlantıdaki dosya adını gerçek dosya adıyla karşılaştır; büyük/küçük harf ve klasör yolu önemlidir.` },
+          { q: `Dağıtım tamamlandı ama adres açılmıyor`, a: `Barındırıcıdaki proje kökünün doğru klasör olduğunu ve <code>index.html</code>'in o klasörde bulunduğunu kontrol et.` }
+        ],
+        have: [
+          `Bütün sayfaların iskeletini ortak bir menüyle kurdun.`,
+          `Yayın akışını içerik henüz basitken doğruladın.`,
+          `Çalışan iskeleti bir commit ile kilometre taşı olarak kaydettin.`
+        ],
+        note: `Bu sitede de önce sayfaların iskeleti ve ortak menüsü oluştu; içerik ve tasarım ayrıntıları sonradan, adım adım geldi.`,
+        next: `Sırada: İskeleti gerçek içerikle doldurmak.`,
+        prompt: `Üç sayfalık (ana sayfa, projeler, iletişim) basit bir HTML sitesinin iskeletini ortak bir menüyle nasıl kurarım? Kısa bir örnek kod gösterir misin?`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: {},
+          cmds: [
+            { match: `git add .`, out: [] },
+            { match: `git commit -m "add the skeleton of all three pages with a shared menu"`, out: [`[main (root-commit) 1a2b3c4] add the skeleton of all three pages with a shared menu`, ` 3 files changed, 12 insertions(+)`] }
+          ],
+          claude: [
+            { match: `build the skeleton of my site: a home, projects, and contact page, each with just a heading and one placeholder line, and a shared menu linking all three`,
+              write: {
+                "~/my-portfolio/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Home</h1>\n<p>(placeholder) A short intro will go here.</p>`,
+                "~/my-portfolio/projects.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Projects</h1>\n<p>(placeholder) My projects will go here.</p>`,
+                "~/my-portfolio/contact.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Contact</h1>\n<p>(placeholder) How to reach me will go here.</p>`
+              },
+              out: [`[OK] wrote index.html`, `[OK] wrote projects.html`, `[OK] wrote contact.html`, `Üç sayfada da aynı menü var.`] },
+            { match: `set up git, push this to a new GitHub repo, and walk me through getting it live on Vercel`,
+              out: [`(simülasyon) Adımlar:`, `1. git init, ilk commit ve yeni GitHub deposuna push — depo adını ve görünürlüğü sen onayla.`, `2. vercel.com'da GitHub ile giriş yap ve depoyu Import et.`, `3. Proje kökünü kontrol et ve Deploy'a bas.`, `4. Verilen adresi aç ve üç sayfayı menüden gez.`] }
+          ],
+          try: [
+            { cmd: `claude "build the skeleton of my site: a home, projects, and contact page, each with just a heading and one placeholder line, and a shared menu linking all three"`, desc: `iskeleti kur` },
+            { cmd: `ls`, desc: `sayfalar` },
+            { cmd: `cat contact.html`, desc: `bir sayfayı oku` },
+            { cmd: `claude "set up git, push this to a new GitHub repo, and walk me through getting it live on Vercel"`, desc: `erken yayınla` },
+            { cmd: `git add .`, desc: `hazırla` },
+            { cmd: `git commit -m "add the skeleton of all three pages with a shared menu"`, desc: `kilometre taşı` }
+          ]
+        }
+      },
+      {
+        id: `m7-d3`, title: `Gerçek içerikle doldur`, minutes: 3, ready: true,
+        intro: [
+          `İskeleti kişisel bir siteye dönüştüren şey, doğru ve sana ait içeriktir. Sayfa sayfa ilerleyip yer tutucuları adınla, kendi açıklamalarınla ve gerçek projelerinle değiştir.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Her yer tutucuyu değiştir` },
+          { t: `code`, label: `Claude'a`, code: `on my home page, replace the placeholder heading with Ayşe Yılmaz\nand write a warm two-sentence intro saying I am learning\nto build things and I make small useful websites` },
+          { t: `p`, html: `Anlamı: “Ana sayfamdaki yer tutucu başlığı Ayşe Yılmaz ile değiştir ve bir şeyler yapmayı öğrendiğimi, küçük ve işe yarar web siteleri yaptığımı söyleyen sıcak, iki cümlelik bir giriş yaz.” Örnekteki adı kendi adınla değiştir. Her sayfa için gerçek malzemeyi ver: ne yaptığın, hangi projeler üzerinde çalıştığın ve bunların senin için önemi. Claude'un yazdığı metindeki gerçekleri ve tonu diff üzerinden kontrol et.` },
+          { t: `practice` },
+          { t: `h`, text: `Adım 2 — Kendi görsellerini ekle` },
+          { t: `code`, label: `Claude'a`, code: `I have added photo.jpg to my project.\nPut it on the home page next to my intro, at a sensible size.` },
+          { t: `p`, html: `Anlamı: “Projeme photo.jpg ekledim. Onu ana sayfada giriş metninin yanına, makul bir boyutta koy.” Dosyayı proje klasörüne koy; adını ve konumunu açıkça belirt. Görselin sayfa düzenine uyduğunu, mobilde taşmadığını ve uygun bir alternatif metni (<code>alt</code>) olduğunu kontrol et.` },
+          { t: `callout`, kind: `warn`, title: `Görsel hakları`, html: `Yalnızca kullanma hakkın olan görselleri yayınla. Fotoğrafın hazır değilse sade bir grafik ya da bilinçli bir görsel alan kullanabilirsin; ama unutulmuş bir “fotoğraf buraya” notunu yayında bırakma.` },
+          { t: `h`, text: `Adım 3 — Kulağa senin gibi gelsin` },
+          { t: `code`, label: `Claude'a`, code: `read my about page and rewrite anything that sounds stiff\nor generic so it sounds like a real person wrote it;\nkeep my facts exactly the same` },
+          { t: `p`, html: `Anlamı: “Hakkımda sayfamı oku; kulağa katı ya da sıradan gelen her şeyi, gerçek bir insan yazmış gibi duyulacak şekilde yeniden yaz; bilgilerimi olduğu gibi koru.” Metni yüksek sesle oku. Doğal olmayan satırları düzelt ve yeni bir başarı, yetenek ya da kişisel bilgi uydurulmadığını doğrula.` },
+          { t: `h`, text: `Bir sayfayı tamamla, kontrol et, yayınla` },
+          { t: `p`, html: `Bir sayfanın gerçek içeriği hazır olduğunda commit ve push yap. Otomatik dağıtım tamamlandıktan sonra canlı sürümü açıp doğrula; sonra bir sonraki sayfaya geç.` }
+        ],
+        trouble: [
+          { q: `Claude bilmediğim bir bilgi ekledi`, a: `Diff'te bulduğun satırı reddet ya da düzelt ve isteğe “keep my facts exactly the same; do not add anything new about me” ekini koy.` },
+          { q: `Fotoğraf görünmüyor`, a: `Dosya adının ve uzantısının (ör. <code>photo.jpg</code> / <code>Photo.JPG</code>) koddakiyle birebir aynı olduğunu ve dosyanın doğru klasörde olduğunu kontrol et.` }
+        ],
+        have: [
+          `Yer tutucuları kendi adın ve açıklamalarınla değiştirmeyi öğrendin.`,
+          `Kendi görselini sayfaya ekleyip mobilde ve <code>alt</code> metninde kontrol etmeyi öğrendin.`,
+          `Metni doğallaştırırken bilgilerini korumayı öğrendin.`
+        ],
+        note: `Bu sitenin hakkımda bilgileri yalnızca CV'mden, ders konuları yalnızca ders notlarımdan geliyor; Claude'dan metni düzenlemesini isterken yeni bilgi eklememesini özellikle istedim.`,
+        next: `Sırada: Ziyaretçilerin sana ulaşabilmesi için bir yol eklemek.`,
+        prompt: `Kişisel web sitemin Hakkımda metnini daha doğal ve samimi bir dille yeniden yazmak istiyorum, ama bilgilerimin değişmemesi gerekiyor. Bunu bir yapay zekâdan isterken nelere dikkat etmeliyim?`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: {
+            "~/my-portfolio/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Home</h1>\n<p>(placeholder) A short intro will go here.</p>`,
+            "~/my-portfolio/photo.jpg": `(bu bir görsel dosyası; terminalde içeriği okunmaz)`
+          },
+          claude: [
+            { match: `on my home page, replace the placeholder heading with Ayşe Yılmaz and write a warm two-sentence intro saying I am learning to build things and I make small useful websites`,
+              write: { "~/my-portfolio/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Ayşe Yılmaz</h1>\n<p>Hi, I'm Ayşe — I'm learning to build things, one small step at a time. I make small, useful websites.</p>` },
+              out: [`Önerilen değişiklik — index.html:`, `- <h1>Home</h1>`, `+ <h1>Ayşe Yılmaz</h1>`, `- <p>(placeholder) A short intro will go here.</p>`, `+ <p>Hi, I'm Ayşe — I'm learning to build things, one small step at a time. I make small, useful websites.</p>`, `(simülasyon: öneri kabul edildi)`, `[OK] edited index.html`] },
+            { match: `I have added photo.jpg to my project. Put it on the home page next to my intro, at a sensible size`,
+              write: { "~/my-portfolio/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Ayşe Yılmaz</h1>\n<img src="photo.jpg" alt="Portrait of Ayşe Yılmaz" width="240" style="max-width:100%;height:auto">\n<p>Hi, I'm Ayşe — I'm learning to build things, one small step at a time. I make small, useful websites.</p>` },
+              out: [`[OK] edited index.html — photo.jpg eklendi (240px genişlik, mobilde küçülür, alt metni var)`] }
+          ],
+          try: [
+            { cmd: `ls`, desc: `photo.jpg yerinde mi?` },
+            { cmd: `claude "on my home page, replace the placeholder heading with Ayşe Yılmaz and write a warm two-sentence intro saying I am learning to build things and I make small useful websites"`, desc: `gerçek içerik` },
+            { cmd: `claude "I have added photo.jpg to my project. Put it on the home page next to my intro, at a sensible size."`, desc: `görseli ekle` },
+            { cmd: `cat index.html`, desc: `sonucu oku` }
+          ]
+        }
+      },
+      {
+        id: `m7-d4`, title: `Sana ulaşmanın bir yolunu ekle`, minutes: 4, ready: true,
+        intro: [
+          `Bir ziyaretçinin sana ulaşabilmesi için karmaşık bir sisteme ihtiyacın olmayabilir. Önce açık bir iletişim bağlantısını düşün; form gerekiyorsa uygun bir hizmetle ekle.`
+        ],
+        blocks: [
+          { t: `h`, text: `Birinci seviye: net bağlantılar` },
+          { t: `code`, label: `Claude'a`, code: `on my contact page, add a button that opens a new email\nto me at ayse@example.com, and links to my Instagram and GitHub` },
+          { t: `p`, html: `Anlamı: “İletişim sayfama, bana ayse@example.com adresine yeni bir e-posta açan bir düğme ile Instagram ve GitHub bağlantılarımı ekle.” Örnek adresi, yayınlamak istediğin kendi adresinle değiştir. E-posta bağlantısı, ziyaretçinin cihazında uygun bir e-posta uygulaması varsa yeni bir mesaj açar. Sosyal bağlantıları gerçek profil adreslerinle doğrula.` },
+          { t: `practice` },
+          { t: `h`, text: `İkinci seviye: iletişim formu` },
+          { t: `code`, label: `Claude'a`, code: `add a simple contact form - name, email, message -\nto my contact page, using a form service like Formspree\nso submissions get emailed to me without my own backend` },
+          { t: `p`, html: `Anlamı: “İletişim sayfama ad, e-posta ve mesaj alanları olan basit bir form ekle; gönderimler kendi sunucum olmadan bana e-postayla gelsin diye Formspree gibi bir form hizmeti kullan.” Böyle bir üçüncü taraf hizmet gönderimleri işler; kendi sunucunu işletmen gerekmez.` },
+          { t: `list`, items: [
+            `Hizmetin güncel planını, kullanım sınırlarını, spam kontrollerini ve veri işleme koşullarını kontrol et.`,
+            `Gerekli hesap ve uç nokta ayarlarını tamamla.`,
+            `Formun etiketlerini, zorunlu alanlarını, başarı ve hata mesajlarını incele.`,
+            `Gizli bir erişim anahtarı gerekiyorsa onu tarayıcı koduna yerleştirme.`
+          ] },
+          { t: `h`, text: `Bir ziyaretçi gibi test et` },
+          { t: `cmd`, code: `start contact.html` },
+          { t: `p`, html: `Önce yerelde bağlantıları ve görünümü dene; sonra canlı sayfadan kendine bir test mesajı gönder. Mesajın gelen kutuna ulaştığını ve bir hata olduğunda kullanıcıya anlaşılır bir bilgi gösterildiğini kontrol et.` },
+          { t: `callout`, kind: `warn`, title: `Başarı mesajı yetmez`, html: `Test gönderimini yalnızca kendi hesabına ya da izin verilen bir test hedefine yap. Ekranda başarı mesajının görünmesi, iletinin gerçekten ulaştığını tek başına kanıtlamaz; gelen kutunu kontrol et.` }
+        ],
+        trouble: [
+          { q: `E-posta düğmesi hiçbir şey açmıyor`, a: `Ziyaretçinin cihazında bir e-posta uygulaması tanımlı olmayabilir. Adresi sayfada düz metin olarak da göstermek iyi bir yedektir.` },
+          { q: `Form gönderiliyor ama mesaj gelmiyor`, a: `Form hizmetindeki hesabı ve e-posta doğrulamasını kontrol et; spam klasörüne de bak. Formun gönderim adresinin (uç nokta) doğru olduğundan emin ol.` }
+        ],
+        have: [
+          `E-posta ve profil bağlantılarıyla basit bir iletişim yolu eklemeyi öğrendin.`,
+          `Gerektiğinde bir form hizmetiyle iletişim formu eklemenin adımlarını biliyorsun.`,
+          `İletişimi uçtan uca, gelen kutusunu kontrol ederek test etmeyi öğrendin.`
+        ],
+        note: `Bu sitede form yerine birinci seviyeyi seçtim: e-posta, GitHub ve LinkedIn bağlantıları. Telefon ve adres bilgisi bilerek yer almıyor.`,
+        next: `Sırada: Cilalama, son gözden geçirme ve yayın kararı.`,
+        prompt: `Statik bir kişisel siteye iletişim yolu eklemek istiyorum. Yalnızca e-posta ve sosyal bağlantılar ile bir form hizmeti kullanmanın artılarını ve eksilerini karşılaştırır mısın?`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: { "~/my-portfolio/contact.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Contact</h1>\n<p>(placeholder) How to reach me will go here.</p>` },
+          cmds: [
+            { match: `start contact.html`, out: [`(simülasyon) contact.html tarayıcıda açılırdı. E-posta düğmesini ve profil bağlantılarını tek tek dene.`] }
+          ],
+          claude: [
+            { match: `on my contact page, add a button that opens a new email to me at ayse@example.com, and links to my Instagram and GitHub`,
+              write: { "~/my-portfolio/contact.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Contact</h1>\n<p><a class="button" href="mailto:ayse@example.com">Email me</a></p>\n<p>ayse@example.com</p>\n<ul>\n  <li><a href="https://instagram.com/your-profile">Instagram</a></li>\n  <li><a href="https://github.com/your-profile">GitHub</a></li>\n</ul>` },
+              out: [`[OK] edited contact.html — e-posta düğmesi ve iki profil bağlantısı eklendi`, `Not: Instagram ve GitHub adreslerini kendi profil adreslerinle değiştir.`] }
+          ],
+          try: [
+            { cmd: `claude "on my contact page, add a button that opens a new email to me at ayse@example.com, and links to my Instagram and GitHub"`, desc: `birinci seviye` },
+            { cmd: `cat contact.html`, desc: `bağlantıları kontrol et` },
+            { cmd: `start contact.html`, desc: `ziyaretçi gibi dene` }
+          ]
+        }
+      },
+      {
+        id: `m7-d5`, title: `Cilala, gözden geçir ve yayınla`, minutes: 2, ready: true,
+        intro: [
+          `Sayfaların, gerçek içeriğin ve iletişim yolun hazır. Şimdi siteyi ilk kez gelen bir ziyaretçi gibi değerlendirip yayın kararını vereceksin.`
+        ],
+        blocks: [
+          { t: `h`, text: `Son rötuş turu` },
+          { t: `list`, items: [
+            `<strong>İlk izlenim:</strong> Ana sayfa kim olduğunu ve ne sunduğunu açıkça anlatıyor mu?`,
+            `<strong>Mobil:</strong> Küçük ekranda yazılar, görseller ve menü kullanılabiliyor mu?`,
+            `<strong>Bağlantılar:</strong> Her sayfadan menüyü ve iletişim hedeflerini denedin mi?`,
+            `<strong>Artıklar:</strong> Örnek metin, unutulmuş bir yer tutucu ya da yarım bir bölüm var mı?`
+          ] },
+          { t: `h`, text: `İkinci bir inceleme iste` },
+          { t: `code`, label: `Claude'a`, code: `review my whole site as if you are about to publish it.\nList anything unfinished, inconsistent, broken on mobile,\nor confusing, and the three most worth fixing first.\nDo not change anything yet.` },
+          { t: `p`, html: `Anlamı: “Bütün siteme yayınlamak üzereymişsin gibi bak. Yarım kalmış, tutarsız, mobilde bozuk ya da kafa karıştırıcı her şeyi listele ve önce düzeltmeye en değer üçünü söyle. Henüz hiçbir şeyi değiştirme.” Bulguları kontrol et. Öncelikli eksikleri küçük adımlarla düzelt, kalan iyileştirmeleri not al.` },
+          { t: `callout`, kind: `warn`, title: `Kod incelemesi, telefon testi değildir`, html: `Claude'un kodu incelemesi, gerçek bir telefonda yapılan testin yerini almaz; mobil sorunları canlı sayfada da dene.` },
+          { t: `practice` },
+          { t: `h`, text: `Yayın öncesi kontrol` },
+          { t: `table`, head: [`Kontrol`, `Doğrulama`], rows: [
+            [`Canlı HTTPS adresi`, `Doğru yayın adresi açılıyor; sertifika uyarısı yok.`],
+            [`Telefon`, `Görünüm ve gezinme küçük ekranda çalışıyor.`],
+            [`Bağlantılar`, `Menüler ve sayfa bağlantıları doğru hedefe gidiyor.`],
+            [`Gerçek içerik`, `Yer tutucular temizlenmiş; ad ve bilgiler doğru.`],
+            [`İletişim`, `Test mesajı gerçekten alınmış.`]
+          ] },
+          { t: `h`, text: `Yayın kararını ver` },
+          { t: `p`, html: `Bir ziyaretçi siteyi anlayabiliyor, sayfaları gezebiliyor ve sana ulaşabiliyorsa temel hedefi sağladın. Mükemmellik için süresiz beklemek yerine gerekli düzeltmeleri tamamla ve yayınla; yeni iyileştirmeleri sonradan ekleyebilirsin.` }
+        ],
+        trouble: [
+          { q: `Bitmeyen bir iyileştirme listem var`, a: `Listeyi “yayından önce şart” ve “sonra eklenebilir” diye ikiye ayır. Yalnızca ilk grubu tamamla ve yayınla.` }
+        ],
+        have: [
+          `Son rötuş için dört maddelik bir tur listen var.`,
+          `Claude'dan önceliklendirilmiş bir son inceleme isteyebilirsin.`,
+          `Beş maddelik yayın öncesi kontrolle bilinçli bir yayın kararı verebilirsin.`
+        ],
+        note: `Bu siteyi yayınlamadan önce bağlantıları ve iki temayı kontrol ettim, farklı ekran genişliklerinde ekran görüntüleriyle baktım; her yayından önce de onay verdim.`,
+        next: `Sırada: Kursun özeti.`,
+        prompt: `Kişisel web sitemi yayınlamadan önce kullanabileceğim bir yayın öncesi kontrol listesi hazırlar mısın? Mobil, bağlantılar, içerik, HTTPS ve iletişim başlıklarını kullan.`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: {
+            "~/my-portfolio/index.html": `<h1>Ayşe Yılmaz</h1>\n<img src="photo.jpg" width="900">\n<p>Hi, I'm Ayşe. I make small, useful websites.</p>`,
+            "~/my-portfolio/projects.html": `<h1>Projects</h1>\n<p>(placeholder) My projects will go here.</p>`,
+            "~/my-portfolio/contact.html": `<h1>Contact</h1>\n<p><a href="mailto:ayse@example.com">Email me</a></p>`
+          },
+          claude: [
+            { match: `review my whole site as if you are about to publish it. List anything unfinished, inconsistent, broken on mobile, or confusing, and the three most worth fixing first. Do not change anything yet`,
+              out: [`Değişiklik yapmadım. Bulgular:`, `- projects.html: yer tutucu metin duruyor.`, `- index.html: görsel 900px sabit genişlikte; telefonda taşar. alt metni de yok.`, `- Hiçbir sayfada ortak menü yok.`, `- contact.html: e-posta adresi örnek adres gibi görünüyor.`, `Önce düzeltmeye en değer üçü: 1) yer tutucu, 2) mobilde taşan görsel, 3) eksik menü.`] }
+          ],
+          try: [
+            { cmd: `claude "review my whole site as if you are about to publish it. List anything unfinished, inconsistent, broken on mobile, or confusing, and the three most worth fixing first. Do not change anything yet."`, desc: `son inceleme` },
+            { cmd: `cat index.html`, desc: `bulguyu doğrula` }
+          ]
+        }
+      },
+      {
+        id: `m7-d6`, title: `Modül 7 özeti: yayınladın`, minutes: 2, ready: true,
+        intro: [
+          `Kursun sonunda hedef, küçük ve gerçek bir siteyi planlayıp yayınlayabileceğin bir çalışma döngüsü kurmak. Bu ders, tamamladığın adımları ve bir sonraki projene taşıyacağın alışkanlıkları bir araya getiriyor.`
+        ],
+        blocks: [
+          { t: `h`, text: `Kurs boyunca kazandığın beceriler` },
+          { t: `table`, head: [`Modül`, `Beceri`], rows: [
+            [`1. Terminal temelleri`, `Konumunu bulmak, dosya ve klasörleri görmek; pratik ortamında ilk adımları atmak.`],
+            [`2. İlk prompt`, `Kurulum akışını tanımak ve açık isteklerle bir sayfa oluşturmak.`],
+            [`3. Düzenleme`, `Diff okumak, öneriyi ayarlamak, açıklama istemek ve küçük refaktörler yapmak.`],
+            [`4. Çok sayfalı site`, `Birden fazla dosyada planlı ve tutarlı değişiklik yapmak.`],
+            [`5. Yayınlama`, `Git, uzak depo, barındırma, HTTPS ve alan adı akışını anlamak.`],
+            [`6. İş akışı araçları`, `Proje talimatlarını, komutları, yardımcıları, hook'ları ve bağlantıları tanımak.`],
+            [`7. Bitirme projesi`, `Küçük bir siteyi gerçek içerik ve iletişimle tamamlayıp kontrol etmek.`]
+          ] },
+          { t: `h`, text: `Asıl beceri: döngüyü sürdürmek` },
+          { t: `p`, html: `<strong>Planla → ne istediğini anlat → diff'i incele → sonucu kontrol et → tamamlanan parçayı yayınla → tekrarla.</strong> Aynı yaklaşım tek satırlık bir değişiklikte de, daha büyük bir projede de işe yarar.` },
+          { t: `h`, text: `Sonraki proje` },
+          { t: `p`, html: `Bir sonraki proje için gerçekten işine yarayacak küçük bir fikir seç. Kapsamı sınırla, bir ilk sürüm tanımla ve aynı kontrol döngüsüyle ilerle.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Terminalde rahatça gezinmek ve Claude Code'u kendi bilgisayarında kullanmak.`,
+          `Açık istekler yazıp diff'leri bilinçli olarak incelemek.`,
+          `Çok sayfalı bir siteyi planlı ve tutarlı biçimde geliştirmek.`,
+          `Siteyi Git ve bir barındırıcıyla yayınlayıp güncellemek.`,
+          `Kendi küçük ve gerçek siteni bitirip paylaşmak.`
+        ],
+        note: `Amaç komut ezberlemek değil; açık istek vermek, değişikliği incelemek ve sonucu bitirip yayınlamak. Bu site, o döngünün ilk ürünü.`,
+        next: `Bir sonraki adım: Öğrendiklerini kullanarak kendi küçük projeni seçmek ve aynı döngüyle ilerlemek.`,
+        prompt: `Claude Code ile ilk kişisel sitemi yayınladım. Aynı “planla, anlat, diff'i incele, kontrol et, yayınla” döngüsüyle yapabileceğim, yeni başlayan biri için uygun 5 küçük proje fikri önerir misin?`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: { "~/my-portfolio/index.html": `<h1>Ayşe Yılmaz</h1>`, "~/my-portfolio/projects.html": `<h1>Projects</h1>`, "~/my-portfolio/contact.html": `<h1>Contact</h1>` },
+          cmds: [
+            { match: `git push`, out: [`(simülasyon) To https://github.com/you/my-portfolio.git`, `   4e5f6a7..8b9c0d1  main -> main`, `Dağıtımı izle ve canlı adresi başka bir cihazda aç.`] }
+          ],
+          try: [
+            { cmd: `ls`, desc: `bitmiş site` },
+            { cmd: `git push`, desc: `yayınla` }
+          ]
+        }
+      }
     ] }
   ]
 };

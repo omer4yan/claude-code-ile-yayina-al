@@ -62,6 +62,14 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 - Kapak görselleri `assets/img/modules/m1–m7.svg` (640×400, ortak gradyan ve palet).
 - Görünüm: masaüstü 3, tablet (≤1023px) 2, mobil (≤640px) 1 kart + sonrakinin bir kısmı; scroll-snap, otomatik kaydırma ve döngü yok.
 
+## Ders sayfaları (`ders.html?id=m1-d1` … `m7-d6`)
+- Tek şablon `ders.html`; içerik tek veri dosyasından: `assets/js/lessons.tr.js` (`window.ORVENA_LESSONS`, blok türleri dosyanın başında açıklı). İngilizce ders sayfaları henüz yok; EN bağlantıları `en/yolculuk.html#id`'ye gider.
+- Betik sırası: `lessons.tr.js` → `lesson.js` (sayfayı, müfredatı, "Bu modülde", "Bu derste", önceki/sonraki kartlarını üretir) → `sandbox.js` → `listen.js` → `main.js`. Stil: `assets/css/lesson.css`. `body[data-lesson-page]` olduğunda `main.js` yolculuk sayfasının kaydırma takibini çalıştırmaz.
+- Metinler PDF notlarına dayanır, talimat diliyle ve kendi cümlelerimizle yazılır; kurs metni birebir kopyalanmaz, kurs sağlayıcı adı ve sertifika geçmez. "Benim notum" birinci tekil şahıstır ve yaşanmamış deneyim iddia etmez.
+- Sandbox simülasyondur (gerçek shell değil): `pwd`, `ls [-a]`, `mkdir`, `cd`, `cat`, `help`, `clear`; derse özel yanıtlar `sandbox.claude` (claude "…" istekleri) ve `sandbox.cmds` (`start …`, `/init`, `git …` gibi) içinde. "Şunları dene" önerilerinin hepsi çalışmalı; test ederken her öneriyi çalıştırıp "komut bulunamadı / yalnızca bu derste" çıktısı olmadığını kontrol et.
+- "Claude'da aç" isteği panoya kopyalar ve `https://claude.ai/new?q=` adresini açar (resmî olmayan adres; alan boş gelirse kullanıcı yapıştırır). Dinleme Web Speech API ile, cümle cümle.
+- Yolculuk sayfasındaki her dersin altında `ders.html?id=…` bağlantısı ("Dersi aç") var.
+
 ## Dersler ve bağlantılar
 - Her modülde `.lessons` listesi var; her dersin kimliği `m{modül}-d{ders}` (örn. `#m3-d2`). Toplam 40 ders.
 - Sol müfredat ve sağdaki "Bu modülde" kartı bu kimliklere bağlanır. Yeni ders eklenirse ikisini de, iki dilde güncelle.
