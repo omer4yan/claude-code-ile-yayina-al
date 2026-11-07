@@ -49,7 +49,7 @@
     openSb: "Open sandbox", openClaude: "Open in Claude",
     crumb: "Location", listen: "Listen instead of reading",
     trouble: "If it didn't work", have: "What you have now", note: "My note",
-    prev: "Previous lesson", next: "Next lesson", onJourney: "Summary on the journey page", pager: "Move between lessons",
+    prev: "Previous lesson", next: "Next lesson", afterCourse: "After the course", pager: "Move between lessons",
     descTpl: function (m, d, t) { return "Module " + m + ", Lesson " + d + ": " + t + ". My lesson notes from the 'Claude Code ile Yayına Al' course."; },
     toastOk: "Example prompt copied to the clipboard. If the box in Claude is empty, paste it (Ctrl+V).",
     toastOpen: "claude.ai opened in a new tab. If the box is empty, type the prompt yourself.",
@@ -63,7 +63,7 @@
     openSb: "Sandbox'ı aç", openClaude: "Claude'da aç",
     crumb: "Konum", listen: "Okumak yerine dinle",
     trouble: "Çalışmadıysa", have: "Şimdi elinde ne var", note: "Benim notum",
-    prev: "Önceki ders", next: "Sonraki ders", onJourney: "Özeti yolculuk sayfasında", pager: "Dersler arası geçiş",
+    prev: "Önceki ders", next: "Sonraki ders", afterCourse: "Kursun ardından", pager: "Dersler arası geçiş",
     descTpl: function (m, d, t) { return "Modül " + m + ", Ders " + d + ": " + t + ". 'Claude Code ile Yayına Al' kursunun ders notlarım."; },
     toastOk: "Örnek istek panoya kopyalandı. Claude'da alan boş gelirse yapıştır (Ctrl+V).",
     toastOpen: "claude.ai yeni sekmede açıldı. Alan boş gelirse isteği kendin yaz.",
@@ -77,9 +77,11 @@
       all.push({ lesson: l, module: m, index: i });
     });
   });
+  // "Yayın günü": modüllerden sonra gelen ek sayfa (modülü yok)
+  if (DATA.launch) all.push({ lesson: DATA.launch, module: null, index: 0 });
 
   var lessonHref = function (l) {
-    return l.ready ? "ders.html?id=" + l.id : "yolculuk.html#" + l.id;
+    return "ders.html?id=" + l.id;
   };
   // Ders sayfasında bir modül bağlantısı o modülün ilk dersine gider
   var moduleHref = function (m) {
@@ -91,9 +93,9 @@
   var pos = -1;
   for (var i = 0; i < all.length; i++) if (all[i].lesson.id === id) pos = i;
 
-  if (pos < 0 || !all[pos].lesson.ready) {
-    // Bilinmeyen ya da henüz hazırlanmamış ders: yolculuk sayfasındaki özete git
-    location.replace(pos < 0 ? "yolculuk.html" : "yolculuk.html#" + id);
+  if (pos < 0) {
+    // Bilinmeyen ders: ilk derse git
+    location.replace(lessonHref(all[0].lesson));
     return;
   }
 
@@ -104,15 +106,12 @@
   var next = all[pos + 1] || null;
 
   /* ---------- Başlık, dil bağlantıları ---------- */
-  document.title = L.title + " — " + T.module + " " + M.no + " · Orvena";
+  document.title = M ? L.title + " — " + T.module + " " + M.no + " · Orvena" : L.title + " · Orvena";
   var desc = document.querySelector('meta[name="description"]');
-  if (desc) desc.setAttribute("content", T.descTpl(M.no, cur.index + 1, L.title));
+  if (desc) desc.setAttribute("content", M ? T.descTpl(M.no, cur.index + 1, L.title) : L.desc || L.title);
 
-  // Dil bağlantıları aynı dersin diğer dildeki karşılığına gider.
-  // İngilizce karşılığı henüz yazılmamış modüllerde İngilizce yolculuk sayfasındaki özete gider (DATA.enReady).
-  var otherHref = isEn
-    ? "../ders.html?id=" + L.id
-    : ((DATA.enReady || []).indexOf(M.id) !== -1 ? "en/ders.html?id=" + L.id : "en/yolculuk.html#" + L.id);
+  // Dil bağlantıları aynı sayfanın diğer dildeki karşılığına gider
+  var otherHref = (isEn ? "../ders.html?id=" : "en/ders.html?id=") + L.id;
   ["lang-link", "footer-other"].forEach(function (k) {
     var a = document.getElementById(k);
     if (a) a.setAttribute("href", otherHref);
@@ -125,7 +124,7 @@
   if (curList) {
     var html = "";
     DATA.modules.forEach(function (m) {
-      var open = m.id === M.id;
+      var open = !!M && m.id === M.id;
       html += '<div class="cur-module' + (open ? " is-active" : " is-collapsed") + '" data-module="' + m.id + '"' + (open ? " data-open" : "") + ">" +
         '<div class="cur-module__head cur-module__head--split">' +
         '<a class="cur-module__link" href="' + moduleHref(m) + '">' +
@@ -142,7 +141,8 @@
       });
       html += "</ul></div></div>";
     });
-    html += '<div class="cur-module cur-extra" data-module="yayin-gunu"><a class="cur-module__head" href="yolculuk.html#yayin-gunu">' +
+    var onLaunch = !M;
+    html += '<div class="cur-module cur-extra' + (onLaunch ? " is-active" : "") + '" data-module="yayin-gunu"><a class="cur-module__head" href="ders.html?id=yayin-gunu"' + (onLaunch ? ' aria-current="page"' : "") + ">" +
       '<span class="cur-badge">★</span><span class="cur-module__name">' + T.launch + '</span><span class="cur-module__count">' + T.launchDate + "</span></a></div>";
     curList.innerHTML = html;
   }
@@ -151,7 +151,7 @@
   var railCard = document.querySelector(".rail-card--module");
   var railName = document.getElementById("rail-module-name");
   var railList = document.getElementById("rail-lessons");
-  if (railCard && railName && railList) {
+  if (railCard && railName && railList && M) {
     railName.innerHTML = '<a href="' + moduleHref(M) + '">' + esc(M.title) + "</a>";
     railList.innerHTML = M.lessons.map(function (l, k) {
       var active = l.id === L.id;
@@ -209,6 +209,12 @@
         return '<ul class="lesson-list">' + b.items.map(function (x) { return "<li data-read>" + x + "</li>"; }).join("") + "</ul>";
       case "steps":
         return '<ol class="lesson-steps">' + b.items.map(function (x) { return "<li data-read>" + x + "</li>"; }).join("") + "</ol>";
+      case "timeline":
+        return '<ol class="timeline">' + b.items.map(function (x, k) {
+          var last = k === b.items.length - 1 && b.live;
+          return "<li" + (last ? ' class="is-live"' : "") + ' data-read><span class="timeline__dot">' + (last ? "✓" : k + 1) + "</span><strong>" +
+            esc(x.title) + "</strong><p>" + x.html + "</p></li>";
+        }).join("") + "</ol>";
       case "practice":
         return '<div class="practice" data-practice>' +
           '<div class="practice__bar">' +
@@ -229,17 +235,22 @@
   body += '<header class="lesson-hero">' +
     '<canvas class="lesson-hero__waves" aria-hidden="true"></canvas>' +
     '<nav class="lesson-crumb" aria-label="' + T.crumb + '">' +
-    '<a href="yolculuk.html" style="--i:0">' + esc(DATA.course) + "</a>" +
+    '<a href="' + lessonHref(all[0].lesson) + '" style="--i:0">' + esc(DATA.course) + "</a>" +
     '<span class="lesson-crumb__sep" style="--i:1">' + ICON.chev + "</span>" +
-    '<a href="' + moduleHref(M) + '" style="--i:2">' + T.module + " " + M.no + "</a>" +
-    '<span class="lesson-crumb__sep" style="--i:3">' + ICON.chev + "</span>" +
-    '<span aria-current="page" style="--i:4">' + T.lesson + " " + (cur.index + 1) + "</span>" +
+    (M
+      ? '<a href="' + moduleHref(M) + '" style="--i:2">' + T.module + " " + M.no + "</a>" +
+        '<span class="lesson-crumb__sep" style="--i:3">' + ICON.chev + "</span>" +
+        '<span aria-current="page" style="--i:4">' + T.lesson + " " + (cur.index + 1) + "</span>"
+      : '<span aria-current="page" style="--i:2">' + T.launch + "</span>") +
     "</nav>" +
     '<h1 class="lesson-hero__title" data-read>' + esc(L.title) + "</h1>" +
+    (L.sub ? '<p class="lesson-hero__sub" data-read>' + esc(L.sub) + "</p>" : "") +
     '<div class="hero-chips">' +
-    '<span class="chip">' + ICON.list + T.lesson + " " + (cur.index + 1) + " / " + M.lessons.length + "</span>" +
-    '<span class="chip">' + ICON.clock + L.minutes + " " + T.minRead + "</span>" +
-    '<span class="chip">' + ICON.term + T.module + " " + pad2(M.no) + " · " + esc(M.title) + "</span>" +
+    (M
+      ? '<span class="chip">' + ICON.list + T.lesson + " " + (cur.index + 1) + " / " + M.lessons.length + "</span>" +
+        '<span class="chip">' + ICON.clock + L.minutes + " " + T.minRead + "</span>" +
+        '<span class="chip">' + ICON.term + T.module + " " + pad2(M.no) + " · " + esc(M.title) + "</span>"
+      : (L.chips || []).map(function (c) { return '<span class="chip">' + esc(c) + "</span>"; }).join("")) +
     "</div></header>";
 
   // Dinleme oynatıcısı (listen.js doldurur)
@@ -279,11 +290,10 @@
     if (!item) return '<span class="pager__empty"></span>';
     var l = item.lesson;
     var label = dir === "prev" ? T.prev : T.next;
-    var where = T.module + " " + item.module.no + " · " + T.lesson + " " + (item.index + 1);
+    var where = item.module ? T.module + " " + item.module.no + " · " + T.lesson + " " + (item.index + 1) : T.afterCourse;
     return '<a class="pager__card pager__card--' + dir + '" href="' + lessonHref(l) + '">' +
       (dir === "prev" ? '<span class="pager__arrow">' + ICON.left + "</span>" : "") +
-      '<span class="pager__text"><small>' + label + " · " + where + "</small><strong>" + esc(l.title) + "</strong>" +
-      (l.ready ? "" : "<em>" + T.onJourney + "</em>") + "</span>" +
+      '<span class="pager__text"><small>' + label + " · " + where + "</small><strong>" + esc(l.title) + "</strong></span>" +
       (dir === "next" ? '<span class="pager__arrow">' + ICON.right + "</span>" : "") +
       "</a>";
   };

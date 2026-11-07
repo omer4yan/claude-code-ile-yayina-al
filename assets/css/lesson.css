@@ -1126,3 +1126,21 @@
 .cmd--diff .d-ctx {
   color: #9a9a9a;
 }
+
+/* Giriş alanı alt başlığı (ör. Yayın günü) */
+.lesson-hero__sub {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  opacity: 0;
+  animation: crumb-in 0.6s ease 0.65s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson-hero__sub {
+    animation: none;
+    opacity: 1;
+  }
+}

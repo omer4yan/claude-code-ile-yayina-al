@@ -18,7 +18,7 @@
 
   var MODULES = [
     {
-      no: 1, lessons: 6, minutes: 34, href: "yolculuk.html#m1", cover: "assets/img/modules/m1.svg", progress: null,
+      no: 1, lessons: 6, minutes: 34, href: "ders.html?id=m1-d1", cover: "assets/img/modules/m1.svg", progress: null,
       tr: {
         title: "Claude Code'u kur",
         highlight: "Terminalde ilk adımlar",
@@ -31,7 +31,7 @@
       }
     },
     {
-      no: 2, lessons: 6, minutes: 31, href: "yolculuk.html#m2", cover: "assets/img/modules/m2.svg", progress: null,
+      no: 2, lessons: 6, minutes: 31, href: "ders.html?id=m2-d1", cover: "assets/img/modules/m2.svg", progress: null,
       tr: {
         title: "İlk prompt'un",
         highlight: "Nerede, ne ve neden",
@@ -44,7 +44,7 @@
       }
     },
     {
-      no: 3, lessons: 5, minutes: 17, href: "yolculuk.html#m3", cover: "assets/img/modules/m3.svg", progress: null,
+      no: 3, lessons: 5, minutes: 17, href: "ders.html?id=m3-d1", cover: "assets/img/modules/m3.svg", progress: null,
       tr: {
         title: "Tek dosyada düzenlemeler",
         highlight: "İste, diff'i oku, kontrol et",
@@ -57,7 +57,7 @@
       }
     },
     {
-      no: 4, lessons: 5, minutes: 14, href: "yolculuk.html#m4", cover: "assets/img/modules/m4.svg", progress: null,
+      no: 4, lessons: 5, minutes: 14, href: "ders.html?id=m4-d1", cover: "assets/img/modules/m4.svg", progress: null,
       tr: {
         title: "Çok sayfalı bir site kur",
         highlight: "Önce planla, sonra değiştir",
@@ -70,7 +70,7 @@
       }
     },
     {
-      no: 5, lessons: 6, minutes: 11, href: "yolculuk.html#m5", cover: "assets/img/modules/m5.svg", progress: null,
+      no: 5, lessons: 6, minutes: 11, href: "ders.html?id=m5-d1", cover: "assets/img/modules/m5.svg", progress: null,
       tr: {
         title: "İlk projeni yayına alma",
         highlight: "Yerel dosyadan herkese açık adrese",
@@ -83,7 +83,7 @@
       }
     },
     {
-      no: 6, lessons: 6, minutes: 11, href: "yolculuk.html#m6", cover: "assets/img/modules/m6.svg", progress: null,
+      no: 6, lessons: 6, minutes: 11, href: "ders.html?id=m6-d1", cover: "assets/img/modules/m6.svg", progress: null,
       tr: {
         title: "Hooks, MCP ve iş akışı",
         highlight: "Tekrarı doğru yere taşı",
@@ -96,7 +96,7 @@
       }
     },
     {
-      no: 7, lessons: 6, minutes: 15, href: "yolculuk.html#m7", cover: "assets/img/modules/m7.svg", progress: null,
+      no: 7, lessons: 6, minutes: 15, href: "ders.html?id=m7-d1", cover: "assets/img/modules/m7.svg", progress: null,
       tr: {
         title: "Bitirme projesi: kendi siteni yayınla",
         highlight: "Planla, inşa et, yayınla",
@@ -198,7 +198,7 @@
 
     var h3 = el("h3", "mcard__title");
     var link = el("a", "mcard__link", m.title);
-    link.href = m.href || "yolculuk.html";
+    link.href = m.href || "ders.html";
     h3.appendChild(link);
     body.appendChild(h3);
 

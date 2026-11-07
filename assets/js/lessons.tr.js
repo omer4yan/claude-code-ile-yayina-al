@@ -29,8 +29,6 @@
    ========================================================= */
 window.ORVENA_LESSONS = {
   course: `Claude Code ile Yayına Al`,
-  // İngilizce ders sayfası hazır olan modüller (dil bağlantısı en/ders.html'e gider; diğerleri en/yolculuk.html'e)
-  enReady: [`m1`, `m2`, `m3`, `m4`, `m5`, `m6`, `m7`],
   modules: [
     {
       id: `m1`, no: 1, title: `Claude Code'u kur`, sub: `Terminalde ilk adımlar`,
@@ -2354,5 +2352,24 @@ window.ORVENA_LESSONS = {
         }
       }
     ] }
-  ]
+  ],
+  // Kursun ardından: ilk sitemi yayına aldığım gün (ders şablonunda ek sayfa; ders.html?id=yayin-gunu)
+  launch: {
+    id: `yayin-gunu`, title: `Yayın günü`, sub: `İlk sitemi yayına aldığım gün`,
+    chips: [`6 Kasım 2026`, `GitHub Pages`],
+    desc: `6 Kasım 2026: ilk sitemi GitHub Pages üzerinden yayına aldığım gün.`,
+    intro: [
+      `6 Kasım 2026, ilk sitemi yayına aldığım gün. Kursun bitirme modülünde öğrendiklerimi kendi sitemde uygulamak istedim ve bu süreçte Claude Code'dan yardım aldım. Site hazır olduğunda GitHub depomun <strong>Settings → Pages</strong> bölümünden yayını etkinleştirdim ve sitem GitHub Pages üzerinden canlıya çıktı.`,
+      `Kursta yayınlama akışını Vercel üzerinden öğrenmiştim; ilk sitem için GitHub Pages'i kullandım. Şu an okuduğunuz sayfa, o yayının sonucu.`
+    ],
+    blocks: [
+      { t: `timeline`, live: true, items: [
+        { title: `Kursu tamamladım`, html: `Yedi modülü bitirdikten sonra öğrendiklerimi kendi sitemde uygulamak istedim.` },
+        { title: `Sitemi hazırladım`, html: `Siteyi hazırlarken Claude Code'dan yardım aldım.` },
+        { title: `Yayını etkinleştirdim`, html: `GitHub depomda Settings → Pages bölümünden yayını açtım.` },
+        { title: `6 Kasım 2026 · Yayında`, html: `Sitem GitHub Pages üzerinden canlıya çıktı.` }
+      ] }
+    ],
+    note: `Bu site benim için bir başlangıç. Öğrendiklerimi uygulamaya ve kendimi geliştirmeye devam ediyorum.`
+  }
 };

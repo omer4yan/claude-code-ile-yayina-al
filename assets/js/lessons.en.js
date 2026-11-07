@@ -5,7 +5,7 @@
    Prompts and commands stay as in the Turkish lessons. The Turkish
    "Anlamı: …" (meaning) sentences are left out, since the prompts are
    already in English.
-   Lessons with ready: false link to en/yolculuk.html#id until translated.
+   All 40 lessons are translated; "launch" is the extra Launch day page.
    ========================================================= */
 window.ORVENA_LESSONS = {
   course: `Claude Code ile Yayına Al`,
@@ -2327,5 +2327,24 @@ window.ORVENA_LESSONS = {
         }
       }
     ] }
-  ]
+  ],
+  // After the course: the day I published my first website (extra page in the lesson template; ders.html?id=yayin-gunu)
+  launch: {
+    id: `yayin-gunu`, title: `Launch day`, sub: `The day I published my first website`,
+    chips: [`6 November 2026`, `GitHub Pages`],
+    desc: `6 November 2026: the day I published my first website on GitHub Pages.`,
+    intro: [
+      `6 November 2026 is the day I published my first website. I wanted to apply what I learned in the course's capstone module to my own site, and I had help from Claude Code along the way. When the site was ready, I enabled publishing in the <strong>Settings → Pages</strong> section of my GitHub repository, and my site went live on GitHub Pages.`,
+      `In the course I had learned the publishing workflow with Vercel; for my first site I used GitHub Pages. The page you're reading now is the result of that launch.`
+    ],
+    blocks: [
+      { t: `timeline`, live: true, items: [
+        { title: `I finished the course`, html: `After completing the seven modules, I wanted to apply what I had learned to my own site.` },
+        { title: `I built my site`, html: `I had help from Claude Code while building the site.` },
+        { title: `I enabled publishing`, html: `I turned on publishing in the Settings → Pages section of my GitHub repository.` },
+        { title: `6 November 2026 · Live`, html: `My site went live on GitHub Pages.` }
+      ] }
+    ],
+    note: `This site is a beginning for me. I'm continuing to apply what I've learned and to improve myself.`
+  }
 };
