@@ -143,6 +143,13 @@
         return '<figure class="cmd cmd--code">' +
           '<figcaption class="cmd__cap"><span>' + esc(b.label || "Örnek") + "</span>" + copyBtn(b.code) + "</figcaption>" +
           "<pre><code>" + esc(b.code) + "</code></pre></figure>";
+      case "diff":
+        return '<figure class="cmd cmd--diff">' +
+          '<figcaption class="cmd__cap"><span>' + esc(b.label || "Diff") + "</span></figcaption><pre><code>" +
+          b.lines.map(function (ln) {
+            var cls = ln.charAt(0) === "-" ? "d-del" : ln.charAt(0) === "+" ? "d-add" : "d-ctx";
+            return '<span class="' + cls + '">' + esc(ln) + "</span>";
+          }).join("") + "</code></pre></figure>";
       case "callout":
         var kind = b.kind || "info";
         return '<aside class="callout callout--' + kind + '" data-read>' +

@@ -197,7 +197,7 @@
       var res = run(line);
       if (res && res.claude) {
         print("● Claude (simülasyon)", "is-claude");
-        res.lines.forEach(function (l) { print(esc(l), /^\[OK\]/.test(l) ? "is-ok" : "is-out"); });
+        res.lines.forEach(function (l) { print(esc(l), /^\[OK\]/.test(l) ? "is-ok" : /^- /.test(l) ? "is-del" : /^\+ /.test(l) ? "is-add" : "is-out"); });
       } else {
         res.forEach(function (l) { print(esc(l) || "&nbsp;", "is-out"); });
       }

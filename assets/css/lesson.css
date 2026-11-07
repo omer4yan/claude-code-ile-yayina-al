@@ -1094,3 +1094,35 @@
     padding-left: 16px;
   }
 }
+
+/* Sandbox içindeki diff satırları */
+.sandbox__line.is-del {
+  color: #f08a7a;
+  background: rgba(240, 90, 70, 0.1);
+}
+
+.sandbox__line.is-add {
+  color: #a8c46a;
+  background: rgba(168, 196, 106, 0.1);
+}
+
+/* Ders metnindeki diff kutusu */
+.cmd--diff pre span {
+  display: block;
+  margin: 0 -18px;
+  padding: 0 18px;
+}
+
+.cmd--diff .d-del {
+  color: #f08a7a;
+  background: rgba(240, 90, 70, 0.12);
+}
+
+.cmd--diff .d-add {
+  color: #a8c46a;
+  background: rgba(168, 196, 106, 0.12);
+}
+
+.cmd--diff .d-ctx {
+  color: #9a9a9a;
+}

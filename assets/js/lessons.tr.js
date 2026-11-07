@@ -822,12 +822,291 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m3`, no: 3, title: `Tek dosyada düzenlemeler`, lessons: [
-      { id: `m3-d1`, title: `Bir diff okuma`, minutes: 5 },
-      { id: `m3-d2`, title: `Düzenlemeleri kabul etme ve ayarlama`, minutes: 3 },
-      { id: `m3-d3`, title: `Açıklama isteme`, minutes: 2 },
-      { id: `m3-d4`, title: `Küçük refaktörler`, minutes: 5 },
-      { id: `m3-d5`, title: `Modül 3 özeti`, minutes: 2 }
+    { id: `m3`, no: 3, title: `Tek dosyada düzenlemeler`, sub: `Diff oku, karar ver, sonucu kontrol et`, lessons: [
+      {
+        id: `m3-d1`, title: `Bir diff okuma`, minutes: 5, ready: true,
+        intro: [
+          `Bir dosyayı değiştirirken edinmen gereken en önemli alışkanlık, önerilen değişikliği okumaktır. <strong>Diff</strong>, eski ve yeni içerik arasındaki farkı satır satır gösterir.`
+        ],
+        blocks: [
+          { t: `callout`, kind: `warn`, title: `Onay ekranı her zaman gelmeyebilir`, html: `Onay isteyen izin modunda Claude öneriyi gösterip kararını bekler. Otomatik düzenleme izinleri açıksa değişiklik önceden uygulanmış olabilir; her seferinde bir onay ekranı göreceğini varsayma.` },
+          { t: `h`, text: `Adım 1 — Küçük bir değişiklik iste` },
+          { t: `code`, label: `Terminal`, code: `cd my-first-project\nclaude` },
+          { t: `code`, label: `Claude'a`, code: `in index.html, change my main heading to say hello and then my name` },
+          { t: `p`, html: `Anlamı: “index.html'deki ana başlığı önce merhaba, sonra adım yazacak şekilde değiştir.” Onay ekranı gelirse <strong>henüz kabul etme</strong>. Önce dosya adını ve değişen satırları oku.` },
+          { t: `h`, text: `Adım 2 — Diff'i oku` },
+          { t: `diff`, label: `index.html`, lines: [`  <body>`, `- <h1>My name</h1>`, `+ <h1>Hello, I'm Ayşe</h1>`, `  <p>I am learning to build websites.</p>`] },
+          { t: `list`, items: [
+            `<code>-</code> ile başlayan satır <strong>kaldırılır</strong>.`,
+            `<code>+</code> ile başlayan satır <strong>eklenir</strong>.`,
+            `İşaretsiz <strong>bağlam satırları</strong>, değişikliğin çevresinde aynı kalan içeriği gösterir; değişikliğin dosyanın neresinde olduğunu anlamana yardım eder.`
+          ] },
+          { t: `p`, html: `Bu örnek bir başlık satırını yenisiyle değiştiriyor. Tek bir parçaya bakıp dosyanın geri kalanının değişmediği sonucuna varma; önerideki diğer blokları da kontrol et.` },
+          { t: `practice` },
+          { t: `h`, text: `Adım 3 — Onay ekranındaki seçenekler` },
+          { t: `table`, head: [`Seçenek`, `Anlamı`], rows: [
+            [`Yes`, `Önerilen değişikliği uygular.`],
+            [`Yes, and switch to accept edits`, `Değişikliği uygular ve dosya düzenlemelerini otomatik kabul eden moda geçer. Sonraki izin davranışını kontrol et.`],
+            [`No`, `Bekleyen öneriyi reddeder.`]
+          ] },
+          { t: `p`, html: `Menü metni ve tuşlar sürüme göre değişebilir. Düzenleme doğruysa onayla; ardından <code>/exit</code> ile çık ve sayfayı aç:` },
+          { t: `cmd`, code: `start index.html` },
+          { t: `p`, html: `Başlığın istediğin biçimde değiştiğini ve diğer bölümlerin olduğu gibi kaldığını kontrol et.` },
+          { t: `h`, text: `Büyük bir diff'i şu sırayla tara` },
+          { t: `steps`, items: [
+            `<strong>Hangi dosya?</strong> Değişiklik istediğin dosyalarda mı kalmış?`,
+            `<strong>Ne kadar değişiklik?</strong> Kapsam, isteğinle orantılı mı?`,
+            `<strong>Neler kaldırılıyor?</strong> Korumak istediğin bir içerik siliniyor mu?`
+          ] },
+          { t: `p`, html: `Küçük bir istek için beklenmedik büyüklükte bir diff görürsen açıklama iste ya da işi daralt. Satır sayısı tek başına bir hata kanıtı değildir; kapsamı incelemen gerektiğine dair bir işarettir.` }
+        ],
+        trouble: [
+          { q: `Onay ekranı gelmedi, değişiklik doğrudan uygulandı`, a: `Seçili izin modu dosya düzenlemelerini otomatik kabul ediyor olabilir. Giriş alanının yakınındaki modu kontrol et; uygulanan değişikliği de diff'ten ya da dosyayı açarak incele.` },
+          { q: `Diff'te beklemediğim satırlar var`, a: `Öneriyi kabul etme. <strong>No</strong> seç ve neyin değişmemesi gerektiğini kısa bir notla yaz ya da Claude'dan değişikliği açıklamasını iste.` }
+        ],
+        have: [
+          `<code>-</code> kaldırılanı, <code>+</code> ekleneni gösterir; bağlam satırları konumu anlatır.`,
+          `Onay ekranındaki üç seçeneğin farkını biliyorsun.`,
+          `Büyük bir diff'i dosya, kapsam ve kaldırılan içerik sırasıyla tarayabilirsin.`
+        ],
+        note: `Diff'te önce eksi satırlara bakmayı not ettim: Neyin ekleneceğinden çok, neyin silineceği sürpriz olabiliyor.`,
+        next: `Sırada: Bekleyen bir öneriyi kabul etmek, düzeltmek ya da reddetmek.`,
+        prompt: `Bir diff'i nasıl okurum? Eksi ve artı ile başlayan satırlar ile bağlam satırlarını küçük bir HTML örneği üzerinden açıklar mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<body>\n  <h1>My name</h1>\n  <p>I am learning to build websites.</p>\n</body>` },
+          cmds: [
+            { match: `start index.html`, out: [`(simülasyon) index.html varsayılan tarayıcıda açılırdı.`] }
+          ],
+          claude: [
+            { match: `in index.html, change my main heading to say hello and then my name`, write: { "~/my-first-project/index.html": `<body>\n  <h1>Hello, I'm Ayşe</h1>\n  <p>I am learning to build websites.</p>\n</body>` },
+              out: [`Önerilen değişiklik — index.html:`, `  <body>`, `- <h1>My name</h1>`, `+ <h1>Hello, I'm Ayşe</h1>`, `  <p>I am learning to build websites.</p>`, `(simülasyon: öneri kabul edildi)`, `[OK] edited index.html`] }
+          ],
+          try: [
+            { cmd: `cat index.html`, desc: `önceki hâl` },
+            { cmd: `claude "in index.html, change my main heading to say hello and then my name"`, desc: `diff'i gör` },
+            { cmd: `cat index.html`, desc: `sonraki hâl` }
+          ]
+        }
+      },
+      {
+        id: `m3-d2`, title: `Düzenlemeleri kabul etme ve ayarlama`, minutes: 3, ready: true,
+        intro: [
+          `Önerilen bir diff bir tekliftir. Onay bekleyen bir düzenlemede sıradaki adımı sen seçersin: kabul et, düzelt ya da reddet.`
+        ],
+        blocks: [
+          { t: `h`, text: `Üç seçeneğin` },
+          { t: `table`, head: [`Yanıt`, `Ne yaparsın?`], rows: [
+            [`Kabul et`, `Doğru olan değişikliği uygulat.`],
+            [`Düzelt`, `Bekleyen öneriyi reddet ve küçük bir ayarlama tarif et.`],
+            [`Reddet`, `İstemediğin öneriyi uygulamadan bırak.`]
+          ] },
+          { t: `callout`, kind: `info`, title: `Otomatik izinler`, html: `Otomatik düzenleme izinleri açıksa dosya senin kararından önce değişmiş olabilir. Seçili modu kontrol et.` },
+          { t: `h`, text: `Baştan anlatmak yerine küçük bir düzeltme` },
+          { t: `code`, label: `Claude'a`, code: `in index.html, make my heading bigger` },
+          { t: `p`, html: `Diff doğru yönde ama başlık fazla büyük olabilir. Bu durumda <strong>No</strong> seçeneğine gel ve <kbd>Tab</kbd> ile geri bildirim alanını aç. Menü farklıysa mevcut açıklama ya da geri bildirim seçeneğini kullan. Sonra yalnızca düzeltmeyi yaz:` },
+          { t: `code`, label: `Geri bildirim`, code: `a little smaller` },
+          { t: `p`, html: `“keep the colour” (rengi koru) ya da “leave the paragraph alone” (paragrafa dokunma) gibi kısa düzeltmeler, aynı hedef üzerinde kalmanı sağlar. Yeni gelen diff'i de okuyup değerlendir.` },
+          { t: `practice` },
+          { t: `h`, text: `Küçük adımlar, sık kontrol` },
+          { t: `p`, html: `Büyük bir değişikliği okumadan kabul etmek yerine ayrı ayrı kontrol edebileceğin adımlar iste. Böylece bir sorun çıktığında hangi değişikliğin yol açtığını bulmak kolaylaşır.` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `code`, label: `Claude'a`, code: `in index.html, add a short sentence under my heading welcoming visitors` },
+          { t: `p`, html: `Sayfanda üç küçük değişikliği birer birer iste. Her öneriyi oku ve en az birini kısa bir düzeltmeyle ayarla. Sonra sayfayı aç ve sonucun verdiğin kararlarla eşleştiğini kontrol et.` }
+        ],
+        trouble: [
+          { q: `Geri bildirim alanını bulamıyorum`, a: `Menü sürüme göre değişebilir. Öneriyi reddet ve düzeltmeyi bir sonraki mesajda kısa bir cümleyle yaz.` },
+          { q: `Düzeltmeden sonra başka şeyler de değişti`, a: `Yeni diff'i reddet ve neyin değişmemesi gerektiğini açıkça ekle; örneğin “only change the font size”.` }
+        ],
+        have: [
+          `Bekleyen bir öneriyi kabul edebilir, düzeltebilir ya da reddedebilirsin.`,
+          `Baştan anlatmak yerine kısa bir geri bildirimle öneriyi ayarlamayı öğrendin.`,
+          `Değişiklikleri küçük ve gözden geçirilebilir tutmanın faydasını gördün.`
+        ],
+        note: `“a little smaller” gibi iki kelimelik bir düzeltmenin, isteği baştan yazmaktan çok daha hızlı sonuç verdiğini bu derste gördüm.`,
+        next: `Sırada: Değiştirmeden önce açıklama istemek.`,
+        prompt: `Claude Code'da bekleyen bir düzenleme önerisini kabul etmek, kısa bir geri bildirimle düzeltmek ve reddetmek arasında nasıl karar veririm? Basit örneklerle anlatır mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>\n<p>I am learning to build websites.</p>` },
+          claude: [
+            { match: `in index.html, make my heading bigger`, out: [`Önerilen değişiklik — index.html:`, `- <h1>Hello, I'm Ayşe</h1>`, `+ <h1 style="font-size:5rem">Hello, I'm Ayşe</h1>`, `(öneri bekliyor — kabul etmek yerine kısa bir düzeltme yazabilirsin)`] },
+            { match: `a little smaller`, write: { "~/my-first-project/index.html": `<h1 style="font-size:3rem">Hello, I'm Ayşe</h1>\n<p>I am learning to build websites.</p>` }, out: [`Güncellenmiş öneri — index.html:`, `- <h1>Hello, I'm Ayşe</h1>`, `+ <h1 style="font-size:3rem">Hello, I'm Ayşe</h1>`, `(simülasyon: öneri kabul edildi)`, `[OK] edited index.html`] },
+            { match: `in index.html, add a short sentence under my heading welcoming visitors`, write: { "~/my-first-project/index.html": `<h1 style="font-size:3rem">Hello, I'm Ayşe</h1>\n<p>Welcome, thanks for stopping by!</p>\n<p>I am learning to build websites.</p>` }, out: [`Önerilen değişiklik — index.html:`, `  <h1 style="font-size:3rem">Hello, I'm Ayşe</h1>`, `+ <p>Welcome, thanks for stopping by!</p>`, `(simülasyon: öneri kabul edildi)`, `[OK] edited index.html`] }
+          ],
+          try: [
+            { cmd: `claude "in index.html, make my heading bigger"`, desc: `öneriyi gör` },
+            { cmd: `claude "a little smaller"`, desc: `kısa düzeltme` },
+            { cmd: `claude "in index.html, add a short sentence under my heading welcoming visitors"`, desc: `bir sonraki küçük adım` },
+            { cmd: `cat index.html`, desc: `sonucu kontrol et` }
+          ]
+        }
+      },
+      {
+        id: `m3-d3`, title: `Açıklama isteme`, minutes: 2, ready: true,
+        intro: [
+          `Claude'u yalnızca dosyaları değiştirmek için değil, anlamak için de kullan. Anlamadığın bir bölümü değiştirmeden önce ne yaptığını sor.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Önce gerçek dosyayı açıklat` },
+          { t: `code`, label: `Claude'a`, code: `explain what @index.html does, in plain language, section by section` },
+          { t: `p`, html: `Anlamı: “index.html'in ne yaptığını sade bir dille, bölüm bölüm açıkla.” <code>@index.html</code> ile ilgili dosyayı işaret edersin; başlığın, paragrafların ve stillerin ne işe yaradığını anlaşılır bir dille öğrenirsin.` },
+          { t: `h`, text: `Saklamaya değer üç soru` },
+          { t: `list`, items: [
+            `<code>Explain @index.html like I have never seen HTML before.</code> — Daha önce hiç HTML görmemişim gibi açıkla.`,
+            `<code>What would happen to my page if I deleted this part?</code> — Bu bölümü silersem sayfama ne olur?`,
+            `<code>Why is this written this way instead of something simpler?</code> — Bu neden daha basit bir yolla değil de böyle yazılmış?`
+          ] },
+          { t: `p`, html: `“Bu bölüm” gibi ifadeler kullanırken ilgili kodu ya da bölümün adını da yaz. Açıklama olası tasarım nedenlerini ortaya çıkarır; yine de gerekçeyi dosyayla ve sayfanın davranışıyla karşılaştır.` },
+          { t: `practice` },
+          { t: `h`, text: `Adım 2 — Diff'i kabul etmeden önce açıklama iste` },
+          { t: `p`, html: `Bekleyen bir öneriden emin değilsen <strong>No</strong> ve geri bildirim seçeneğini kullan (çoğu sürümde <strong>No</strong> seçiliyken <kbd>Tab</kbd> ile açılır) ve şunu yaz:` },
+          { t: `code`, label: `Geri bildirim`, code: `before I approve, walk me through what this change does\nand what might look different on my page` },
+          { t: `p`, html: `Anlamı: “Onaylamadan önce bu değişikliğin ne yaptığını ve sayfamda neyin farklı görünebileceğini adım adım anlat.” Açıklama istediğinle eşleşmiyorsa öneriyi daralt ya da reddet. Açıklamadan sonra yeniden sunulan diff'i de incele; öncekiyle aynı olduğunu varsayma.` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `p`, html: `Sayfanı baştan sona açıklat. Sonra tek bir bölüm için “Neden böyle yazılmış?” diye sor. Aldığın açıklamayı tarayıcıdaki sonuçla karşılaştır.` }
+        ],
+        trouble: [
+          { q: `Açıklama çok teknik geldi`, a: `Seviyeyi belirt: “like I have never seen HTML before” ya da “in two sentences” gibi bir ek, açıklamayı sadeleştirir.` },
+          { q: `Açıklama dosyayla uyuşmuyor`, a: `Dosyayı açıp ilgili satırı göster ve yeniden sor. Açıklama karar vermene yardım eder ama dosyanın kendisini kontrol etmenin yerini almaz.` }
+        ],
+        have: [
+          `Bir dosyayı bölüm bölüm açıklatmayı öğrendin.`,
+          `Saklamaya değer üç soru kalıbın var.`,
+          `Bekleyen bir diff'i onaylamadan önce açıklama isteyebilirsin.`
+        ],
+        note: `Önce anla, sonra değiştir: Bir bölümü silmeden önce “bunu silersem ne olur?” diye sormayı bu dersten aldığım bir alışkanlık olarak not ettim.`,
+        next: `Sırada: Görünümü değiştirmeden kodu toparlamak.`,
+        prompt: `Basit bir HTML sayfasındaki <head>, <body>, <h1>, <p> ve <style> bölümlerinin ne işe yaradığını, HTML'i hiç görmemiş birine anlatır gibi açıklar mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<style>h1 { color: #b33; }</style>\n<h1>Hello, I'm Ayşe</h1>\n<p>Welcome, thanks for stopping by!</p>` },
+          claude: [
+            { match: `explain what @index.html does, in plain language, section by section`, out: [`index.html üç bölümden oluşuyor:`, `1. <style>: Sayfanın görünüm kuralları. Burada başlığı kırmızı yapıyor.`, `2. <h1>: Sayfanın ana başlığı — ziyaretçinin ilk gördüğü büyük yazı.`, `3. <p>: Başlığın altındaki karşılama paragrafı.`] },
+            { match: `what would happen to my page if I deleted the style part?`, out: [`<style> bölümünü silersen başlık kırmızı olmaktan çıkar ve tarayıcının varsayılan rengiyle (genellikle siyah) görünür.`, `Metinler ve sayfanın yapısı değişmez.`] }
+          ],
+          try: [
+            { cmd: `claude "explain what @index.html does, in plain language, section by section"`, desc: `dosyayı açıklat` },
+            { cmd: `claude "what would happen to my page if I deleted the style part?"`, desc: `silmeden önce sor` },
+            { cmd: `cat index.html`, desc: `açıklamayı dosyayla karşılaştır` }
+          ]
+        }
+      },
+      {
+        id: `m3-d4`, title: `Küçük refaktörler`, minutes: 5, ready: true,
+        intro: [
+          `Refaktör, kodun dışarıdan görünen davranışını koruyarak iç yapısını düzenlemektir. Bu dersteki web sayfasında hedef, görünümü ve işlevi değiştirmeden kodu toparlamak.`
+        ],
+        blocks: [
+          { t: `h`, text: `Yaygın toparlamalar` },
+          { t: `table`, head: [`İşlem`, `Anlamı`], rows: [
+            [`Yeniden adlandır`, `Bir öğeye, kullanıldığı her yerde daha açık bir ad ver.`],
+            [`Ayıkla`, `Tekrarlanan bir değeri ya da yapıyı tek bir yerde topla.`],
+            [`Sadeleştir`, `Aynı işi yapan kodu daha anlaşılır hâle getir.`]
+          ] },
+          { t: `h`, text: `Adım 1 — Küçük ve belirli bir istek yap` },
+          { t: `code`, label: `Claude'a`, code: `in index.html, put the colours in named variables\nat the top of the style block,\nwithout changing how the page looks` },
+          { t: `p`, html: `Anlamı: “index.html'de renkleri, sayfanın görünümünü değiştirmeden, stil bloğunun başında adlandırılmış değişkenlere taşı.” Bir renk birden fazla yerde kullanılıyorsa, sonradan değiştirirken tutarsızlık çıkabilir. Adlandırılmış CSS değişkenleri ortak değerleri tek yerde toplar.` },
+          { t: `diff`, label: `index.html — örnek`, lines: [`  <style>`, `+   :root { --brand: #b33; }`, `-   h1 { color: #b33; }`, `+   h1 { color: var(--brand); }`, `-   a { color: #b33; }`, `+   a { color: var(--brand); }`, `  </style>`] },
+          { t: `h`, text: `Adım 2 — Diff'i oku` },
+          { t: `list`, items: [
+            `Değişkenler doğru değerlerle tanımlanmış mı?`,
+            `Her kullanım doğru değişkene bağlanmış mı?`,
+            `Yeni bir içerik ya da beklenmedik bir görünüm değişikliği var mı?`
+          ] },
+          { t: `practice` },
+          { t: `h`, text: `Adım 3 — Görünümü ve işlevi doğrula` },
+          { t: `cmd`, code: `start index.html` },
+          { t: `p`, html: `Sayfayı aç ya da açık sekmeyi yenile. Renkler, yazı boyutları, aralıklar ve bağlantılar önceki gibi mi? Gerekirse farklı pencere genişliklerinde de bak.` },
+          { t: `p`, html: `Bir şey beklenmedik biçimde değiştiyse dur. Hangi değişikliğin buna yol açtığını incele; uygun bir checkpoint varsa <code>/rewind</code> ile geri dön ya da önceki sürümle karşılaştırarak düzelt.` },
+          { t: `callout`, kind: `tip`, title: `Toparlama ile yeni özelliği ayır`, html: `Aynı adımda hem kodu yeniden düzenleyip hem yeni bir özellik eklersen, bir sorun çıktığında kaynağını ayırmak zorlaşır. İki işi ayrı ve gözden geçirilebilir adımlarda yap.` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `code`, label: `Claude'a`, code: `read @index.html and suggest three small tidy-ups\nthat would not change how the page looks;\ndo not change anything yet` },
+          { t: `steps`, items: [
+            `Önerileri oku.`,
+            `Küçük bir toparlama seç.`,
+            `Yalnızca onu uygulat ve diff'i incele.`,
+            `Sayfayı açıp görünümün ve davranışın korunduğunu doğrula.`
+          ] }
+        ],
+        trouble: [
+          { q: `Refaktörden sonra sayfanın görünümü değişti`, a: `Diff'te değişkenlerin değerlerini ve kullanıldıkları yerleri kontrol et. Gerekirse <code>/rewind</code> ile geri dön ve isteğe “without changing how the page looks” ekini koruyarak yeniden dene.` },
+          { q: `Claude refaktörle birlikte yeni şeyler de ekledi`, a: `Öneriyi reddet ve isteği daralt: “only move the colours into variables; do not add anything new”.` }
+        ],
+        have: [
+          `Refaktörün görünümü ve davranışı koruyan bir iç düzenleme olduğunu biliyorsun.`,
+          `Renkleri adlandırılmış CSS değişkenlerinde toplamayı gördün.`,
+          `Toparlamayı yeni özellikten ayrı bir adımda yapmayı öğrendin.`
+        ],
+        note: `Bu sitenin renkleri de CSS değişkenlerinde duruyor; aydınlık ve koyu temayı tek yerden değiştirebilmemi bu yaklaşım sağlıyor.`,
+        next: `Sırada: Modül 3'ün özeti.`,
+        prompt: `CSS'te renkleri değişkenlere (custom properties) taşımak neden faydalıdır? Basit bir örnekle önce/sonra hâlini gösterir misin?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<style>\n  h1 { color: #b33; }\n  a { color: #b33; }\n</style>\n<h1>Hello, I'm Ayşe</h1>\n<a href="about.html">About me</a>` },
+          cmds: [
+            { match: `start index.html`, out: [`(simülasyon) index.html tarayıcıda açılırdı. Renkler önceki gibi mi? Kontrol et.`] }
+          ],
+          claude: [
+            { match: `read @index.html and suggest three small tidy-ups that would not change how the page looks; do not change anything yet`, out: [`Değişiklik yapmadım. Görünümü değiştirmeyecek üç toparlama:`, `1. Tekrarlanan #b33 rengini bir değişkende topla.`, `2. Başlık ve bağlantıyı bir <main> içine al.`, `3. Stil kurallarını alfabetik sıraya koy.`] },
+            { match: `in index.html, put the colours in named variables at the top of the style block, without changing how the page looks`, write: { "~/my-first-project/index.html": `<style>\n  :root { --brand: #b33; }\n  h1 { color: var(--brand); }\n  a { color: var(--brand); }\n</style>\n<h1>Hello, I'm Ayşe</h1>\n<a href="about.html">About me</a>` },
+              out: [`Önerilen değişiklik — index.html:`, `  <style>`, `+   :root { --brand: #b33; }`, `-   h1 { color: #b33; }`, `+   h1 { color: var(--brand); }`, `-   a { color: #b33; }`, `+   a { color: var(--brand); }`, `  </style>`, `(simülasyon: öneri kabul edildi)`, `[OK] edited index.html — görünüm aynı`] }
+          ],
+          try: [
+            { cmd: `claude "read @index.html and suggest three small tidy-ups that would not change how the page looks; do not change anything yet"`, desc: `önce öneri` },
+            { cmd: `claude "in index.html, put the colours in named variables at the top of the style block, without changing how the page looks"`, desc: `tek bir toparlama` },
+            { cmd: `cat index.html`, desc: `sonucu oku` },
+            { cmd: `start index.html`, desc: `görünümü doğrula` }
+          ]
+        }
+      },
+      {
+        id: `m3-d5`, title: `Modül 3 özeti`, minutes: 2, ready: true,
+        intro: [
+          `Tek dosyada düzenleme döngüsünü kurdun: öneriyi oku, uygun yanıtı ver, gerektiğinde açıklama iste ve küçük toparlamalar yap. Proje büyüdüğünde de bu alışkanlıklar geçerli.`
+        ],
+        blocks: [
+          { t: `h`, text: `Modül 3 hızlı başvuru` },
+          { t: `table`, head: [`Beceri`, `Hamle`], rows: [
+            [`Diff oku`, `<code>-</code> kaldırılanı, <code>+</code> ekleneni gösterir; bağlam satırları konumu anlatır.`],
+            [`Gözden geçirme sırası`, `Hangi dosya → ne kadar değişiklik → ne kaldırılıyor?`],
+            [`Yanıtla`, `Bekleyen öneriyi kabul et, kısa bir geri bildirimle düzelt ya da reddet.`],
+            [`Önce anla`, `“Explain @index.html” ve “Why is it written this way?” diye sor.`],
+            [`Toparla`, `Küçük bir refaktör yap; görünümü ve davranışı tarayıcıda kontrol et.`]
+          ] },
+          { t: `h`, text: `Zihinsel model` },
+          { t: `p`, html: `<strong>İste → diff'i oku → kabul et ya da düzelt → sayfayı kontrol et.</strong> Değişikliğin kapsamını küçük tutmak, hem incelemeyi hem de bir sorunun kaynağını bulmayı kolaylaştırır.` },
+          { t: `callout`, kind: `warn`, title: `İzin modunu bil`, html: `Onay gerektiren modlarda bekleyen değişiklikleri sen değerlendirirsin. Otomatik düzenleme izinleri açıksa her değişiklik için soru gelmeyebilir; seçili modu bil ve uygulanmış diff'leri de incele.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Diff'te eklenen ve kaldırılan satırları ayırt etmek.`,
+          `Bir öneriyi bilinçli olarak kabul etmek, düzeltmek ya da reddetmek.`,
+          `Değiştirmeden önce açıklama istemek.`,
+          `Küçük bir refaktör yapıp görünümün ve davranışın korunduğunu kontrol etmek.`
+        ],
+        note: `İste, oku, karar ver, kontrol et: Tek dosyada öğrendiğim bu döngüyü her değişiklikte uygulamayı hedefliyorum.`,
+        next: `Sırada: Birden fazla dosyayı etkileyen değişiklikleri planlamak ve birlikte gözden geçirmek.`,
+        prompt: `Claude Code kursunun üçüncü modülünde diff okumayı, önerileri kabul etme/düzeltme/reddetmeyi, açıklama istemeyi ve küçük refaktörleri öğrendim. 5 soruluk kısa bir tekrar testi hazırlar mısın? Cevapları en sonda ver.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>My name</h1>\n<p>I am learning to build websites.</p>` },
+          claude: [
+            { match: `in index.html, change my main heading to say hello and then my name`, write: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>\n<p>I am learning to build websites.</p>` },
+              out: [`Önerilen değişiklik — index.html:`, `- <h1>My name</h1>`, `+ <h1>Hello, I'm Ayşe</h1>`, `  <p>I am learning to build websites.</p>`, `(simülasyon: öneri kabul edildi)`, `[OK] edited index.html`] }
+          ],
+          try: [
+            { cmd: `claude "in index.html, change my main heading to say hello and then my name"`, desc: `iste ve diff'i oku` },
+            { cmd: `cat index.html`, desc: `sonucu kontrol et` }
+          ]
+        }
+      }
     ] },
     { id: `m4`, no: 4, title: `Çok sayfalı bir site kur`, lessons: [
       { id: `m4-d1`, title: `Planlama neden önemli`, minutes: 4 },
