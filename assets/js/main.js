@@ -67,6 +67,49 @@
     });
   }
 
+  /* ---------- Ana sayfa giriş alanı: boş yüksekliği metne dağıt ----------
+     Yüksek ekranlarda harita sütun genişliğinden fazla büyüyemez; kalan yükseklik başlığın
+     üstünde büyük bir boşluk olarak kalmasın diye ölçülür ve başlık/paragraf satır aralıklarına
+     ve aralara paylaştırılır. Satır aralığı satır kırılmalarını değiştirmez, bu yüzden
+     dağıtılan miktar hiçbir zaman ölçülen boşluğu aşmaz (taşma olmaz). */
+  var hero = document.querySelector(".hero2");
+  var heroCopy = hero && hero.querySelector(".hero2__copy");
+  var heroTitle = hero && hero.querySelector(".hero2__title");
+  var heroDesc = hero && hero.querySelector(".hero2__desc");
+  if (hero && heroCopy && heroTitle && heroDesc) {
+    var wide = window.matchMedia("(min-width: 1024px)");
+    var setFit = function (t, d, g1, g2) {
+      hero.style.setProperty("--fit-title", t + "px");
+      hero.style.setProperty("--fit-desc", d + "px");
+      hero.style.setProperty("--fit-gap1", g1 + "px");
+      hero.style.setProperty("--fit-gap2", g2 + "px");
+    };
+    var lines = function (el) {
+      var lh = parseFloat(window.getComputedStyle(el).lineHeight) || 1;
+      return Math.max(1, Math.round(el.getBoundingClientRect().height / lh));
+    };
+    var fitHero = function () {
+      setFit(0, 0, 0, 0);
+      if (!wide.matches) return;
+      var cs = window.getComputedStyle(hero);
+      var avail = hero.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      var free = avail - heroCopy.getBoundingClientRect().height;
+      if (free < 8) return;
+      var tl = lines(heroTitle), dl = lines(heroDesc);
+      var titleFont = parseFloat(window.getComputedStyle(heroTitle).fontSize);
+      var descFont = parseFloat(window.getComputedStyle(heroDesc).fontSize);
+      // Paylaşım: başlık satırları %40, paragraf satırları %20, aralar %25 ve %15; ölçülü üst sınırlar
+      var t = Math.min((free * 0.4) / tl, titleFont * 0.36);
+      var d = Math.min((free * 0.2) / dl, descFont * 0.5);
+      var g1 = Math.min(free * 0.25, 90);
+      var g2 = Math.min(free * 0.15, 60);
+      setFit(t.toFixed(1), d.toFixed(1), g1.toFixed(1), g2.toFixed(1));
+    };
+    fitHero();
+    window.addEventListener("resize", fitHero);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHero);
+  }
+
   /* ---------- Sayfa içi bağlantılar: güvenilir kaydırma ---------- */
   var scrollToId = function (id, push) {
     var target = document.getElementById(id);

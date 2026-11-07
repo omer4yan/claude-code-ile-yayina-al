@@ -415,3 +415,22 @@
     font-size: 0.9rem;
   }
 }
+
+/* Yüksek ekranlarda metin bloğu nefes alır (kullanıcı isteği): haritanın büyüyemediği
+   yükseklik başlığın üstünde boşluk olarak kalmasın diye, main.js içindeki fitHero()
+   gerçek boş alanı ölçer ve satır aralıklarına ve aralara dağıtır (--fit-* değişkenleri).
+   Boş alan yoksa (ör. laptop) değerler 0 kalır, hiçbir şey değişmez. */
+@media (min-width: 1024px) {
+  .hero2__title {
+    line-height: calc(1.04em + var(--fit-title, 0px));
+  }
+
+  .hero2__desc {
+    margin-top: calc(clamp(14px, 2.4vh, 26px) + var(--fit-gap1, 0px));
+    line-height: calc(1.75em + var(--fit-desc, 0px));
+  }
+
+  .hero2__actions {
+    margin-top: calc(clamp(18px, 3vh, 30px) + var(--fit-gap2, 0px));
+  }
+}
