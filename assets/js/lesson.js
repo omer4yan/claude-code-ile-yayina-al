@@ -49,6 +49,10 @@
   var lessonHref = function (l) {
     return l.ready ? "ders.html?id=" + l.id : "yolculuk.html#" + l.id;
   };
+  // Ders sayfasında bir modül bağlantısı o modülün ilk dersine gider
+  var moduleHref = function (m) {
+    return lessonHref(m.lessons[0]);
+  };
 
   var params = new URLSearchParams(location.search);
   var id = params.get("id") || all[0].lesson.id;
@@ -86,7 +90,7 @@
       var open = m.id === M.id;
       html += '<div class="cur-module' + (open ? " is-active" : " is-collapsed") + '" data-module="' + m.id + '"' + (open ? " data-open" : "") + ">" +
         '<div class="cur-module__head cur-module__head--split">' +
-        '<a class="cur-module__link" href="yolculuk.html#' + m.id + '">' +
+        '<a class="cur-module__link" href="' + moduleHref(m) + '">' +
         '<span class="cur-badge">' + pad2(m.no) + "</span>" +
         '<span class="cur-module__name">' + esc(m.title) + "</span>" +
         '<span class="cur-module__count">' + m.lessons.length + " ders</span></a>" +
@@ -110,7 +114,7 @@
   var railName = document.getElementById("rail-module-name");
   var railList = document.getElementById("rail-lessons");
   if (railCard && railName && railList) {
-    railName.innerHTML = '<a href="yolculuk.html#' + M.id + '">' + esc(M.title) + "</a>";
+    railName.innerHTML = '<a href="' + moduleHref(M) + '">' + esc(M.title) + "</a>";
     railList.innerHTML = M.lessons.map(function (l, k) {
       var active = l.id === L.id;
       return "<li" + (active ? ' class="is-active"' : "") + '><a href="' + lessonHref(l) + '"' + (active ? ' aria-current="page"' : "") +
@@ -189,7 +193,7 @@
     '<nav class="lesson-crumb" aria-label="Konum">' +
     '<a href="yolculuk.html" style="--i:0">' + esc(DATA.course) + "</a>" +
     '<span class="lesson-crumb__sep" style="--i:1">' + ICON.chev + "</span>" +
-    '<a href="yolculuk.html#' + M.id + '" style="--i:2">Modül ' + M.no + "</a>" +
+    '<a href="' + moduleHref(M) + '" style="--i:2">Modül ' + M.no + "</a>" +
     '<span class="lesson-crumb__sep" style="--i:3">' + ICON.chev + "</span>" +
     '<span aria-current="page" style="--i:4">Ders ' + (cur.index + 1) + "</span>" +
     "</nav>" +
