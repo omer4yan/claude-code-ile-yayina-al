@@ -1088,12 +1088,277 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m4`, no: 4, title: `Build a multi-page site`, lessons: [
-      { id: `m4-d1`, title: `Why planning matters`, minutes: 4 },
-      { id: `m4-d2`, title: `Edits across files`, minutes: 4 },
-      { id: `m4-d3`, title: `Breaking tasks into pieces`, minutes: 2 },
-      { id: `m4-d4`, title: `Reviewing your own diff`, minutes: 2 },
-      { id: `m4-d5`, title: `Module 4 summary`, minutes: 2 }
+    { id: `m4`, no: 4, title: `Build a multi-page site`, sub: `Plan, spread across pages, review the whole`, lessons: [
+      {
+        id: `m4-d1`, title: `Why planning matters`, minutes: 4, ready: true,
+        intro: [
+          `Once your site grows to more than one page, a change affects other files too. Renaming a page affects links; changing a shared menu affects every page. So plan the approach before moving on to edits.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — Ask for the plan, not the edit` },
+          { t: `code`, label: `To Claude`, code: `I want to add a second page called projects.html\nand link to it from my home page. Plan the change first:\nlist the files you would touch and in what order.\nDo not edit anything yet.` },
+          { t: `p`, html: `This way you see in advance which files will change and in what order. It's much easier to notice a missing page or a wrong assumption before editing starts.` },
+          { t: `practice` },
+          { t: `h`, text: `Step 2 — Read the plan critically` },
+          { t: `list`, items: [
+            `<strong>Scope:</strong> Are all the affected files in the list?`,
+            `<strong>Order:</strong> Have shared style and link dependencies been considered?`,
+            `<strong>Boundaries:</strong> Is there a file you don't want touched?`
+          ] },
+          { t: `p`, html: `There's no single right order for every job. What matters is that the plan's reasoning is clear and it doesn't skip dependencies.` },
+          { t: `h`, text: `Step 3 — Use plan mode` },
+          { t: `p`, html: `You can switch to plan mode with <kbd>Shift</kbd> + <kbd>Tab</kbd>. Check the selected mode in the interface; it can vary with version and permission settings.` },
+          { t: `callout`, kind: `warn`, title: `A plan doesn't replace a review`, html: `Reading the plan doesn't change the fact that you need to review the applied changes afterwards. The plan sets the direction; the diff and the browser result confirm it.` },
+          { t: `h`, text: `Try it now` },
+          { t: `code`, label: `To Claude`, code: `plan how to give my site a projects page and an about page,\nboth linked from the home page;\nlist the files and the order, no edits yet` },
+          { t: `p`, html: `Only read the plan. If a file is missing or there's a step you don't want, explain it and have the plan revised. You don't have to move on to implementation in this exercise.` }
+        ],
+        trouble: [
+          { q: `Claude started editing directly instead of planning`, a: `Stop it with <kbd>Esc</kbd>. Add “do not edit anything yet” to the request, or switch to plan mode and ask again.` },
+          { q: `A file is missing from the plan`, a: `Name the missing file: “you also need to update about.html”. Have the plan rewritten and read it again.` }
+        ],
+        have: [
+          `You learned to ask for a plan with a file list and an order before editing.`,
+          `You can check a plan for scope, order and boundaries.`,
+          `You know where plan mode is and its limits.`
+        ],
+        note: `Because I need to update this site's Turkish and English pages together, the question “which files will you touch first?” matters especially to me.`,
+        next: `Next: spreading the planned change consistently across all the relevant pages.`,
+        prompt: `When I add a new page to a simple multi-page website, what kind of plan should I ask for before making changes? Which questions should I look at to check a plan?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>\n<p>Welcome, thanks for stopping by!</p>` },
+          claude: [
+            { match: `I want to add a second page called projects.html and link to it from my home page. Plan the change first: list the files you would touch and in what order. Do not edit anything yet`,
+              out: [`Plan (I haven't changed any files yet):`, `1. projects.html — a new page; same structure and style as index.html.`, `2. index.html — add a link to projects.html.`, `Files I won't touch: none.`, `If you approve, I'll start with step 1.`] },
+            { match: `plan how to give my site a projects page and an about page, both linked from the home page; list the files and the order, no edits yet`,
+              out: [`Plan (no edits):`, `1. Create projects.html.`, `2. Create about.html.`, `3. Add links to both pages in index.html.`, `4. Check that the shared style is the same on all three pages.`, `Suggested order: pages first, then links — so the links don't point nowhere.`] }
+          ],
+          try: [
+            { cmd: `claude "I want to add a second page called projects.html and link to it from my home page. Plan the change first: list the files you would touch and in what order. Do not edit anything yet."`, desc: `ask for the plan first` },
+            { cmd: `ls`, desc: `nothing changed?` },
+            { cmd: `claude "plan how to give my site a projects page and an about page, both linked from the home page; list the files and the order, no edits yet"`, desc: `a two-page plan` }
+          ]
+        }
+      },
+      {
+        id: `m4-d2`, title: `Edits across files`, minutes: 4, ready: true,
+        intro: [
+          `Once the plan is ready, spread the change consistently across all the relevant pages. For a shared menu, colour or footer, decide which pages need to change together.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — Add the shared menu to every page` },
+          { t: `code`, label: `To Claude`, code: `add the same navigation menu - Home, Projects, About -\nto the top of every page,\nlinking each one to the right file` },
+          { t: `p`, html: `Claude may propose edits in more than one file. Read each file not on its own but in terms of its role in the change as a whole.` },
+          { t: `practice` },
+          { t: `h`, text: `Step 2 — Review across the files` },
+          { t: `list`, items: [
+            `<strong>Complete?</strong> Did every relevant page get the change?`,
+            `<strong>Consistent?</strong> Do the menu names, their order and the target links match?`,
+            `<strong>Limited to the plan?</strong> Were only the intended files touched?`
+          ] },
+          { t: `h`, text: `Step 3 — Really verify in the browser` },
+          { t: `cmd`, code: `start index.html` },
+          { t: `p`, html: `Open the home page. Move to the other pages from the menu and try the links on each page. Check that the file names, folder paths and upper/lower case are right.` },
+          { t: `h`, text: `Step 4 — Report the gap concretely` },
+          { t: `p`, html: `If the menu is missing on a page, name the file and the symptom:` },
+          { t: `code`, label: `To Claude`, code: `the menu is missing on about.html;\nadd the same menu as on the other pages` },
+          { t: `p`, html: `After the fix, try the relevant links again.` }
+        ],
+        trouble: [
+          { q: `A link gives a “file not found” error`, a: `Compare the file name in the link with the actual file name; upper/lower case and the folder path matter too. Check the file's name with <code>ls</code>.` },
+          { q: `The menu looks different on one page`, a: `Ask whether that page uses the same style file or style block, and ask for a fix naming the page.` }
+        ],
+        have: [
+          `You learned to have a shared item applied to all the relevant pages together.`,
+          `You can review a multi-file diff for completeness, consistency and scope.`,
+          `You learned to verify links by trying them in the browser and to report gaps concretely.`
+        ],
+        note: `This site's top menu and footer are shared across six pages; this lesson made it clear that when I change one, I need to check them all.`,
+        next: `Next: breaking large changes into reviewable pieces.`,
+        prompt: `I want to add a shared navigation menu to a simple three-page HTML site (index, projects, about). How do I ask for the change, and what should I look at to check the result?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {
+            "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`,
+            "~/my-first-project/projects.html": `<h1>Projects</h1>`,
+            "~/my-first-project/about.html": `<h1>About me</h1>`
+          },
+          cmds: [
+            { match: `start index.html`, out: [`(simulation) index.html would open in the browser. Try each link in the menu one by one.`] }
+          ],
+          claude: [
+            { match: `add the same navigation menu - Home, Projects, About - to the top of every page, linking each one to the right file`,
+              write: {
+                "~/my-first-project/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>Hello, I'm Ayşe</h1>`,
+                "~/my-first-project/projects.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>Projects</h1>`
+              },
+              out: [`[OK] edited index.html — menu added`, `[OK] edited projects.html — menu added`, `(simulation: about.html was skipped this round — try to spot it by checking)`] },
+            { match: `the menu is missing on about.html; add the same menu as on the other pages`,
+              write: { "~/my-first-project/about.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>About me</h1>` },
+              out: [`[OK] edited about.html — added the same menu as on the other pages`] }
+          ],
+          try: [
+            { cmd: `claude "add the same navigation menu - Home, Projects, About - to the top of every page, linking each one to the right file"`, desc: `shared menu` },
+            { cmd: `cat about.html`, desc: `is it on every page?` },
+            { cmd: `claude "the menu is missing on about.html; add the same menu as on the other pages"`, desc: `report the gap` },
+            { cmd: `cat about.html`, desc: `fixed?` }
+          ]
+        }
+      },
+      {
+        id: `m4-d3`, title: `Breaking tasks into pieces`, minutes: 2, ready: true,
+        intro: [
+          `Jobs like “build my whole site” or “redesign everything” can produce changes too large to review in one go. The solution is to break the job into pieces you can check one at a time.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — Find the natural steps` },
+          { t: `steps`, items: [
+            `Create the projects page with its content.`,
+            `Create the about page with its content.`,
+            `Add the shared navigation menu to all pages.`,
+            `Make the colours and fonts consistent.`
+          ] },
+          { t: `p`, html: `The order of the steps can vary by project. At the end of each piece, aim for a working state where you can open and review the site.` },
+          { t: `h`, text: `Step 2 — Do one piece, then stop` },
+          { t: `code`, label: `To Claude`, code: `do step 1 only: create the projects page with a heading\nand a short list of things I have made.\nStop and let me review before the next step.` },
+          { t: `p`, html: `Read the diff at each step and check the result in the browser.` },
+          { t: `callout`, kind: `warn`, title: `Accepting isn't backing up`, html: `An accepted step is not, on its own, a permanent backup. For a reliable return point, use a suitable checkpoint or a Git commit; you'll see Git in Module 5.` },
+          { t: `practice` },
+          { t: `h`, text: `Manage the context as needed` },
+          { t: `p`, html: `If the next piece is independent, you can start clean with <code>/clear</code>. If important decisions from the same job are still needed, keep the context or summarise it with <code>/compact</code>. When you start clean, restate the remaining plan and the files needed.` },
+          { t: `h`, text: `Try it now` },
+          { t: `code`, label: `To Claude`, code: `let us build my about page in steps. Step one:\njust the page with my name and a short bio.\nWe will add the rest after I look at it.` },
+          { t: `p`, html: `After opening and reviewing the page, move on to the next step.` }
+        ],
+        trouble: [
+          { q: `Claude went on to the next step without stopping`, a: `Stop it with <kbd>Esc</kbd> and write clearly in the request “stop after this step” or “do step 1 only”.` },
+          { q: `The site broke after a step`, a: `Look only at that step's diff; because the pieces are small, finding the source of the problem is easy. If needed, go back to before that step with <code>/rewind</code>.` }
+        ],
+        have: [
+          `You learned to break a big job into natural, checkable steps.`,
+          `You can ask Claude to do a single step and stop.`,
+          `You learned to manage context and return points deliberately between steps.`
+        ],
+        note: `This site was built piece by piece too, not in one go; stopping after each piece to open the page let me see problems early.`,
+        next: `Next: reviewing the site as a whole once the pieces are done.`,
+        prompt: `How do I break a big job like “build my personal website” into small steps that can each be checked separately? Could you prepare an example list of steps?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `do step 1 only: create the projects page with a heading and a short list of things I have made. Stop and let me review before the next step`,
+              write: { "~/my-first-project/projects.html": `<h1>Projects</h1>\n<ul>\n  <li>My first web page</li>\n  <li>A shopping list in Markdown</li>\n</ul>` },
+              out: [`[OK] wrote projects.html`, `Step 1 done. I'm stopping here so you can review.`] },
+            { match: `let us build my about page in steps. Step one: just the page with my name and a short bio. We will add the rest after I look at it`,
+              write: { "~/my-first-project/about.html": `<h1>Ayşe</h1>\n<p>I am learning to build and publish websites with Claude Code.</p>` },
+              out: [`[OK] wrote about.html — only the name and a short bio`, `We'll continue after you've looked at it.`] }
+          ],
+          try: [
+            { cmd: `claude "do step 1 only: create the projects page with a heading and a short list of things I have made. Stop and let me review before the next step."`, desc: `a single step` },
+            { cmd: `cat projects.html`, desc: `review the step` },
+            { cmd: `claude "let us build my about page in steps. Step one: just the page with my name and a short bio. We will add the rest after I look at it."`, desc: `step by step` },
+            { cmd: `ls`, desc: `what was created?` }
+          ]
+        }
+      },
+      {
+        id: `m4-d4`, title: `Reviewing your own diff`, minutes: 2, ready: true,
+        intro: [
+          `Reviewing each piece matters; but in the end you should also look at the site as a whole. The site opening doesn't mean all the pages and links are right.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — Go through it from start to finish` },
+          { t: `p`, html: `On each page, check its purpose, the finished content and how it fits with the other pages. Make a habit of looking for placeholder text, half-finished sections and forgotten links.` },
+          { t: `h`, text: `Quick self-review` },
+          { t: `table`, head: [`Check`, `What you're looking for`], rows: [
+            [`Complete`, `Every page is finished; no half-done sections or placeholders.`],
+            [`Consistent`, `The shared menu, colours and footer match.`],
+            [`Links`, `Every link goes to its real intended target.`],
+            [`Real content`, `Correct content that's yours instead of example text.`]
+          ] },
+          { t: `h`, text: `Step 2 — Ask Claude for a second review` },
+          { t: `code`, label: `To Claude`, code: `look over all my pages as if you are a first-time visitor.\nWhat is inconsistent, unfinished, or confusing?\nDo not change anything yet.` },
+          { t: `p`, html: `Verify the findings against the files and pages. You decide which fixes to make; you don't have to apply every suggested change.` },
+          { t: `practice` },
+          { t: `callout`, kind: `warn`, title: `A file review doesn't replace the browser`, html: `Claude reviewing the files doesn't replace going through the pages in the browser. Check for yourself whether a link goes to the right file, and how things look. Really look at the result before you say “done”.` }
+        ],
+        trouble: [
+          { q: `The problem Claude found isn't real`, a: `Check the finding in the file and in the browser. If it's wrong, say so and move on; you don't have to apply every suggestion.` },
+          { q: `I can't find the placeholder text`, a: `Ask Claude to list it: “list any placeholder or example text on my pages; do not change anything”.` }
+        ],
+        have: [
+          `You learned to review the site as a whole once the pieces are done.`,
+          `You have a four-item checklist for completeness, consistency, links and real content.`,
+          `You can ask Claude for a review through a first-time visitor's eyes and verify the findings.`
+        ],
+        note: `Before publishing this site I had the links checked one by one with a script; but going through the pages in the browser still remained a separate step.`,
+        next: `Next: the Module 4 summary.`,
+        prompt: `Could you prepare a checklist for reviewing my personal website before publishing it? Use the headings completeness, consistency, links and content.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {
+            "~/my-first-project/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>Hello, I'm Ayşe</h1>`,
+            "~/my-first-project/projects.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="About.html">About</a></nav>\n<h1>Projects</h1>\n<p>Lorem ipsum dolor sit amet.</p>`,
+            "~/my-first-project/about.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>About me</h1>\n<p>I am learning to build and publish websites.</p>`
+          },
+          claude: [
+            { match: `look over all my pages as if you are a first-time visitor. What is inconsistent, unfinished, or confusing? Do not change anything yet`,
+              out: [`I haven't changed anything. Findings:`, `1. projects.html — the About link in the menu goes to "About.html"; the file is called "about.html".`, `2. projects.html — "Lorem ipsum" placeholder text is still there.`, `3. index.html — there's no sentence telling visitors what the site is.`, `Which ones would you like me to fix?`] }
+          ],
+          try: [
+            { cmd: `cat projects.html`, desc: `look yourself` },
+            { cmd: `claude "look over all my pages as if you are a first-time visitor. What is inconsistent, unfinished, or confusing? Do not change anything yet."`, desc: `a second pair of eyes` },
+            { cmd: `ls`, desc: `compare the file names` }
+          ]
+        }
+      },
+      {
+        id: `m4-d5`, title: `Module 4 summary`, minutes: 2, ready: true,
+        intro: [
+          `You can now plan a change that affects more than one page, apply it consistently and check it in small steps. At the final stage you review the site as a whole.`
+        ],
+        blocks: [
+          { t: `h`, text: `Module 4 quick reference` },
+          { t: `table`, head: [`Skill`, `Move`], rows: [
+            [`Plan first`, `Before editing, ask for a plan, a file list and an order; use plan mode when appropriate.`],
+            [`Think about every page`, `Have a shared change applied to all the relevant pages; verify by trying the links.`],
+            [`Break up big jobs`, `Split them into natural steps; review the diff and the page after each piece.`],
+            [`Final review`, `Check completeness, consistency, links and real content; ask Claude for a review too.`]
+          ] },
+          { t: `h`, text: `Mental model` },
+          { t: `p`, html: `<strong>Plan → change → review the diff → check the pages.</strong> The single-file loop carries on exactly as before; the added habit is thinking about consistency across pages together.` },
+          { t: `p`, html: `If a menu or style is shared, consider all the relevant pages. Instead of reviewing a big job in one go, split it into small steps, and go through the whole site before publishing.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Planning and reviewing a multi-file change.`,
+          `Keeping shared items consistent across all pages.`,
+          `Carrying out a big job in small, checked steps.`,
+          `Assessing the finished site as a whole.`
+        ],
+        note: `Plan, change, review, check: for a multi-page site I added a “think about all the pages together” step to this loop.`,
+        next: `Next: moving your site from your computer to the internet and publishing it at a shareable address.`,
+        prompt: `In the fourth module of a Claude Code course I learned about planning a multi-page site, edits across files, breaking work into pieces and the final review. Could you prepare a short 5-question review quiz? Give the answers at the end.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {
+            "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`,
+            "~/my-first-project/projects.html": `<h1>Projects</h1>`,
+            "~/my-first-project/about.html": `<h1>About me</h1>`
+          },
+          try: [
+            { cmd: `ls`, desc: `the site's files` },
+            { cmd: `cat about.html`, desc: `read a page` }
+          ]
+        }
+      }
     ] },
     { id: `m5`, no: 5, title: `Ship your first project`, lessons: [
       { id: `m5-d1`, title: `Localhost vs. the live web`, minutes: 2 },
