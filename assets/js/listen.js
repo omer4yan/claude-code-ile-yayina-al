@@ -19,8 +19,25 @@
     head: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><rect x="3" y="14" width="4" height="7" rx="1.5"/><rect x="17" y="14" width="4" height="7" rx="1.5"/></svg>'
   };
 
+  var T = ctx.isEn ? {
+    title: "Listen instead of reading", unsupported: "This browser doesn\x27t support reading aloud.",
+    ready: "You can listen to the lesson in your browser\x27s voice.",
+    prevS: "Previous sentence", nextS: "Next sentence", start: "Start listening", pause: "Pause", resume: "Resume", rate: "Reading speed",
+    reading: "Reading", noVoice: " · No English voice found, using the default voice", end: "End of the lesson.", paused: "Paused",
+    error: "Couldn\x27t start reading aloud. Your device may not have a speech voice installed.",
+    lang: "en-US", voiceRe: /^en\b|^en-/i, dec: "."
+  } : {
+    title: "Okumak yerine dinle", unsupported: "Bu tarayıcı sesli okumayı desteklemiyor.",
+    ready: "Dersi tarayıcının sesiyle dinleyebilirsin.",
+    prevS: "Önceki cümle", nextS: "Sonraki cümle", start: "Dinlemeye başla", pause: "Duraklat", resume: "Devam et", rate: "Okuma hızı",
+    reading: "Okunuyor", noVoice: " · Türkçe ses bulunamadı, varsayılan ses kullanılıyor", end: "Ders sonuna gelindi.", paused: "Duraklatıldı",
+    error: "Sesli okuma başlatılamadı. Cihazında bir konuşma sesi yüklü olmayabilir.",
+    lang: "tr-TR", voiceRe: /^tr\b|^tr-/i, dec: ","
+  };
+  var fmtRate = function (r) { return String(r).replace(".", T.dec) + "×"; };
+
   if (!synth || typeof window.SpeechSynthesisUtterance !== "function") {
-    box.innerHTML = '<div class="listen__inner"><span class="listen__icon">' + ICON.head + '</span><div class="listen__meta"><strong>Okumak yerine dinle</strong><span class="listen__status">Bu tarayıcı sesli okumayı desteklemiyor.</span></div></div>';
+    box.innerHTML = '<div class="listen__inner"><span class="listen__icon">' + ICON.head + '</span><div class="listen__meta"><strong>' + T.title + '</strong><span class="listen__status">' + T.unsupported + '</span></div></div>';
     return;
   }
 
@@ -45,12 +62,12 @@
   box.innerHTML =
     '<div class="listen__inner">' +
     '<span class="listen__icon">' + ICON.head + "</span>" +
-    '<div class="listen__meta"><strong>Okumak yerine dinle</strong><span class="listen__status" aria-live="polite">Dersi tarayıcının sesiyle dinleyebilirsin.</span></div>' +
+    '<div class="listen__meta"><strong>' + T.title + '</strong><span class="listen__status" aria-live="polite">' + T.ready + '</span></div>' +
     '<div class="listen__controls">' +
-    '<button type="button" class="listen__btn" data-act="back" aria-label="Önceki cümle">' + ICON.back + "</button>" +
-    '<button type="button" class="listen__btn listen__btn--main" data-act="toggle" aria-label="Dinlemeye başla">' + ICON.play + "</button>" +
-    '<button type="button" class="listen__btn" data-act="fwd" aria-label="Sonraki cümle">' + ICON.fwd + "</button>" +
-    '<button type="button" class="listen__rate" data-act="rate" aria-label="Okuma hızı">' + String(rate).replace(".", ",") + "×</button>" +
+    '<button type="button" class="listen__btn" data-act="back" aria-label="' + T.prevS + '">' + ICON.back + "</button>" +
+    '<button type="button" class="listen__btn listen__btn--main" data-act="toggle" aria-label="' + T.start + '">' + ICON.play + "</button>" +
+    '<button type="button" class="listen__btn" data-act="fwd" aria-label="' + T.nextS + '">' + ICON.fwd + "</button>" +
+    '<button type="button" class="listen__rate" data-act="rate" aria-label="' + T.rate + '">' + fmtRate(rate) + "</button>" +
     "</div></div>" +
     '<div class="listen__progress" aria-hidden="true"><span></span></div>';
 
@@ -65,7 +82,7 @@
     var voices = synth.getVoices() || [];
     voice = null;
     for (var i = 0; i < voices.length; i++) {
-      if (/^tr\b|^tr-/i.test(voices[i].lang)) { voice = voices[i]; break; }
+      if (T.voiceRe.test(voices[i].lang)) { voice = voices[i]; break; }
     }
   };
   pickVoice();
@@ -93,17 +110,17 @@
   var update = function () {
     bar.style.width = (sentences.length ? (index / sentences.length) * 100 : 0) + "%";
     toggleBtn.innerHTML = playing ? ICON.pause : ICON.play;
-    toggleBtn.setAttribute("aria-label", playing ? "Duraklat" : index > 0 ? "Devam et" : "Dinlemeye başla");
+    toggleBtn.setAttribute("aria-label", playing ? T.pause : index > 0 ? T.resume : T.start);
     box.classList.toggle("is-playing", playing);
   };
 
   var setStatus = function () {
     if (playing) {
-      status.textContent = "Okunuyor · " + (index + 1) + " / " + sentences.length + (voice ? "" : " · Türkçe ses bulunamadı, varsayılan ses kullanılıyor");
+      status.textContent = T.reading + " · " + (index + 1) + " / " + sentences.length + (voice ? "" : T.noVoice);
     } else if (index >= sentences.length) {
-      status.textContent = "Ders sonuna gelindi.";
+      status.textContent = T.end;
     } else if (index > 0) {
-      status.textContent = "Duraklatıldı · " + (index + 1) + " / " + sentences.length;
+      status.textContent = T.paused + " · " + (index + 1) + " / " + sentences.length;
     }
   };
 
@@ -121,7 +138,7 @@
     }
     var s = sentences[index];
     var u = new SpeechSynthesisUtterance(s.text);
-    u.lang = "tr-TR";
+    u.lang = T.lang;
     if (voice) u.voice = voice;
     u.rate = rate;
     u.onend = function () {
@@ -133,7 +150,7 @@
       if (my !== token) return;
       if (e && (e.error === "interrupted" || e.error === "canceled")) return;
       playing = false;
-      status.textContent = "Sesli okuma başlatılamadı. Cihazında bir konuşma sesi yüklü olmayabilir.";
+      status.textContent = T.error;
       update();
     };
     mark(s.el);
@@ -165,7 +182,7 @@
       else { mark(sentences[index].el); update(); setStatus(); }
     } else if (act === "rate") {
       rate = RATES[(RATES.indexOf(rate) + 1) % RATES.length];
-      rateBtn.textContent = String(rate).replace(".", ",") + "×";
+      rateBtn.textContent = fmtRate(rate);
       try { localStorage.setItem("listenRate", String(rate)); } catch (er) { /* depolama kapalı */ }
       if (playing) speak();
     }

@@ -29,6 +29,8 @@
    ========================================================= */
 window.ORVENA_LESSONS = {
   course: `Claude Code ile Yayına Al`,
+  // İngilizce ders sayfası hazır olan modüller (dil bağlantısı en/ders.html'e gider; diğerleri en/yolculuk.html'e)
+  enReady: [`m1`],
   modules: [
     {
       id: `m1`, no: 1, title: `Claude Code'u kur`, sub: `Terminalde ilk adımlar`,

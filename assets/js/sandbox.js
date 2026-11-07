@@ -3,6 +3,7 @@
    Gerçek bir terminal değildir: bilgisayarındaki dosyalara dokunmaz.
    Desteklenen komutlar: pwd, ls, ls -a, mkdir, cd, cat, clear, help,
    claude "..." (yalnızca derste geçen istekler).
+   Arayüz ve hata metinleri <html lang> değerine göre seçilir.
    ========================================================= */
 (function () {
   "use strict";
@@ -13,6 +14,76 @@
     return;
   }
   var cfg = ctx.lesson.sandbox;
+
+  var T = ctx.isEn ? {
+    help: [
+      "Commands that work in this practice terminal:",
+      "  pwd               shows the folder you are in",
+      "  ls  /  ls -a      lists the folder's contents (-a: hidden files too)",
+      "  mkdir name        creates a new folder",
+      "  cd name  /  cd .. moves into a folder / up one folder",
+      "  cat file          shows a file's contents",
+      "  claude \"prompt\"   gives the simulated Claude a prompt from this lesson",
+      "  clear             clears the screen (Ctrl+L)",
+      "Use the up arrow key for previous commands."
+    ],
+    slash: function (c) { return ["(simulation) " + c + " is a Claude Code session command; it works in a real session.", "See the suggestions below for session commands you can try in this lesson."]; },
+    lsNo: function (a) { return "ls: cannot access '" + a + "': No such file or directory"; },
+    mkExists: function (a) { return "mkdir: cannot create directory '" + a + "': File exists"; },
+    mkNo: function (a) { return "mkdir: cannot create directory '" + a + "': No such file or directory"; },
+    mkMissing: "mkdir: missing folder name — e.g. mkdir my-first-project",
+    cdNotDir: function (a) { return "cd: " + a + ": Not a directory"; },
+    cdNo: function (a) { return "cd: " + a + ": No such file or directory"; },
+    catMissing: "cat: missing file name — e.g. cat hello.txt",
+    catDir: function (a) { return "cat: " + a + ": Is a directory"; },
+    catNo: function (a) { return "cat: " + a + ": No such file or directory"; },
+    version: "2.x.x (Claude Code) — simulation; the real version number will differ",
+    claudeBare: ["(simulation) The real Claude Code opens an interactive session here.", "In this practice environment, give the prompt in quotes: claude \"…\""],
+    claudeMiss: ["(simulation) Only the prompts from this lesson work in this practice environment.", "Try one of the suggestions below, or use the “Open in Claude” button to experiment freely."],
+    git: "(simulation) This git command isn't supported in this lesson. See the suggestions below for commands you can try.",
+    notFound: function (c) { return c + ": command not found — type help for the available commands"; },
+    title: "Guided learning sandbox · <em>simulated shell</em>",
+    welcome1: "Guided learning sandbox · simulated shell",
+    welcome2: "Commands don't touch the files on your computer. Type <b>help</b> for help.",
+    claude: "● Claude (simulation)",
+    reset: "Reset", screen: "Terminal output", input: "Type a command and press Enter",
+    tryHead: "Try these", tryHint: "(click to put the command on the prompt line; press Enter to run it)",
+    open: "Open sandbox", close: "Close sandbox"
+  } : {
+    help: [
+      "Bu pratik terminalinde çalışan komutlar:",
+      "  pwd               bulunduğun klasörü gösterir",
+      "  ls  /  ls -a      klasördekileri listeler (-a: gizli dosyalar da)",
+      "  mkdir ad          yeni klasör oluşturur",
+      "  cd ad  /  cd ..   klasöre girer / bir üst klasöre çıkar",
+      "  cat dosya         dosyanın içeriğini gösterir",
+      "  claude \"istek\"    simüle Claude'a derste geçen isteği verir",
+      "  clear             ekranı temizler (Ctrl+L)",
+      "Önceki komutlar için yukarı ok tuşunu kullan."
+    ],
+    slash: function (c) { return ["(simülasyon) " + c + " bir Claude Code oturum komutudur; gerçek oturumda çalışır.", "Bu derste denenebilen oturum komutları için aşağıdaki önerilere bak."]; },
+    lsNo: function (a) { return "ls: '" + a + "' erişilemiyor: Böyle bir dosya ya da dizin yok"; },
+    mkExists: function (a) { return "mkdir: '" + a + "' dizini oluşturulamıyor: Dosya mevcut (File exists)"; },
+    mkNo: function (a) { return "mkdir: '" + a + "' dizini oluşturulamıyor: Böyle bir dosya ya da dizin yok"; },
+    mkMissing: "mkdir: klasör adı eksik — örnek: mkdir my-first-project",
+    cdNotDir: function (a) { return "cd: " + a + ": Bir dizin değil"; },
+    cdNo: function (a) { return "cd: " + a + ": Böyle bir dosya ya da dizin yok"; },
+    catMissing: "cat: dosya adı eksik — örnek: cat hello.txt",
+    catDir: function (a) { return "cat: " + a + ": Bir dizin"; },
+    catNo: function (a) { return "cat: " + a + ": Böyle bir dosya ya da dizin yok"; },
+    version: "2.x.x (Claude Code) — simülasyon; gerçek sürüm numarası farklı olur",
+    claudeBare: ["(simülasyon) Gerçek Claude Code burada etkileşimli bir oturum açar.", "Bu pratik ortamında isteği tırnak içinde ver: claude \"…\""],
+    claudeMiss: ["(simülasyon) Bu pratik ortamında yalnızca bu derste geçen istekler çalışır.", "Aşağıdaki önerilerden birini dene ya da isteği serbestçe denemek için “Claude'da aç” düğmesini kullan."],
+    git: "(simülasyon) Bu git komutu bu derste desteklenmiyor. Denenebilen komutlar için aşağıdaki önerilere bak.",
+    notFound: function (c) { return c + ": komut bulunamadı (command not found) — kullanılabilir komutlar için help yaz"; },
+    title: "Rehberli öğrenme sandbox'ı · <em>simüle edilmiş shell</em>",
+    welcome1: "Rehberli öğrenme sandbox'ı · simüle edilmiş shell",
+    welcome2: "Komutlar bilgisayarındaki dosyalara dokunmaz. Yardım için <b>help</b> yaz.",
+    claude: "● Claude (simülasyon)",
+    reset: "Sıfırla", screen: "Terminal çıktısı", input: "Komut yaz ve Enter'a bas",
+    tryHead: "Şunları dene", tryHint: "(tıklayınca komut satırına yazılır; Enter ile çalıştır)",
+    open: "Sandbox'ı aç", close: "Sandbox'ı kapat"
+  };
 
   var esc = function (s) {
     return String(s).replace(/[&<>"]/g, function (c) {
@@ -59,18 +130,6 @@
     return s.toLowerCase().replace(/[“”„]/g, '"').replace(/\s+/g, " ").replace(/[.!?]+$/, "").trim();
   };
 
-  var HELP = [
-    "Bu pratik terminalinde çalışan komutlar:",
-    "  pwd               bulunduğun klasörü gösterir",
-    "  ls  /  ls -a      klasördekileri listeler (-a: gizli dosyalar da)",
-    "  mkdir ad          yeni klasör oluşturur",
-    "  cd ad  /  cd ..   klasöre girer / bir üst klasöre çıkar",
-    "  cat dosya         dosyanın içeriğini gösterir",
-    "  claude \"istek\"    simüle Claude'a derste geçen isteği verir",
-    "  clear             ekranı temizler (Ctrl+L)",
-    "Önceki komutlar için yukarı ok tuşunu kullan."
-  ];
-
   var run = function (line) {
     var raw = line.trim();
     if (!raw) return [];
@@ -82,10 +141,8 @@
       if (custom.write) Object.keys(custom.write).forEach(function (p) { fs.files[p] = custom.write[p]; });
       return custom.claude ? { claude: true, lines: custom.out || [] } : (custom.out || []).slice();
     }
-    if (raw.charAt(0) === "/") {
-      return ["(simülasyon) " + raw.split(/\s+/)[0] + " bir Claude Code oturum komutudur; gerçek oturumda çalışır.",
-        "Bu derste denenebilen oturum komutları için aşağıdaki önerilere bak."];
-    }
+    if (raw.charAt(0) === "/") return T.slash(raw.split(/\s+/)[0]);
+
     var m = raw.match(/^(\S+)\s*([\s\S]*)$/);
     var cmd = m[1];
     var rest = m[2].trim();
@@ -102,7 +159,7 @@
         });
         if (!fs.dirs[target]) {
           if (fs.files[target] !== undefined) return [args[args.length - 1]];
-          return ["ls: '" + args[args.length - 1] + "' erişilemiyor: Böyle bir dosya ya da dizin yok"];
+          return [T.lsNo(args[args.length - 1])];
         }
         var items = children(target).filter(function (c) { return showAll || c.name.charAt(0) !== "."; });
         var names = items.map(function (c) { return c.name + (c.dir ? "/" : ""); });
@@ -114,52 +171,47 @@
         args.filter(function (a) { return a.charAt(0) !== "-"; }).forEach(function (a) {
           var p = resolve(a);
           var parent = p.slice(0, p.lastIndexOf("/"));
-          if (fs.dirs[p] || fs.files[p] !== undefined) outM.push("mkdir: '" + a + "' dizini oluşturulamıyor: Dosya mevcut (File exists)");
-          else if (!fs.dirs[parent]) outM.push("mkdir: '" + a + "' dizini oluşturulamıyor: Böyle bir dosya ya da dizin yok");
+          if (fs.dirs[p] || fs.files[p] !== undefined) outM.push(T.mkExists(a));
+          else if (!fs.dirs[parent]) outM.push(T.mkNo(a));
           else fs.dirs[p] = true;
         });
-        if (!args.length) outM.push("mkdir: klasör adı eksik — örnek: mkdir my-first-project");
+        if (!args.length) outM.push(T.mkMissing);
         return outM;
       }
       case "cd": {
         var dest = resolve(args[0] || "~");
         if (fs.dirs[dest]) { cwd = dest; return []; }
-        if (fs.files[dest] !== undefined) return ["cd: " + args[0] + ": Bir dizin değil"];
-        return ["cd: " + args[0] + ": Böyle bir dosya ya da dizin yok"];
+        if (fs.files[dest] !== undefined) return [T.cdNotDir(args[0])];
+        return [T.cdNo(args[0])];
       }
       case "cat": {
-        if (!args.length) return ["cat: dosya adı eksik — örnek: cat hello.txt"];
+        if (!args.length) return [T.catMissing];
         var outC = [];
         args.forEach(function (a) {
           var p = resolve(a);
-          if (fs.dirs[p]) outC.push("cat: " + a + ": Bir dizin");
-          else if (fs.files[p] === undefined) outC.push("cat: " + a + ": Böyle bir dosya ya da dizin yok");
+          if (fs.dirs[p]) outC.push(T.catDir(a));
+          else if (fs.files[p] === undefined) outC.push(T.catNo(a));
           else if (fs.files[p] !== "") outC = outC.concat(fs.files[p].split("\n"));
         });
         return outC;
       }
       case "help":
-        return HELP.slice();
+        return T.help.slice();
       case "claude": {
-        if (/^(--version|-v)$/.test(rest)) return ["2.x.x (Claude Code) — simülasyon; gerçek sürüm numarası farklı olur"];
+        if (/^(--version|-v)$/.test(rest)) return [T.version];
+        if (!rest) return T.claudeBare.slice();
         var q = rest.replace(/^["“'‘]/, "").replace(/["”'’]$/, "");
-        if (!rest) return ["(simülasyon) Gerçek Claude Code burada etkileşimli bir oturum açar.", "Bu pratik ortamında isteği tırnak içinde ver: claude \"…\""];
         var hit = null;
         (cfg.claude || []).forEach(function (r) { if (!hit && norm(q) === norm(r.match)) hit = r; });
-        if (!hit) {
-          return [
-            "(simülasyon) Bu pratik ortamında yalnızca bu derste geçen istekler çalışır.",
-            "Aşağıdaki önerilerden birini dene ya da isteği serbestçe denemek için “Claude'da aç” düğmesini kullan."
-          ];
-        }
+        if (!hit) return T.claudeMiss.slice();
         if (hit.write) {
           Object.keys(hit.write).forEach(function (p) { fs.files[p] = hit.write[p]; });
         }
         return { claude: true, lines: hit.out || [] };
       }
       default:
-        if (cmd === "git") return ["(simülasyon) Bu git komutu bu derste desteklenmiyor. Denenebilen komutlar için aşağıdaki önerilere bak."];
-        return [cmd + ": komut bulunamadı (command not found) — kullanılabilir komutlar için help yaz"];
+        if (cmd === "git") return [T.git];
+        return [T.notFound(cmd)];
     }
   };
 
@@ -185,8 +237,8 @@
     var scrollEnd = function () { screen.scrollTop = screen.scrollHeight; };
 
     var welcome = function () {
-      print("Rehberli öğrenme sandbox'ı · simüle edilmiş shell", "is-dim");
-      print("Komutlar bilgisayarındaki dosyalara dokunmaz. Yardım için <b>help</b> yaz.", "is-dim");
+      print(T.welcome1, "is-dim");
+      print(T.welcome2, "is-dim");
     };
 
     var exec = function (line) {
@@ -197,7 +249,7 @@
       if (trimmed === "clear") { screen.innerHTML = ""; promptEl.textContent = promptText(); return; }
       var res = run(line);
       if (res && res.claude) {
-        print("● Claude (simülasyon)", "is-claude");
+        print(T.claude, "is-claude");
         res.lines.forEach(function (l) { print(esc(l), /^\[OK\]/.test(l) ? "is-ok" : /^- /.test(l) ? "is-del" : /^\+ /.test(l) ? "is-add" : "is-out"); });
       } else {
         res.forEach(function (l) { print(esc(l) || "&nbsp;", "is-out"); });
@@ -215,14 +267,14 @@
       box.innerHTML =
         '<div class="sandbox__term">' +
         '<div class="sandbox__bar"><span class="terminal__dots" aria-hidden="true"><i></i><i></i><i></i></span>' +
-        '<span class="sandbox__title">Rehberli öğrenme sandbox\'ı · <em>simüle edilmiş shell</em></span>' +
-        '<button type="button" class="sandbox__reset">Sıfırla</button></div>' +
-        '<div class="sandbox__screen" role="log" aria-live="polite" aria-label="Terminal çıktısı"></div>' +
+        '<span class="sandbox__title">' + T.title + "</span>" +
+        '<button type="button" class="sandbox__reset">' + T.reset + "</button></div>" +
+        '<div class="sandbox__screen" role="log" aria-live="polite" aria-label="' + esc(T.screen) + '"></div>' +
         '<form class="sandbox__form" autocomplete="off">' +
         '<label class="sandbox__ps" for="' + inputId + '"></label>' +
-        '<input class="sandbox__input" id="' + inputId + '" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Komut yaz ve Enter\'a bas">' +
+        '<input class="sandbox__input" id="' + inputId + '" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="' + esc(T.input) + '">' +
         "</form></div>" +
-        (tryHtml ? '<div class="sandbox__tryhead">Şunları dene <small>(tıklayınca komut satırına yazılır; Enter ile çalıştır)</small></div><ul class="sandbox__trylist">' + tryHtml + "</ul>" : "");
+        (tryHtml ? '<div class="sandbox__tryhead">' + T.tryHead + " <small>" + T.tryHint + '</small></div><ul class="sandbox__trylist">' + tryHtml + "</ul>" : "");
       screen = box.querySelector(".sandbox__screen");
       input = box.querySelector(".sandbox__input");
       promptEl = box.querySelector(".sandbox__form .sandbox__ps");
@@ -277,7 +329,7 @@
       box.hidden = !open;
       openBtn.setAttribute("aria-expanded", open ? "true" : "false");
       var label = openBtn.querySelector("span");
-      if (label) label.textContent = open ? "Sandbox'ı kapat" : "Sandbox'ı aç";
+      if (label) label.textContent = open ? T.close : T.open;
       if (open) {
         promptEl.textContent = promptText();
         input.focus({ preventScroll: true });

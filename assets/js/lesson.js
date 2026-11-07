@@ -38,6 +38,38 @@
   };
   var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
 
+  /* ---------- Arayüz metinleri: <html lang> değerine göre ---------- */
+  var isEn = (document.documentElement.getAttribute("lang") || "").toLowerCase().indexOf("en") === 0;
+  var T = isEn ? {
+    module: "Module", lesson: "Lesson", lessons: "lessons", minRead: "min read",
+    toggle: "Show or hide lessons", launch: "Launch day", launchDate: "6 Nov",
+    copy: "Copy", copyCmd: "Copy command", copied: "Copied", copyFail: "Couldn't copy",
+    expect: "You should see", example: "Example",
+    practice: "Practice", practiceText: "Try the commands in a simulated terminal in your browser, or talk this topic through with Claude.",
+    openSb: "Open sandbox", openClaude: "Open in Claude",
+    crumb: "Location", listen: "Listen instead of reading",
+    trouble: "If it didn't work", have: "What you have now", note: "My note",
+    prev: "Previous lesson", next: "Next lesson", onJourney: "Summary on the journey page", pager: "Move between lessons",
+    descTpl: function (m, d, t) { return "Module " + m + ", Lesson " + d + ": " + t + ". My lesson notes from the 'Claude Code ile Yayına Al' course."; },
+    toastOk: "Example prompt copied to the clipboard. If the box in Claude is empty, paste it (Ctrl+V).",
+    toastOpen: "claude.ai opened in a new tab. If the box is empty, type the prompt yourself.",
+    toastBlocked: "The pop-up was blocked. You can open claude.ai yourself; the prompt is on your clipboard."
+  } : {
+    module: "Modül", lesson: "Ders", lessons: "ders", minRead: "dk okuma",
+    toggle: "Dersleri göster veya gizle", launch: "Yayın günü", launchDate: "6 Kasım",
+    copy: "Kopyala", copyCmd: "Komutu kopyala", copied: "Kopyalandı", copyFail: "Kopyalanamadı",
+    expect: "Şunu görmelisin", example: "Örnek",
+    practice: "Pratik", practiceText: "Komutları tarayıcıdaki simüle terminalde dene ya da bu konuyu Claude ile konuş.",
+    openSb: "Sandbox'ı aç", openClaude: "Claude'da aç",
+    crumb: "Konum", listen: "Okumak yerine dinle",
+    trouble: "Çalışmadıysa", have: "Şimdi elinde ne var", note: "Benim notum",
+    prev: "Önceki ders", next: "Sonraki ders", onJourney: "Özeti yolculuk sayfasında", pager: "Dersler arası geçiş",
+    descTpl: function (m, d, t) { return "Modül " + m + ", Ders " + d + ": " + t + ". 'Claude Code ile Yayına Al' kursunun ders notlarım."; },
+    toastOk: "Örnek istek panoya kopyalandı. Claude'da alan boş gelirse yapıştır (Ctrl+V).",
+    toastOpen: "claude.ai yeni sekmede açıldı. Alan boş gelirse isteği kendin yaz.",
+    toastBlocked: "Açılır pencere engellendi. claude.ai adresini kendin açabilirsin; istek panoya kopyalandı."
+  };
+
   /* ---------- Ders listesi ve geçerli ders ---------- */
   var all = [];
   DATA.modules.forEach(function (m) {
@@ -72,15 +104,21 @@
   var next = all[pos + 1] || null;
 
   /* ---------- Başlık, dil bağlantıları ---------- */
-  document.title = L.title + " — Modül " + M.no + " · Orvena";
+  document.title = L.title + " — " + T.module + " " + M.no + " · Orvena";
   var desc = document.querySelector('meta[name="description"]');
-  if (desc) desc.setAttribute("content", "Modül " + M.no + ", Ders " + (cur.index + 1) + ": " + L.title + ". 'Claude Code ile Yayına Al' kursunun ders notlarım.");
-  ["lang-link", "footer-en"].forEach(function (k) {
+  if (desc) desc.setAttribute("content", T.descTpl(M.no, cur.index + 1, L.title));
+
+  // Dil bağlantıları aynı dersin diğer dildeki karşılığına gider.
+  // İngilizce karşılığı henüz yazılmamış modüllerde İngilizce yolculuk sayfasındaki özete gider (DATA.enReady).
+  var otherHref = isEn
+    ? "../ders.html?id=" + L.id
+    : ((DATA.enReady || []).indexOf(M.id) !== -1 ? "en/ders.html?id=" + L.id : "en/yolculuk.html#" + L.id);
+  ["lang-link", "footer-other"].forEach(function (k) {
     var a = document.getElementById(k);
-    if (a) a.setAttribute("href", "en/yolculuk.html#" + L.id);
+    if (a) a.setAttribute("href", otherHref);
   });
-  var trLink = document.querySelector('.footer-bar a[hreflang="tr"]');
-  if (trLink) trLink.setAttribute("href", "ders.html?id=" + L.id);
+  var selfLink = document.getElementById("footer-self");
+  if (selfLink) selfLink.setAttribute("href", "ders.html?id=" + L.id);
 
   /* ---------- Müfredat ---------- */
   var curList = document.getElementById("lesson-curriculum");
@@ -93,8 +131,8 @@
         '<a class="cur-module__link" href="' + moduleHref(m) + '">' +
         '<span class="cur-badge">' + pad2(m.no) + "</span>" +
         '<span class="cur-module__name">' + esc(m.title) + "</span>" +
-        '<span class="cur-module__count">' + m.lessons.length + " ders</span></a>" +
-        '<button class="cur-module__toggle" type="button" aria-expanded="' + open + '" aria-controls="cur-' + m.id + '" aria-label="Dersleri göster veya gizle">' +
+        '<span class="cur-module__count">' + m.lessons.length + " " + T.lessons + "</span></a>" +
+        '<button class="cur-module__toggle" type="button" aria-expanded="' + open + '" aria-controls="cur-' + m.id + '" aria-label="' + T.toggle + '">' +
         ICON.chev.replace("<svg ", '<svg class="cur-module__chev" ') + "</button></div>" +
         '<div class="cur-lessons-wrap" id="cur-' + m.id + '"><ul class="cur-lessons">';
       m.lessons.forEach(function (l) {
@@ -105,7 +143,7 @@
       html += "</ul></div></div>";
     });
     html += '<div class="cur-module cur-extra" data-module="yayin-gunu"><a class="cur-module__head" href="yolculuk.html#yayin-gunu">' +
-      '<span class="cur-badge">★</span><span class="cur-module__name">Yayın günü</span><span class="cur-module__count">6 Kasım</span></a></div>';
+      '<span class="cur-badge">★</span><span class="cur-module__name">' + T.launch + '</span><span class="cur-module__count">' + T.launchDate + "</span></a></div>";
     curList.innerHTML = html;
   }
 
@@ -128,7 +166,7 @@
   var toc = [];
 
   var copyBtn = function (text, label) {
-    return '<button class="copy-btn" type="button" data-copy="' + esc(text) + '" aria-label="' + (label || "Kopyala") + '">' + ICON.copy + "<span>Kopyala</span></button>";
+    return '<button class="copy-btn" type="button" data-copy="' + esc(text) + '" aria-label="' + (label || T.copy) + '">' + ICON.copy + "<span>" + T.copy + "</span></button>";
   };
 
   var renderBlock = function (b) {
@@ -142,12 +180,12 @@
         return '<p data-read>' + b.html + "</p>";
       case "cmd":
         return '<figure class="cmd">' +
-          '<div class="cmd__row"><pre><code><span class="prompt" aria-hidden="true">$ </span>' + esc(b.code) + "</code></pre>" + copyBtn(b.code, "Komutu kopyala") + "</div>" +
-          (b.expect ? '<div class="cmd__expect"><span class="cmd__label">Şunu görmelisin</span><pre>' + esc(b.expect) + "</pre></div>" : "") +
+          '<div class="cmd__row"><pre><code><span class="prompt" aria-hidden="true">$ </span>' + esc(b.code) + "</code></pre>" + copyBtn(b.code, T.copyCmd) + "</div>" +
+          (b.expect ? '<div class="cmd__expect"><span class="cmd__label">' + T.expect + "</span><pre>" + esc(b.expect) + "</pre></div>" : "") +
           "</figure>";
       case "code":
         return '<figure class="cmd cmd--code">' +
-          '<figcaption class="cmd__cap"><span>' + esc(b.label || "Örnek") + "</span>" + copyBtn(b.code) + "</figcaption>" +
+          '<figcaption class="cmd__cap"><span>' + esc(b.label || T.example) + "</span>" + copyBtn(b.code) + "</figcaption>" +
           "<pre><code>" + esc(b.code) + "</code></pre></figure>";
       case "diff":
         return '<figure class="cmd cmd--diff">' +
@@ -174,10 +212,10 @@
       case "practice":
         return '<div class="practice" data-practice>' +
           '<div class="practice__bar">' +
-          '<div class="practice__text"><strong>Pratik</strong><span>Komutları tarayıcıdaki simüle terminalde dene ya da bu konuyu Claude ile konuş.</span></div>' +
+          '<div class="practice__text"><strong>' + T.practice + "</strong><span>" + T.practiceText + "</span></div>" +
           '<div class="practice__actions">' +
-          '<button class="btn btn--primary practice__open" type="button" aria-expanded="false">' + ICON.term + "<span>Sandbox'ı aç</span></button>" +
-          '<button class="btn btn--ghost practice__claude" type="button">' + ICON.spark + "<span>Claude'da aç</span></button>" +
+          '<button class="btn btn--primary practice__open" type="button" aria-expanded="false">' + ICON.term + "<span>" + T.openSb + "</span></button>" +
+          '<button class="btn btn--ghost practice__claude" type="button">' + ICON.spark + "<span>" + T.openClaude + "</span></button>" +
           "</div></div>" +
           '<div class="sandbox" hidden></div>' +
           "</div>";
@@ -190,30 +228,30 @@
   // Giriş alanı
   body += '<header class="lesson-hero">' +
     '<canvas class="lesson-hero__waves" aria-hidden="true"></canvas>' +
-    '<nav class="lesson-crumb" aria-label="Konum">' +
+    '<nav class="lesson-crumb" aria-label="' + T.crumb + '">' +
     '<a href="yolculuk.html" style="--i:0">' + esc(DATA.course) + "</a>" +
     '<span class="lesson-crumb__sep" style="--i:1">' + ICON.chev + "</span>" +
-    '<a href="' + moduleHref(M) + '" style="--i:2">Modül ' + M.no + "</a>" +
+    '<a href="' + moduleHref(M) + '" style="--i:2">' + T.module + " " + M.no + "</a>" +
     '<span class="lesson-crumb__sep" style="--i:3">' + ICON.chev + "</span>" +
-    '<span aria-current="page" style="--i:4">Ders ' + (cur.index + 1) + "</span>" +
+    '<span aria-current="page" style="--i:4">' + T.lesson + " " + (cur.index + 1) + "</span>" +
     "</nav>" +
     '<h1 class="lesson-hero__title" data-read>' + esc(L.title) + "</h1>" +
     '<div class="hero-chips">' +
-    '<span class="chip">' + ICON.list + "Ders " + (cur.index + 1) + " / " + M.lessons.length + "</span>" +
-    '<span class="chip">' + ICON.clock + L.minutes + " dk okuma</span>" +
-    '<span class="chip">' + ICON.term + "Modül " + pad2(M.no) + " · " + esc(M.title) + "</span>" +
+    '<span class="chip">' + ICON.list + T.lesson + " " + (cur.index + 1) + " / " + M.lessons.length + "</span>" +
+    '<span class="chip">' + ICON.clock + L.minutes + " " + T.minRead + "</span>" +
+    '<span class="chip">' + ICON.term + T.module + " " + pad2(M.no) + " · " + esc(M.title) + "</span>" +
     "</div></header>";
 
   // Dinleme oynatıcısı (listen.js doldurur)
-  body += '<section class="listen" id="listen" aria-label="Okumak yerine dinle"></section>';
+  body += '<section class="listen" id="listen" aria-label="' + T.listen + '"></section>';
 
   body += '<article class="lesson-body" id="lesson-body">';
   (L.intro || []).forEach(function (p) { body += '<p class="lesson-intro" data-read>' + p + "</p>"; });
   (L.blocks || []).forEach(function (b) { body += renderBlock(b); });
 
   if (L.trouble && L.trouble.length) {
-    toc.push({ id: "calismadiysa", text: "Çalışmadıysa" });
-    body += '<section class="trouble" id="calismadiysa"><h2 class="lesson-h" data-read>Çalışmadıysa</h2>' +
+    toc.push({ id: "calismadiysa", text: T.trouble });
+    body += '<section class="trouble" id="calismadiysa"><h2 class="lesson-h" data-read>' + T.trouble + "</h2>" +
       L.trouble.map(function (t) {
         return '<details class="trouble__item"><summary>' + ICON.help + "<span>" + esc(t.q) + "</span>" +
           ICON.chev.replace("<svg ", '<svg class="trouble__chev" ') + "</summary><p>" + t.a + "</p></details>";
@@ -221,14 +259,14 @@
   }
 
   if (L.have && L.have.length) {
-    toc.push({ id: "elinde", text: "Şimdi elinde ne var" });
-    body += '<section class="have" id="elinde"><h2 class="lesson-h" data-read>Şimdi elinde ne var</h2><ul>' +
+    toc.push({ id: "elinde", text: T.have });
+    body += '<section class="have" id="elinde"><h2 class="lesson-h" data-read>' + T.have + "</h2><ul>" +
       L.have.map(function (h) { return "<li data-read>" + '<span class="have__check">' + ICON.check + "</span><span>" + h + "</span></li>"; }).join("") +
       "</ul></section>";
   }
 
   if (L.note) {
-    body += '<aside class="my-note" data-read><span class="my-note__label">' + ICON.note + "Benim notum</span><p>" + L.note + "</p></aside>";
+    body += '<aside class="my-note" data-read><span class="my-note__label">' + ICON.note + T.note + "</span><p>" + L.note + "</p></aside>";
   }
 
   if (L.next) {
@@ -240,16 +278,16 @@
   var navCard = function (item, dir) {
     if (!item) return '<span class="pager__empty"></span>';
     var l = item.lesson;
-    var label = dir === "prev" ? "Önceki ders" : "Sonraki ders";
-    var where = "Modül " + item.module.no + " · Ders " + (item.index + 1);
+    var label = dir === "prev" ? T.prev : T.next;
+    var where = T.module + " " + item.module.no + " · " + T.lesson + " " + (item.index + 1);
     return '<a class="pager__card pager__card--' + dir + '" href="' + lessonHref(l) + '">' +
       (dir === "prev" ? '<span class="pager__arrow">' + ICON.left + "</span>" : "") +
       '<span class="pager__text"><small>' + label + " · " + where + "</small><strong>" + esc(l.title) + "</strong>" +
-      (l.ready ? "" : '<em>Özeti yolculuk sayfasında</em>') + "</span>" +
+      (l.ready ? "" : "<em>" + T.onJourney + "</em>") + "</span>" +
       (dir === "next" ? '<span class="pager__arrow">' + ICON.right + "</span>" : "") +
       "</a>";
   };
-  body += '<nav class="pager" aria-label="Dersler arası geçiş">' + navCard(prev, "prev") + navCard(next, "next") + "</nav>";
+  body += '<nav class="pager" aria-label="' + T.pager + '">' + navCard(prev, "prev") + navCard(next, "next") + "</nav>";
 
   main.innerHTML = body;
 
@@ -321,10 +359,10 @@
     if (!btn) return;
     copyText(btn.getAttribute("data-copy")).then(function (ok) {
       var span = btn.querySelector("span");
-      if (span) span.textContent = ok ? "Kopyalandı" : "Kopyalanamadı";
+      if (span) span.textContent = ok ? T.copied : T.copyFail;
       btn.classList.toggle("is-done", ok);
       window.setTimeout(function () {
-        if (span) span.textContent = "Kopyala";
+        if (span) span.textContent = T.copy;
         btn.classList.remove("is-done");
       }, 1600);
     });
@@ -337,11 +375,9 @@
     var url = "https://claude.ai/new?q=" + encodeURIComponent(L.prompt);
     var win = window.open(url, "_blank", "noopener");
     copyText(L.prompt).then(function (ok) {
-      toast(ok
-        ? "Örnek istek panoya kopyalandı. Claude'da alan boş gelirse yapıştır (Ctrl+V)."
-        : "claude.ai yeni sekmede açıldı. Alan boş gelirse isteği kendin yaz.");
+      toast(ok ? T.toastOk : T.toastOpen);
     });
-    if (!win) toast("Açılır pencere engellendi. claude.ai adresini kendin açabilirsin; istek panoya kopyalandı.");
+    if (!win) toast(T.toastBlocked);
   });
 
   /* ---------- Giriş alanı: hareketli dalgalar ---------- */
@@ -405,5 +441,5 @@
   }
 
   /* Diğer betikler için paylaşılan bilgiler */
-  window.ORVENA_LESSON = { lesson: L, module: M, toast: toast, copy: copyText };
+  window.ORVENA_LESSON = { lesson: L, module: M, isEn: isEn, toast: toast, copy: copyText };
 })();
