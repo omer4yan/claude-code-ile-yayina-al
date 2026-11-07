@@ -7,8 +7,8 @@
    - "Dağıt, yeniden topla" düğmesi: noktalar dışarı saçılır, haritadan çıkar,
      sonra kırmızı olarak geri dönüp yerlerine yerleşir; ardından çizgiler yeniden çizilir.
    - Animasyonlar cihazın "hareketi azalt" ayarından bağımsız olarak her zaman çalışır (kullanıcı isteği).
-   - Dokunmatik ekranlarda (fare yok) görünmez bir imleç harita üzerinde yavaşça dolaşır;
-     parmakla dokunulan/sürüklenen yer de imleç gibi davranır. Dikey kaydırma bozulmaz.
+   - Dokunmatik ekranlarda parmakla dokunulan/sürüklenen yer imleç gibi davranır; parmak kalkınca
+     noktalar yerine döner. Kendiliğinden dolaşan imleç kullanıcı isteğiyle kaldırıldı. Dikey kaydırma bozulmaz.
    - JavaScript yoksa SVG içindeki desen (.map-pattern) görünmeye devam eder.
    ========================================================= */
 (function () {
@@ -41,8 +41,6 @@
   // Dağıt, yeniden topla zaman çizelgesi (ms)
   var T_OUT = 700, T_IN_START = 1000, T_IN = 1600, T_IN_SPREAD = 900, T_REDRAW = 3900;
 
-  // Fare olmayan (dokunmatik) cihaz: gezinen imleç kullanılır
-  var touchOnly = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
   var rand = function (a, b) { return a + Math.random() * (b - a); };
 
   /* ---------- Noktaları üret: kara şekilleri SVG maskesinden okunur ---------- */
@@ -201,7 +199,7 @@
     pointer = toMap(e); wake();
   }, { passive: true });
   hero.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { pointer = null; wake(); } });
-  // Dokunma: parmağın değdiği yer imleç olur; parmak kalkınca gezinen imlece dönülür
+  // Dokunma: parmağın değdiği yer imleç olur; parmak kalkınca imleç kalkar
   stage.addEventListener("pointerdown", function (e) {
     if (e.pointerType === "mouse") return;
     touching = true; pointer = toMap(e); wake();
@@ -209,19 +207,12 @@
   var endTouch = function (e) {
     if (e.pointerType === "mouse") return;
     touching = false;
-    if (!touchOnly) pointer = null;
+    pointer = null;
     wake();
   };
   window.addEventListener("pointerup", endTouch, { passive: true });
   window.addEventListener("pointercancel", endTouch, { passive: true });
 
-  // Gezinen imleç (dokunmatik ekranlar): harita üzerinde yavaş, düzensiz görünen bir yol
-  var ghostAt = function (now) {
-    return {
-      x: VB_W / 2 + Math.sin(now * 0.00019) * 240 + Math.sin(now * 0.00047 + 1.3) * 60,
-      y: VB_H / 2 + Math.sin(now * 0.00027 + 0.7) * 170 + Math.cos(now * 0.00041) * 40
-    };
-  };
 
   var fgShift = { x: 0, y: 0 };
 
@@ -370,8 +361,6 @@
   var step = function (now) {
     rafId = 0;
 
-    // Dokunmatik ekranda parmak değmiyorsa imleç kendiliğinden dolaşır
-    if (touchOnly && !touching && !scatter) pointer = ghostAt(now);
 
     // Derinlik: çizgi grubu imleci izler, nokta alanı ters yönde daha az kayar
     var tx = 0, ty = 0;
