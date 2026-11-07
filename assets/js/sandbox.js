@@ -158,6 +158,7 @@
         return { claude: true, lines: hit.out || [] };
       }
       default:
+        if (cmd === "git") return ["(simülasyon) Bu git komutu bu derste desteklenmiyor. Denenebilen komutlar için aşağıdaki önerilere bak."];
         return [cmd + ": komut bulunamadı (command not found) — kullanılabilir komutlar için help yaz"];
     }
   };

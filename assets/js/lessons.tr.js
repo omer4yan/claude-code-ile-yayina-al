@@ -1380,13 +1380,330 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m5`, no: 5, title: `İlk projeni yayına alma`, lessons: [
-      { id: `m5-d1`, title: `Localhost ile yayındaki web`, minutes: 2 },
-      { id: `m5-d2`, title: `Git: ihtiyacın olan beş komut`, minutes: 2 },
-      { id: `m5-d3`, title: `Vercel'e deploy`, minutes: 2 },
-      { id: `m5-d4`, title: `Ortam değişkenleri ve sırlar`, minutes: 2 },
-      { id: `m5-d5`, title: `Alan adları, HTTPS ve gerçekten yayınlama`, minutes: 2 },
-      { id: `m5-d6`, title: `Modül 5 özeti`, minutes: 1 }
+    { id: `m5`, no: 5, title: `İlk projeni yayına alma`, sub: `Bilgisayarından internete`, lessons: [
+      {
+        id: `m5-d1`, title: `Localhost ile yayındaki web`, minutes: 2, ready: true,
+        intro: [
+          `Şu anda sitenin dosyaları senin bilgisayarında duruyor. <code>index.html</code> dosyasını doğrudan açtığında adres çubuğunda <code>file://</code> ile başlayan yerel bir yol görürsün. Bu yol, başka birinin bilgisayarından senin dosyana erişim sağlamaz.`
+        ],
+        blocks: [
+          { t: `h`, text: `Üç tür adres` },
+          { t: `table`, head: [`Adres türü`, `Ne demek?`], rows: [
+            [`<code>file://</code>`, `Tarayıcı, kendi cihazındaki dosyayı doğrudan açar.`],
+            [`<code>localhost</code>`, `Cihazında çalışan yerel bir sunucuya bağlanırsın. Başka birinin “localhost” adresi onun kendi cihazını gösterir.`],
+            [`Herkese açık HTTPS adresi`, `İnternetten erişilebilen bir sunucu ya da barındırma hizmeti siteyi sunar.`]
+          ] },
+          { t: `p`, html: `Bilgisayarını kapattığında dosyaların silinmez; yalnızca o bilgisayarda çalışan yerel sunucu durur. Siteyi bağımsız bir barındırıcıda yayınlamak, kendi bilgisayarın kapalıyken de erişilebilir olmasını sağlar.` },
+          { t: `h`, text: `Yayına almak ne gerektirir?` },
+          { t: `steps`, items: [
+            `Dosyaları bir barındırma akışına aktar.`,
+            `Bir barındırıcı bu dosyaları bir web adresinde sunsun.`,
+            `HTTPS bağlantısını yapılandır ya da sağlayıcının sunduğu HTTPS adresini kullan.`
+          ] },
+          { t: `p`, html: `Bu modülde GitHub, kaynak dosyaları tutmak ve barındırıcıya aktarmak için kullanılır. Ücretsiz plan olup olmadığı ve sınırları sağlayıcıya göre değişir.` },
+          { t: `callout`, kind: `info`, title: `HTTPS ne sağlar?`, html: `HTTPS bağlantıyı şifreler. Sitenin içeriğinin güvenilir olduğunu tek başına kanıtlamaz.` },
+          { t: `h`, text: `Claude'a sade bir açıklama sor` },
+          { t: `code`, label: `Claude'a`, code: `in plain language, explain the difference between opening\nmy index.html as a file and putting it on a website` },
+          { t: `p`, html: `Anlamı: “index.html'i bir dosya olarak açmak ile bir web sitesine koymak arasındaki farkı sade bir dille açıkla.”` },
+          { t: `practice` },
+          { t: `h`, text: `Erken yayınla, küçük adımlarla güncelle` },
+          { t: `p`, html: `Basit bir sürümü erkenden yayınlamak, paylaşma ve güncelleme akışını öğrenmeni sağlar. Küçük güncellemeleri kontrol etmek ve gerekirse geri almak çok daha kolaydır.` }
+        ],
+        trouble: [
+          { q: `Arkadaşıma gönderdiğim bağlantı açılmıyor`, a: `Bağlantı <code>file://</code> ya da <code>localhost</code> ile başlıyorsa yalnızca senin cihazında çalışır. Başkalarıyla paylaşmak için sitenin bir barındırıcıda yayınlanmış HTTPS adresini kullan.` }
+        ],
+        have: [
+          `<code>file://</code>, <code>localhost</code> ve herkese açık adres arasındaki farkı biliyorsun.`,
+          `Yayına almanın üç adımını öğrendin: aktar, sun, HTTPS.`,
+          `Erken yayınlayıp küçük adımlarla güncellemenin faydasını biliyorsun.`
+        ],
+        note: `Bu siteyi önce bilgisayarımda <code>file://</code> ile açarak denedim; herkese açık adresi GitHub Pages sağlıyor.`,
+        next: `Sırada: Git ile ihtiyacın olan beş komut.`,
+        prompt: `file://, localhost ve herkese açık bir HTTPS adresi arasındaki farkı yeni başlayan birine sade bir dille açıklar mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `in plain language, explain the difference between opening my index.html as a file and putting it on a website`,
+              out: [`Dosya olarak açtığında tarayıcı, senin bilgisayarındaki index.html'i okur (file://...).`, `Bu adres yalnızca senin cihazında çalışır; başkası açamaz.`, `Bir web sitesine koyduğunda dosyalar bir barındırıcıya yüklenir ve herkesin açabileceği`, `bir HTTPS adresinden sunulur. Bilgisayarın kapalı olsa bile site açık kalır.`] }
+          ],
+          try: [
+            { cmd: `pwd`, desc: `dosyalar şu an burada` },
+            { cmd: `claude "in plain language, explain the difference between opening my index.html as a file and putting it on a website"`, desc: `farkı sor` }
+          ]
+        }
+      },
+      {
+        id: `m5-d2`, title: `Git: ihtiyacın olan beş komut`, minutes: 2, ready: true,
+        intro: [
+          `Git, projenin sürüm geçmişini tutar. Bir <strong>commit</strong>, izlenen dosyaların belirli bir andaki durumunu kaydeder. GitHub gibi bir <strong>remote</strong> (uzak depo) ise bu geçmişin uzaktaki bir kopyasını barındırır.`
+        ],
+        blocks: [
+          { t: `callout`, kind: `info`, title: `Push, yayın demek değildir`, html: `Bir barındırıcı GitHub deposunu yayın kaynağı olarak kullanabilir. Ama bir yayın bağlantısı kurulmadıkça GitHub'a push yapmak siteyi tek başına web'de yayınlamaz.` },
+          { t: `h`, text: `Beş temel komut` },
+          { t: `table`, head: [`Komut`, `Ne yapar?`], rows: [
+            [`<code>git init</code>`, `Klasörde bir Git deposu başlatır; genellikle proje başına bir kez çalıştırılır.`],
+            [`<code>git add .</code>`, `Bulunduğun konumun altındaki, yok sayılmayan değişiklikleri bir sonraki commit için hazırlama alanına ekler.`],
+            [`<code>git commit -m "mesaj"</code>`, `Hazırlanan değişiklikleri açıklayıcı bir mesajla kaydeder.`],
+            [`<code>git remote add origin &lt;url&gt;</code>`, `Uzak deponun adresini <code>origin</code> adıyla tanımlar.`],
+            [`<code>git push -u origin main</code>`, `Yerel <code>main</code> dalını uzak depoya gönderir ve takip ilişkisini ayarlar.`]
+          ] },
+          { t: `p`, html: `Bu temel akıştır. Git'in kurulu olması, kullanıcı kimliğinin tanımlanması, giriş yetkisi ve doğru dal adı gibi ön koşullar gerekebilir. Sonraki gönderimlerde çoğunlukla yalnızca <code>git push</code> yeterlidir.` },
+          { t: `practice` },
+          { t: `h`, text: `Zahmetli adımlarda yardım iste` },
+          { t: `code`, label: `Claude'a`, code: `set up git in this folder, make a first commit,\nand push it to a new GitHub repo called my-first-site;\nwalk me through anything I need to click` },
+          { t: `p`, html: `Anlamı: “Bu klasörde Git'i kur, ilk commit'i yap ve my-first-site adlı yeni bir GitHub deposuna gönder; tıklamam gereken her şeyde bana adım adım yol göster.” Uzak depoyu oluşturmadan ve göndermeden önce hedef hesabı, depo adını, görünürlüğü (herkese açık / özel) ve gönderilecek dosyaları kontrol et.` },
+          { t: `h`, text: `Commit mesajı gelecekteki sana bir nottur` },
+          { t: `p`, html: `“fix” yerine “fix the broken link on the about page” gibi, değişikliğin sonucunu anlatan kısa bir mesaj yaz.` },
+          { t: `callout`, kind: `warn`, title: `Sırları commit'leme`, html: `Parolaları ve anahtarları depoya ekleme. <code>.gitignore</code> kullanmak, daha önce commit edilmiş bir sırrı geçmişten silmez. Göndermeden önce dosyaları ve hazırlanan değişiklikleri <code>git status</code> ile incele.` }
+        ],
+        trouble: [
+          { q: `“src refspec main does not match any”`, a: `Henüz commit yapılmamış olabilir ya da dalının adı farklıdır (ör. <code>master</code>). Önce <code>git commit</code> yap; dal adını <code>git branch</code> ile kontrol et.` },
+          { q: `Push sırasında giriş/yetki hatası`, a: `GitHub hesabınla giriş yapman gerekir. Hata mesajındaki yönlendirmeyi izle ya da Claude'dan adım adım yardım iste; parolanı sohbete yapıştırma.` },
+          { q: `İstemediğim dosyalar da commit'e girdi`, a: `<code>git status</code> ile hazırlanan dosyaları kontrol et. Gitmemesi gereken dosyaları <code>.gitignore</code>'a ekle; daha önce commit edildilerse Claude'dan geçmişten nasıl çıkarılacağını sor.` }
+        ],
+        have: [
+          `Commit ve remote kavramlarını biliyorsun.`,
+          `Beş temel Git komutunun ne yaptığını öğrendin.`,
+          `Açıklayıcı commit mesajı yazmayı ve sırları depodan uzak tutmayı öğrendin.`
+        ],
+        note: `Bu sitenin kaynak klasörlerini (CV, fotoğraf, ders notları) <code>.gitignore</code> ile depo dışında tutuyorum ve dosyaları <code>git add .</code> yerine adlarıyla ekliyorum.`,
+        next: `Sırada: Depoyu bir barındırıcıya bağlayıp siteyi yayınlamak.`,
+        prompt: `git init, git add, git commit, git remote add ve git push komutlarını yeni başlayan birine sırasıyla ve basit bir benzetmeyle açıklar mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`, "~/my-first-project/about.html": `<h1>About me</h1>` },
+          cmds: [
+            { match: `git init`, out: [`Initialized empty Git repository in ~/my-first-project/.git/`] },
+            { match: `git status`, out: [`On branch main`, `Untracked files:`, `  about.html`, `  index.html`] },
+            { match: `git add .`, out: [] },
+            { match: `git commit -m "first version of my site"`, out: [`[main (root-commit) a1b2c3d] first version of my site`, ` 2 files changed, 2 insertions(+)`] },
+            { match: `git remote add origin https://github.com/you/my-first-site.git`, out: [] },
+            { match: `git push -u origin main`, out: [`(simülasyon) Writing objects: 100% (4/4), done.`, `To https://github.com/you/my-first-site.git`, ` * [new branch]      main -> main`, `branch 'main' set up to track 'origin/main'.`] }
+          ],
+          try: [
+            { cmd: `git init`, desc: `depoyu başlat` },
+            { cmd: `git status`, desc: `ne değişti?` },
+            { cmd: `git add .`, desc: `hazırla` },
+            { cmd: `git commit -m "first version of my site"`, desc: `kaydet` },
+            { cmd: `git remote add origin https://github.com/you/my-first-site.git`, desc: `uzak depoyu tanımla` },
+            { cmd: `git push -u origin main`, desc: `gönder` }
+          ]
+        }
+      },
+      {
+        id: `m5-d3`, title: `Vercel'e deploy`, minutes: 2, ready: true,
+        intro: [
+          `Sitenin dosyaları GitHub'da. Bu derste kaynak depoyu bir barındırıcıya bağlayacak ve siteyi paylaşılabilir bir HTTPS adresinde sunma akışını öğreneceksin. Ders Vercel üzerinden ilerler.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Bir kerelik bağlantı` },
+          { t: `steps`, items: [
+            `<strong>vercel.com</strong> adresine git ve GitHub hesabınla giriş yap.`,
+            `İlgili GitHub deposunu içe aktar (<strong>Import</strong>).`,
+            `Proje kökünü ve ayarları incele; sade HTML sitene uygun olduğundan emin olduktan sonra <strong>Deploy</strong>'a bas.`
+          ] },
+          { t: `p`, html: `Planların uygunluğu, kullanım sınırları ve arayüzdeki adlar değişebilir; hesabında görünen koşulları kontrol et. Dağıtım tamamlandığında verilen adresi aç; örnek bir adres <code>my-first-site.vercel.app</code> biçimindedir.` },
+          { t: `callout`, kind: `info`, title: `Sade HTML sitesi neden kolay?`, html: `Tarayıcı HTML, CSS ve JavaScript dosyalarını doğrudan gösterebilir; bu yüzden sade bir statik site çoğunlukla derleme adımı gerektirmez. Yine de doğru proje kökünün ve yayınlanacak dosyaların seçilmesi gerekir.` },
+          { t: `h`, text: `Adım 2 — Bir sayfa 404 veriyorsa` },
+          { t: `code`, label: `Claude'a`, code: `I deployed my site to Vercel but one page shows 404 Not Found.\nHow do I work out which file it is looking for?` },
+          { t: `p`, html: `Anlamı: “Sitemi Vercel'e yükledim ama bir sayfa 404 Not Found gösteriyor. Hangi dosyayı aradığını nasıl bulurum?” Önce bağlantının hedefini, dosyanın konumunu ve adını karşılaştır. <code>Projects.html</code> ile <code>projects.html</code> aynı kabul edilmeyebilir. Yanlış klasör, eksik dosya ya da yönlendirme ayarları da 404'e yol açabilir.` },
+          { t: `practice` },
+          { t: `h`, text: `Güncelleme döngüsü` },
+          { t: `p`, html: `<strong>Değiştir → kontrol et → commit → push → dağıtımı izle → canlı siteyi kontrol et.</strong>` },
+          { t: `p`, html: `Git entegrasyonu açıksa her push yeni bir dağıtım başlatabilir. Production dalına gönderim canlı siteyi günceller; diğer dallar önizleme dağıtımı oluşturabilir. Bu davranış proje ayarlarına bağlıdır; her push'un canlı siteyi değiştirdiğini varsayma.` },
+          { t: `p`, html: `Dağıtım tamamlanınca ana sayfayı, diğer sayfaları ve bağlantıları canlı adreste dene. Güncellemenin anında ya da belirli bir sürede biteceği garanti değildir.` }
+        ],
+        trouble: [
+          { q: `Dağıtım başarısız oldu`, a: `Dağıtım kaydındaki (log) hata mesajını oku ve Claude'a olduğu gibi göster. Sade HTML sitesinde derleme komutu gerekmez; proje kökünün doğru klasör olduğunu kontrol et.` },
+          { q: `Push yaptım ama site değişmedi`, a: `Gönderdiğin dalın production dalı olup olmadığını ve dağıtımın tamamlandığını kontrol et. Tarayıcı önbelleği için sayfayı yenile.` }
+        ],
+        have: [
+          `GitHub deposunu bir barındırıcıya bağlamanın adımlarını biliyorsun.`,
+          `404 hatasında dosya adını, yolunu ve büyük/küçük harfi karşılaştırmayı öğrendin.`,
+          `Değiştir → commit → push → dağıtımı izle → kontrol et döngüsünü biliyorsun.`
+        ],
+        note: `Ders Vercel'i anlatıyor; ben bu siteyi aynı mantıkla GitHub Pages'te yayınladım. Her gönderimden sonra yayının tamamlandığını ve canlı adresin açıldığını kontrol ettim.`,
+        next: `Sırada: Ortam değişkenleri ve sırları güvenle yönetmek.`,
+        prompt: `Statik bir HTML sitesini GitHub deposundan bir barındırma hizmetinde yayınlarken 404 hatası alıyorum. Nedenlerini ve kontrol etmem gerekenleri sırayla listeler misin?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<nav><a href="index.html">Home</a> <a href="Projects.html">Projects</a></nav>\n<h1>Hello, I'm Ayşe</h1>`, "~/my-first-project/projects.html": `<h1>Projects</h1>` },
+          claude: [
+            { match: `I deployed my site to Vercel but one page shows 404 Not Found. How do I work out which file it is looking for?`,
+              out: [`404, istenen adreste bir dosya bulunamadığı anlamına gelir. index.html'e baktım:`, `menüdeki bağlantı "Projects.html"e gidiyor, ama dosyanın adı "projects.html".`, `Barındırıcı büyük/küçük harfi ayırt edebilir. Bağlantıyı "projects.html" yapmamı ister misin?`] }
+          ],
+          try: [
+            { cmd: `ls`, desc: `dosya adları` },
+            { cmd: `cat index.html`, desc: `bağlantının hedefi` },
+            { cmd: `claude "I deployed my site to Vercel but one page shows 404 Not Found. How do I work out which file it is looking for?"`, desc: `404'ü sor` }
+          ]
+        }
+      },
+      {
+        id: `m5-d4`, title: `Ortam değişkenleri ve sırlar`, minutes: 2, ready: true,
+        intro: [
+          `Sade bir kişisel site yalnızca herkese açık içerikten oluşabilir. Ama bir servise bağlanırken API anahtarı, parola ya da başka bir erişim bilgisi kullanman gerekebilir. Bu değerlerin açığa çıkmasını önlemelisin.`
+        ],
+        blocks: [
+          { t: `h`, text: `Sır nedir?` },
+          { t: `p`, html: `Sır, yetki sağlayan gizli bir değerdir: özel bir API anahtarı, parola ya da erişim belirteci (token) gibi. Her yapılandırma değeri sır değildir; ama örneğin bir veritabanı adresi kimlik bilgisi içeriyorsa özellikle korunmalıdır.` },
+          { t: `h`, text: `Sırları kaynak koddan ayrı tut` },
+          { t: `table`, head: [`Ortam`, `Nerede tutulur?`], rows: [
+            [`Yerel geliştirme`, `Kullandığın araç destekliyorsa, Git dışında tutulan <code>.env.local</code> gibi bir ortam dosyasında.`],
+            [`Barındırma ortamı`, `Sağlayıcının ortam değişkenleri ya da sır yönetimi ayarlarında. Vercel'de <strong>Settings → Environment Variables</strong>.`]
+          ] },
+          { t: `p`, html: `Kod, <code>CONTACT_FORM_KEY</code> gibi bir değişken adına başvurur; gizli değerin kendisi kaynak dosyaya yazılmaz. <code>.env.local</code> dosyasının otomatik okunup okunmadığı kullandığın uygulamaya ya da geliştirme aracına bağlıdır.` },
+          { t: `callout`, kind: `warn`, title: `Tarayıcı kodu sır saklayamaz`, html: `Yalnızca HTML'den oluşan bir sayfa gizli bir anahtarı güvenle kullanamaz. Tarayıcıya gönderilen JavaScript, HTML ya da derlenmiş dosyalara eklenen değerler kullanıcılar tarafından görülebilir. Gizli anahtar gerektiren işlemleri sunucu tarafında yürüt; ortam değişkeni kullanmak tek başına değeri gizli tutmaz.` },
+          { t: `h`, text: `.gitignore ve geçmiş kontrolü` },
+          { t: `code`, label: `Claude'a`, code: `make sure any .env files are in my .gitignore,\nand check that none were ever accidentally committed` },
+          { t: `p`, html: `Anlamı: “Bütün .env dosyalarının .gitignore'da olduğundan emin ol ve hiçbirinin yanlışlıkla commit edilmediğini kontrol et.” <code>.gitignore</code>, henüz izlenmeyen dosyaların yanlışlıkla eklenmesini önler; daha önce izlenen ya da commit edilen bir dosyayı geçmişten kendiliğinden çıkarmaz. Gerçek sırları sohbet mesajına ya da örnek çıktıya yapıştırma.` },
+          { t: `practice` },
+          { t: `h`, text: `Bir sır sızdıysa` },
+          { t: `steps`, items: [
+            `Yeni bir anahtar oluştur.`,
+            `Uygulamayı yeni anahtarla güncelle.`,
+            `Eski anahtarı iptal et ya da devre dışı bırak.`
+          ] },
+          { t: `p`, html: `Dosyayı silmek ya da yeni bir commit yapmak, eski değeri Git geçmişinden kaldırmaz. Commit edilmiş bir sırrı her zaman sızmış kabul et ve değiştir.` }
+        ],
+        trouble: [
+          { q: `.env dosyam zaten commit edilmiş`, a: `Önce içindeki anahtarları iptal edip yenile. Ardından dosyayı izlemeden çıkar ve <code>.gitignore</code>'a ekle; Claude'dan bu adımlarda yardım isteyebilirsin.` },
+          { q: `Ortam değişkeni canlı sitede okunmuyor`, a: `Değişkenin barındırıcının ayarlarına doğru adla eklendiğini ve ekledikten sonra yeni bir dağıtım yapıldığını kontrol et.` }
+        ],
+        have: [
+          `Sırrın ne olduğunu ve neden kaynak koddan ayrı tutulduğunu biliyorsun.`,
+          `Tarayıcıya giden kodun sır saklayamayacağını öğrendin.`,
+          `Sızan bir anahtarı iptal edip yenilemenin adımlarını biliyorsun.`
+        ],
+        note: `Bu sitede hiçbir gizli anahtar yok; yine de <code>.env</code> dosyasını önlem olarak <code>.gitignore</code>'a ekledim.`,
+        next: `Sırada: Alan adı, HTTPS ve yayınlamadan önce son tur.`,
+        prompt: `API anahtarı gibi sırları bir web projesinde nasıl güvende tutarım? .env dosyası, .gitignore ve barındırıcının ortam değişkenleri arasındaki ilişkiyi basitçe anlatır mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`, "~/my-first-project/.env.local": `CONTACT_FORM_KEY=ornek-deger-paylasma`, "~/my-first-project/.gitignore": `.DS_Store` },
+          claude: [
+            { match: `make sure any .env files are in my .gitignore, and check that none were ever accidentally committed`,
+              write: { "~/my-first-project/.gitignore": `.DS_Store\n.env*` },
+              out: [`[OK] edited .gitignore — ".env*" eklendi`, `Git geçmişini kontrol ettim: .env.local hiç commit edilmemiş.`, `Not: Bir sır daha önce commit edilmiş olsaydı, .gitignore onu geçmişten silmezdi.`] }
+          ],
+          try: [
+            { cmd: `ls -a`, desc: `gizli dosyaları gör` },
+            { cmd: `cat .gitignore`, desc: `.env yok sayılıyor mu?` },
+            { cmd: `claude "make sure any .env files are in my .gitignore, and check that none were ever accidentally committed"`, desc: `kontrol ettir` },
+            { cmd: `cat .gitignore`, desc: `sonucu oku` }
+          ]
+        }
+      },
+      {
+        id: `m5-d5`, title: `Alan adları, HTTPS ve gerçekten yayınlama`, minutes: 2, ready: true,
+        intro: [
+          `Barındırıcının verdiği adresle siteni hemen paylaşabilirsin. Özel bir alan adı ise isteğe bağlı bir sonraki adımdır: seçtiğin adı kaydeder, barındırma hizmetine bağlar ve HTTPS erişimini doğrularsın.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Alan adını kaydet` },
+          { t: `p`, html: `Bir alan adı kayıt kuruluşunda uygun bir ad seç ve kaydet. Kayıt genellikle süreli ve yenilenebilir bir kullanım hakkıdır; ilk yılın fiyatıyla yenileme ücretini ayrı ayrı kontrol et. Fiyat, uzantıya ve sağlayıcıya göre değişir.` },
+          { t: `p`, html: `Alan adını kaydetmek, siteyi otomatik olarak doğru yere bağlamaz; adın hangi hizmeti göstereceğini ayrıca yapılandırırsın.` },
+          { t: `h`, text: `Adım 2 — Barındırıcıya ekle ve DNS'i ayarla` },
+          { t: `p`, html: `Alan adını barındırıcıdaki projene ekle. Ardından barındırıcının verdiği güncel DNS kayıtlarını, alan adının yetkili DNS sağlayıcısında tanımla. Bu sağlayıcı, alan adını satın aldığın yerden farklı olabilir.` },
+          { t: `code`, label: `Claude'a`, code: `Vercel told me to add an A record and a CNAME for my domain.\nExplain in plain terms what each one does before I paste them in.` },
+          { t: `p`, html: `Anlamı: “Vercel alan adım için bir A kaydı ve bir CNAME eklememi söyledi. Yapıştırmadan önce her birinin ne yaptığını sade bir dille açıkla.”` },
+          { t: `table`, head: [`Kayıt`, `Ne yapar?`], rows: [
+            [`A`, `Bir adı bir IPv4 adresine bağlar.`],
+            [`CNAME`, `Bir adı başka bir alan adına yönlendirir.`]
+          ] },
+          { t: `p`, html: `Hangi ad için hangi kaydın gerektiğini barındırıcının proje ekranından al; örnek değerleri rastgele kopyalama. DNS değişikliklerinin görünmesi önbelleklere ve kayıt ayarlarına bağlıdır; değişiklik hemen görünmeyebilir. Barındırıcıdaki alan adı doğrulama durumunu kontrol et.` },
+          { t: `practice` },
+          { t: `h`, text: `Adım 3 — HTTPS'i doğrula` },
+          { t: `p`, html: `Birçok yönetilen barındırıcı sertifika işlemlerini otomatik yürütür; bunun için DNS doğrulamasının ve sertifika oluşturmanın tamamlanması gerekir. HTTPS adresini aç ve sertifika uyarısı olmadığını kontrol et.` },
+          { t: `callout`, kind: `info`, title: `Asma kilit her zaman görünmeyebilir`, html: `HTTPS bağlantıyı şifreler, içeriğin güvenilirliğini tek başına kanıtlamaz. Tarayıcılar güvenli bağlantıyı her zaman asma kilit simgesiyle göstermeyebilir.` },
+          { t: `h`, text: `Adım 4 — “Yabancının turu”nu yap` },
+          { t: `list`, items: [
+            `Siteyi telefonunda ya da başka bir cihazda aç.`,
+            `Bütün sayfa ve menü bağlantılarını dene.`,
+            `HTTPS bağlantısında uyarı olmadığını doğrula.`,
+            `Gerçek adını ve içeriğini kontrol et; örnek metinleri temizle.`
+          ] }
+        ],
+        trouble: [
+          { q: `Alan adı hâlâ eski yere gidiyor`, a: `DNS değişikliklerinin yayılması zaman alabilir. Barındırıcıdaki doğrulama durumunu kontrol et ve kayıtların barındırıcının gösterdiği değerlerle birebir aynı olduğundan emin ol.` },
+          { q: `Sertifika uyarısı görüyorum`, a: `DNS doğrulaması ve sertifika oluşturma henüz tamamlanmamış olabilir. Barındırıcının alan adı ekranındaki durumu izle; uyarı sürerse kayıtları yeniden kontrol et.` }
+        ],
+        have: [
+          `Özel alan adının isteğe bağlı bir adım olduğunu biliyorsun.`,
+          `A ve CNAME kayıtlarının ne işe yaradığını öğrendin.`,
+          `Yayınlamadan önce “yabancının turu” kontrol listen var.`
+        ],
+        note: `Bu sitede özel alan adı kullanmadım; GitHub Pages'in verdiği HTTPS adresiyle yayında. “Yabancının turu” listesini kendi sitem için de not ettim.`,
+        next: `Sırada: Modül 5'in özeti ve yayına alma döngüsü.`,
+        prompt: `Bir alan adını statik site barındırıcısına bağlarken A kaydı ve CNAME kaydı ne işe yarar? Sade bir dille ve bir benzetmeyle açıklar mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `Vercel told me to add an A record and a CNAME for my domain. Explain in plain terms what each one does before I paste them in`,
+              out: [`A kaydı: alan adını (ör. ornek.com) bir sunucunun IP adresine bağlar — bir adresin sokak numarası gibi.`, `CNAME: bir adı (ör. www.ornek.com) başka bir alan adına yönlendirir — “şu adrese bak” notu gibi.`, `Değerleri barındırıcının proje ekranından birebir kopyala; örnek değer kullanma.`] }
+          ],
+          try: [
+            { cmd: `claude "Vercel told me to add an A record and a CNAME for my domain. Explain in plain terms what each one does before I paste them in."`, desc: `DNS kayıtlarını sor` }
+          ]
+        }
+      },
+      {
+        id: `m5-d6`, title: `Modül 5 özeti`, minutes: 1, ready: true,
+        intro: [
+          `Bir siteyi yerel dosyalardan herkese açık bir web adresine taşımanın temel akışını öğrendin. Yayın bağlantısı bir kez kurulduktan sonra küçük güncellemeleri aynı döngüyle sürdürebilirsin.`
+        ],
+        blocks: [
+          { t: `h`, text: `Yayına alma döngüsü` },
+          { t: `table`, head: [`Adım`, `Ne yaparsın?`], rows: [
+            [`Anlık görüntü`, `Değişikliği kontrol et; <code>git add</code> ve <code>git commit</code> ile kaydet.`],
+            [`Yükleme`, `Doğru uzak depoya ve dala <code>git push</code> ile gönder.`],
+            [`Dağıtım`, `Bağlı barındırıcının dağıtımını izle ve başarılı olduğunu doğrula.`],
+            [`Kontrol`, `Canlı HTTPS adresini başka bir cihazda aç; sayfaları ve bağlantıları dene.`]
+          ] },
+          { t: `p`, html: `<strong>Commit → push → dağıtımı doğrula → kontrol et.</strong> Otomatik yayın, Git entegrasyonuna ve production dalı ayarına bağlıdır; önizleme dağıtımı ile canlı site güncellemesini birbirinden ayırt et.` },
+          { t: `h`, text: `Akılda tutmaya değer kurallar` },
+          { t: `list`, items: [
+            `<strong>Küçük ve sık güncelle:</strong> Her değişikliğin sonucunu kontrol et.`,
+            `<strong>Sırları commit'leme:</strong> Ortam dosyalarını ve gizli değerleri Git dışında tut; sızan anahtarı değiştir.`,
+            `<strong>404'te yolu incele:</strong> Bağlantıyı, dosya adını ve klasör konumunu karşılaştır.`,
+            `<strong>Başka cihazda dene:</strong> Yayın adresini yalnızca kendi geliştirme ortamında test etme.`
+          ] },
+          { t: `p`, html: `Bu beceriler komut ezberlemekten çok, her adımın ne yaptığını anlamak ve sonucu kontrol etmekle ilgilidir.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Dosyalarını bir Git deposunda sürümlemek.`,
+          `Uzak depoyu bir barındırma akışına bağlamak.`,
+          `Değişikliği gönderip dağıtımın sonucunu kontrol etmek.`,
+          `İstersen özel alan adı ekleyip HTTPS erişimini doğrulamak.`
+        ],
+        note: `Commit, push, doğrula, kontrol et: Bu siteyi her güncellediğimde aynı dört adımı izliyorum ve yayınlamadan önce onay veriyorum.`,
+        next: `Sırada: Proje talimatları, kısayollar ve dış araç bağlantılarıyla Claude Code kullanımını geliştirmek.`,
+        prompt: `Claude Code kursunun beşinci modülünde yerel dosya ile yayındaki site farkını, Git'in beş temel komutunu, deploy, sırlar ve alan adı/HTTPS konularını öğrendim. 5 soruluk kısa bir tekrar testi hazırlar mısın? Cevapları en sonda ver.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          cmds: [
+            { match: `git add index.html`, out: [] },
+            { match: `git commit -m "update the home page heading"`, out: [`[main 4e5f6a7] update the home page heading`, ` 1 file changed, 1 insertion(+), 1 deletion(-)`] },
+            { match: `git push`, out: [`(simülasyon) To https://github.com/you/my-first-site.git`, `   a1b2c3d..4e5f6a7  main -> main`, `Şimdi dağıtımı izle ve canlı adresi kontrol et.`] }
+          ],
+          try: [
+            { cmd: `git add index.html`, desc: `anlık görüntü` },
+            { cmd: `git commit -m "update the home page heading"`, desc: `kaydet` },
+            { cmd: `git push`, desc: `yükle` }
+          ]
+        }
+      }
     ] },
     { id: `m6`, no: 6, title: `Hooks, MCP ve iş akışı`, lessons: [
       { id: `m6-d1`, title: `CLAUDE.md: projeni Claude'a öğret`, minutes: 2 },
