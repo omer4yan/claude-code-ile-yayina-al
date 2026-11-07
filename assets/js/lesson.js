@@ -1,5 +1,5 @@
 /* =========================================================
-   Ders sayfası (ders.html?id=m1-d1)
+   Ders sayfası (ders.html?id=m1-d1) ve Öğrenme Yolculuğum genel bakışı (kimliksiz ders.html)
    Ders verisini (window.ORVENA_LESSONS) okuyup sayfayı üretir:
    giriş alanı, ders gövdesi, müfredat, "Bu modülde", "Bu derste",
    önceki/sonraki dersler. Sandbox ve dinleme ayrı dosyalarda.
@@ -51,6 +51,10 @@
     trouble: "If it didn't work", have: "What you have now", note: "My note",
     prev: "Previous lesson", next: "Next lesson", afterCourse: "After the course", pager: "Move between lessons",
     descTpl: function (m, d, t) { return "Module " + m + ", Lesson " + d + ": " + t + ". My lesson notes from the 'Claude Code ile Yayına Al' course."; },
+    overview: "Overview", ovTitle: "My Learning Journey", onPage: "On this page", modules: "modules",
+    ovIntro: "I gathered what I learned in the 'Claude Code ile Yayına Al' course into 7 modules and 40 lesson pages. Pick a module and start with its first lesson.",
+    ovDesc: "My Learning Journey: an overview of the 7 modules and 40 lesson pages of the 'Claude Code ile Yayına Al' course.",
+    startModule: "Start the module", openPage: "Open the page", min: "min", lessonsOf: "Lessons in this module",
     toastOk: "Example prompt copied to the clipboard. If the box in Claude is empty, paste it (Ctrl+V).",
     toastOpen: "claude.ai opened in a new tab. If the box is empty, type the prompt yourself.",
     toastBlocked: "The pop-up was blocked. You can open claude.ai yourself; the prompt is on your clipboard."
@@ -65,6 +69,10 @@
     trouble: "Çalışmadıysa", have: "Şimdi elinde ne var", note: "Benim notum",
     prev: "Önceki ders", next: "Sonraki ders", afterCourse: "Kursun ardından", pager: "Dersler arası geçiş",
     descTpl: function (m, d, t) { return "Modül " + m + ", Ders " + d + ": " + t + ". 'Claude Code ile Yayına Al' kursunun ders notlarım."; },
+    overview: "Genel bakış", ovTitle: "Öğrenme Yolculuğum", onPage: "Bu sayfada", modules: "modül",
+    ovIntro: "'Claude Code ile Yayına Al' kursunda öğrendiklerimi 7 modül ve 40 ders sayfasında topladım. Bir modül seç ve ilk dersinden başla.",
+    ovDesc: "Öğrenme Yolculuğum: 'Claude Code ile Yayına Al' kursunun 7 modülüne ve 40 ders sayfasına genel bakış.",
+    startModule: "Modüle başla", openPage: "Sayfayı aç", min: "dk", lessonsOf: "Bu modülün dersleri",
     toastOk: "Örnek istek panoya kopyalandı. Claude'da alan boş gelirse yapıştır (Ctrl+V).",
     toastOpen: "claude.ai yeni sekmede açıldı. Alan boş gelirse isteği kendin yaz.",
     toastBlocked: "Açılır pencere engellendi. claude.ai adresini kendin açabilirsin; istek panoya kopyalandı."
@@ -88,41 +96,53 @@
     return lessonHref(m.lessons[0]);
   };
 
+  // Kimliksiz ders.html: Öğrenme Yolculuğum genel bakış sayfası
+  var OVERVIEW_HREF = "ders.html";
   var params = new URLSearchParams(location.search);
-  var id = params.get("id") || all[0].lesson.id;
+  var id = params.get("id");
+  var overview = !id;
   var pos = -1;
-  for (var i = 0; i < all.length; i++) if (all[i].lesson.id === id) pos = i;
-
-  if (pos < 0) {
-    // Bilinmeyen ders: ilk derse git
-    location.replace(lessonHref(all[0].lesson));
-    return;
+  if (!overview) {
+    for (var i = 0; i < all.length; i++) if (all[i].lesson.id === id) pos = i;
+    if (pos < 0) {
+      // Bilinmeyen ders: genel bakışa git
+      location.replace(OVERVIEW_HREF);
+      return;
+    }
   }
 
-  var cur = all[pos];
-  var L = cur.lesson;
-  var M = cur.module;
-  var prev = all[pos - 1] || null;
-  var next = all[pos + 1] || null;
+  var cur = overview ? null : all[pos];
+  var L = overview ? null : cur.lesson;
+  var M = overview ? null : cur.module;
+  var prev = overview ? null : all[pos - 1] || null;
+  var next = overview ? null : all[pos + 1] || null;
 
   /* ---------- Başlık, dil bağlantıları ---------- */
-  document.title = M ? L.title + " — " + T.module + " " + M.no + " · Orvena" : L.title + " · Orvena";
   var desc = document.querySelector('meta[name="description"]');
-  if (desc) desc.setAttribute("content", M ? T.descTpl(M.no, cur.index + 1, L.title) : L.desc || L.title);
+  if (overview) {
+    document.title = T.ovTitle + " · Orvena";
+    if (desc) desc.setAttribute("content", T.ovDesc);
+  } else {
+    document.title = M ? L.title + " — " + T.module + " " + M.no + " · Orvena" : L.title + " · Orvena";
+    if (desc) desc.setAttribute("content", M ? T.descTpl(M.no, cur.index + 1, L.title) : L.desc || L.title);
+  }
 
   // Dil bağlantıları aynı sayfanın diğer dildeki karşılığına gider
-  var otherHref = (isEn ? "../ders.html?id=" : "en/ders.html?id=") + L.id;
+  var query = overview ? "" : "?id=" + L.id;
+  var otherHref = (isEn ? "../ders.html" : "en/ders.html") + query;
   ["lang-link", "footer-other"].forEach(function (k) {
     var a = document.getElementById(k);
     if (a) a.setAttribute("href", otherHref);
   });
   var selfLink = document.getElementById("footer-self");
-  if (selfLink) selfLink.setAttribute("href", "ders.html?id=" + L.id);
+  if (selfLink) selfLink.setAttribute("href", "ders.html" + query);
 
   /* ---------- Müfredat ---------- */
   var curList = document.getElementById("lesson-curriculum");
   if (curList) {
-    var html = "";
+    // En üstte genel bakış bağlantısı
+    var html = '<div class="cur-module cur-extra cur-overview' + (overview ? " is-active" : "") + '"><a class="cur-module__head" href="' + OVERVIEW_HREF + '"' + (overview ? ' aria-current="page"' : "") + ">" +
+      '<span class="cur-badge">' + ICON.list + '</span><span class="cur-module__name">' + T.overview + '</span><span class="cur-module__count">' + DATA.modules.length + " " + T.modules + "</span></a></div>";
     DATA.modules.forEach(function (m) {
       var open = !!M && m.id === M.id;
       html += '<div class="cur-module' + (open ? " is-active" : " is-collapsed") + '" data-module="' + m.id + '"' + (open ? " data-open" : "") + ">" +
@@ -135,13 +155,13 @@
         ICON.chev.replace("<svg ", '<svg class="cur-module__chev" ') + "</button></div>" +
         '<div class="cur-lessons-wrap" id="cur-' + m.id + '"><ul class="cur-lessons">';
       m.lessons.forEach(function (l) {
-        var active = l.id === L.id;
+        var active = !!L && l.id === L.id;
         html += "<li" + (active ? ' class="is-active"' : "") + '><a href="' + lessonHref(l) + '"' +
           (active ? ' aria-current="page"' : "") + ">" + esc(l.title) + "</a></li>";
       });
       html += "</ul></div></div>";
     });
-    var onLaunch = !M;
+    var onLaunch = !overview && !M;
     html += '<div class="cur-module cur-extra' + (onLaunch ? " is-active" : "") + '" data-module="yayin-gunu"><a class="cur-module__head" href="ders.html?id=yayin-gunu"' + (onLaunch ? ' aria-current="page"' : "") + ">" +
       '<span class="cur-badge">★</span><span class="cur-module__name">' + T.launch + '</span><span class="cur-module__count">' + T.launchDate + "</span></a></div>";
     curList.innerHTML = html;
@@ -230,12 +250,86 @@
     }
   };
 
+  /* ---------- Genel bakış: modül kartları ---------- */
+  var renderOverview = function () {
+    var MODS = window.ORVENA_MODULES || [];
+    var base = isEn ? "../" : "";
+    var lessonCount = 0, minutes = 0;
+    DATA.modules.forEach(function (m) {
+      lessonCount += m.lessons.length;
+      m.lessons.forEach(function (l) { minutes += l.minutes || 0; });
+    });
+
+    var out = '<header class="lesson-hero">' +
+      '<canvas class="lesson-hero__waves" aria-hidden="true"></canvas>' +
+      '<nav class="lesson-crumb" aria-label="' + T.crumb + '">' +
+      '<span style="--i:0">' + esc(DATA.course) + "</span>" +
+      '<span class="lesson-crumb__sep" style="--i:1">' + ICON.chev + "</span>" +
+      '<span aria-current="page" style="--i:2">' + T.overview + "</span></nav>" +
+      '<h1 class="lesson-hero__title">' + T.ovTitle + "</h1>" +
+      '<div class="hero-chips">' +
+      '<span class="chip">' + ICON.term + DATA.modules.length + " " + T.modules + "</span>" +
+      '<span class="chip">' + ICON.list + lessonCount + " " + T.lessons + "</span>" +
+      '<span class="chip">' + ICON.clock + minutes + " " + T.minRead + "</span>" +
+      "</div></header>";
+
+    out += '<article class="lesson-body ov" id="lesson-body">';
+    out += '<p class="lesson-intro">' + esc(T.ovIntro) + "</p>";
+
+    DATA.modules.forEach(function (m) {
+      var meta = null;
+      for (var k = 0; k < MODS.length; k++) if (MODS[k].no === m.no) meta = MODS[k];
+      var tx = meta ? meta[isEn ? "en" : "tr"] || meta.tr : null;
+      var mins = 0;
+      m.lessons.forEach(function (l) { mins += l.minutes || 0; });
+      toc.push({ id: m.id, text: pad2(m.no) + " · " + m.title });
+
+      out += '<section class="ov-module" id="' + m.id + '" aria-labelledby="' + m.id + '-t">' +
+        '<div class="ov-module__head">' +
+        (meta && meta.cover ? '<img class="ov-module__cover" src="' + base + meta.cover + '" alt="" width="640" height="400" loading="lazy" decoding="async">' : "") +
+        '<div class="ov-module__text">' +
+        '<p class="ov-module__no">' + T.module + " " + pad2(m.no) + "</p>" +
+        '<h2 class="ov-module__title" id="' + m.id + '-t"><a href="' + moduleHref(m) + '">' + esc(m.title) + "</a></h2>" +
+        (m.sub ? '<p class="ov-module__sub">' + esc(m.sub) + "</p>" : "") +
+        (tx && tx.description ? '<p class="ov-module__desc">' + esc(tx.description) + "</p>" : "") +
+        '<p class="ov-module__meta">' + ICON.list + m.lessons.length + " " + T.lessons +
+        '<span aria-hidden="true">·</span>' + ICON.clock + "≈" + mins + " " + T.min + "</p>" +
+        "</div></div>" +
+        '<ol class="ov-lessons" aria-label="' + T.lessonsOf + '">' +
+        m.lessons.map(function (l, j) {
+          return '<li><a href="' + lessonHref(l) + '"><span class="ov-lessons__n">' + (j + 1) + "</span>" +
+            '<span class="ov-lessons__title">' + esc(l.title) + "</span>" +
+            (l.minutes ? '<span class="ov-lessons__min">' + l.minutes + " " + T.min + "</span>" : "") +
+            ICON.chev + "</a></li>";
+        }).join("") + "</ol>" +
+        '<a class="btn btn--primary ov-module__start" href="' + moduleHref(m) + '">' + T.startModule + ICON.right + "</a>" +
+        "</section>";
+    });
+
+    if (DATA.launch) {
+      var Lc = DATA.launch;
+      toc.push({ id: "yayin-gunu", text: T.launch });
+      out += '<section class="ov-module ov-module--launch" id="yayin-gunu" aria-labelledby="yayin-gunu-t">' +
+        '<div class="ov-module__text">' +
+        '<p class="ov-module__no">' + T.afterCourse + "</p>" +
+        '<h2 class="ov-module__title" id="yayin-gunu-t"><a href="' + lessonHref(Lc) + '">' + esc(Lc.title) + "</a></h2>" +
+        (Lc.sub ? '<p class="ov-module__sub">' + esc(Lc.sub) + "</p>" : "") +
+        "</div>" +
+        '<a class="btn btn--ghost ov-module__start" href="' + lessonHref(Lc) + '">' + T.openPage + ICON.right + "</a>" +
+        "</section>";
+    }
+    out += "</article>";
+    return out;
+  };
+
   var body = "";
+  if (overview) body = renderOverview();
+  else {
   // Giriş alanı
   body += '<header class="lesson-hero">' +
     '<canvas class="lesson-hero__waves" aria-hidden="true"></canvas>' +
     '<nav class="lesson-crumb" aria-label="' + T.crumb + '">' +
-    '<a href="' + lessonHref(all[0].lesson) + '" style="--i:0">' + esc(DATA.course) + "</a>" +
+    '<a href="' + OVERVIEW_HREF + '" style="--i:0">' + esc(DATA.course) + "</a>" +
     '<span class="lesson-crumb__sep" style="--i:1">' + ICON.chev + "</span>" +
     (M
       ? '<a href="' + moduleHref(M) + '" style="--i:2">' + T.module + " " + M.no + "</a>" +
@@ -298,13 +392,26 @@
       "</a>";
   };
   body += '<nav class="pager" aria-label="' + T.pager + '">' + navCard(prev, "prev") + navCard(next, "next") + "</nav>";
+  }
 
   main.innerHTML = body;
 
-  /* ---------- Sağ kart: Bu derste ---------- */
+  // Genel bakış #m3 gibi bir adresle açıldıysa o modüle kay (içerik betikle üretildiği için)
+  if (overview && location.hash.length > 1) {
+    var target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target) {
+      var jump = function () { target.scrollIntoView({ block: "start", behavior: "instant" }); };
+      jump();
+      window.addEventListener("load", jump, { once: true }); // görseller yüklenince yer değişebilir
+    }
+  }
+
+  /* ---------- Sağ kart: Bu derste / Bu sayfada ---------- */
   var tocCard = document.querySelector(".rail-card--toc");
   var tocList = document.getElementById("lesson-toc");
   if (tocCard && tocList && toc.length) {
+    var tocTitle = tocCard.querySelector("h2");
+    if (overview && tocTitle) tocTitle.textContent = T.onPage;
     tocList.innerHTML = toc.map(function (t) {
       return '<li><a href="#' + t.id + '">' + esc(t.text) + "</a></li>";
     }).join("");
@@ -381,7 +488,7 @@
   // Claude'da aç: istek panoya kopyalanır ve claude.ai yeni sekmede açılır
   main.addEventListener("click", function (e) {
     var btn = e.target.closest(".practice__claude");
-    if (!btn || !L.prompt) return;
+    if (!btn || !L || !L.prompt) return;
     var url = "https://claude.ai/new?q=" + encodeURIComponent(L.prompt);
     var win = window.open(url, "_blank", "noopener");
     copyText(L.prompt).then(function (ok) {
@@ -450,6 +557,6 @@
     }
   }
 
-  /* Diğer betikler için paylaşılan bilgiler */
-  window.ORVENA_LESSON = { lesson: L, module: M, isEn: isEn, toast: toast, copy: copyText };
+  /* Diğer betikler için paylaşılan bilgiler (genel bakışta yok: sandbox ve dinleme çalışmaz) */
+  if (!overview) window.ORVENA_LESSON = { lesson: L, module: M, isEn: isEn, toast: toast, copy: copyText };
 })();

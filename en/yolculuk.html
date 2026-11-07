@@ -9,11 +9,11 @@
   <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
   <script>
     /* Eski Öğrenme Yolculuğum adresleri ders sayfalarına yönlenir:
-       #m3-d2 -> ders.html?id=m3-d2, #m3 -> ders.html?id=m3-d1, #yayin-gunu -> ders.html?id=yayin-gunu */
+       #m3-d2 -> ders.html?id=m3-d2, #m3 -> ders.html#m3 (genel bakışta Modül 3), #yayin-gunu -> ders.html?id=yayin-gunu */
     (function () {
       var h = decodeURIComponent(location.hash.slice(1));
-      var id = /^m\d-d\d$/.test(h) ? h : /^m\d$/.test(h) ? h + "-d1" : h === "yayin-gunu" ? h : "";
-      location.replace("ders.html" + (id ? "?id=" + id : ""));
+      var id = /^m\d-d\d$/.test(h) || h === "yayin-gunu" ? h : "";
+      location.replace(id ? "ders.html?id=" + id : /^m\d$/.test(h) ? "ders.html#" + h : "ders.html");
     })();
   </script>
   <style>body{margin:0;font-family:system-ui,sans-serif;background:#131211;color:#f2eee7;display:grid;place-items:center;min-height:100vh}a{color:#e8622c}</style>

@@ -110,6 +110,9 @@
     }
   ];
 
+  // Öğrenme Yolculuğum genel bakış sayfası (lesson.js) kapak ve açıklamaları buradan okur
+  window.ORVENA_MODULES = MODULES;
+
   /* Arayüz metinleri (sayfanın diline göre) */
   var LANG = (document.documentElement.getAttribute("lang") || "tr").toLowerCase().indexOf("en") === 0 ? "en" : "tr";
   var S = LANG === "en"

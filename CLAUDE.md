@@ -12,8 +12,8 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 | Türkçe (kök) | İngilizce | İçerik |
 |---|---|---|
 | `index.html` | `en/index.html` | Giriş alanı (serif başlık + canlı noktalı harita), Eğitim Modülleri carousel'i, kısa hakkımda, iletişim. Ders şeridi ve "İlk sitem yayında" kartı kullanıcının isteğiyle kaldırıldı (yayın günü artık `ders.html?id=yayin-gunu` sayfasında). |
-| `ders.html` | `en/ders.html` | **Öğrenme Yolculuğum** (kullanıcının isteğiyle her şey ders sayfalarında): menüdeki "Öğrenme Yolculuğum", ana sayfa düğmesi ve modül kartları ders sayfalarını açar. `ders.html` (id yoksa) ilk dersi, `?id=yayin-gunu` Yayın günü sayfasını açar. |
-| `yolculuk.html` | `en/yolculuk.html` | Yalnızca yönlendirme (eski bağlantılar için): `#mN-dK` → o ders, `#mN` → modülün ilk dersi, `#yayin-gunu` → Yayın günü, diğerleri → ilk ders. İçerik eklenmez. |
+| `ders.html` | `en/ders.html` | **Öğrenme Yolculuğum**: kimliksiz `ders.html` genel bakış sayfasıdır (ders şablonuyla aynı tasarım; kullanıcı onayladı): 7 modül kartı (kapak, açıklama, ders listesi, "Modüle başla") ve Yayın günü kartı. Menüdeki "Öğrenme Yolculuğum", ana sayfa düğmesi, ders başlığının üstündeki kurs adı ve müfredattaki "Genel bakış" buraya gider; ana sayfadaki modül kartları modülün ilk dersine gider. `?id=m1-d1` … ders sayfası, `?id=yayin-gunu` Yayın günü; bilinmeyen kimlik genel bakışa döner. |
+| `yolculuk.html` | `en/yolculuk.html` | Yalnızca yönlendirme (eski bağlantılar için): `#mN-dK` → o ders, `#mN` → genel bakışta o modül (`ders.html#mN`), `#yayin-gunu` → Yayın günü, diğerleri → genel bakış. İçerik eklenmez. |
 | `hakkimda.html` | `en/hakkimda.html` | Fotoğraf, hakkımda metni (eğitim paragrafı dahil) ve butonlar. Unvan satırı ve deneyim/eğitim/sertifika/beceri/dil bölümleri kullanıcının isteğiyle kaldırıldı. |
 
 - Ortak dosyalar: `assets/css/style.css`, `assets/css/home.css` (yalnızca ana sayfa giriş alanı), `assets/js/main.js`, `assets/js/modules.js`, `assets/img/`.
@@ -86,6 +86,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 
 ## Dersler ve bağlantılar
 - Her dersin kimliği `m{modül}-d{ders}` (örn. `#m3-d2`). Toplam 40 ders.
+- Genel bakış (`lesson.js` içindeki `renderOverview`): ders verisi (`lessons.*.js`) + kapak ve açıklamalar `modules.js`'ten (`window.ORVENA_MODULES`; `ders.html` bu dosyayı `lesson.js`'ten önce yükler). Giriş metni (TR: "'Claude Code ile Yayına Al' kursunda öğrendiklerimi 7 modül ve 40 ders sayfasında topladım. Bir modül seç ve ilk dersinden başla.") kullanıcı onaylı. Sağda "Bu sayfada" kartı (modüllere atlama). Dinleme oynatıcısı, sandbox ve önceki/sonraki kartları yok (`window.ORVENA_LESSON` tanımlanmaz). `ders.html#m3` o modüle anında kayar.
 - Eski `yolculuk.html#m3-d2` bağlantıları yönlendirme sayfası sayesinde ilgili ders sayfasına gider. Yeni ders eklenirse iki dilde de veri dosyasına eklenir; müfredat, "Bu modülde" kartı ve önceki/sonraki kartları ondan üretilir.
 - Müfredat modülleri açılır/kapanır (kullanıcının paylaştığı referans videoya göre): modül başlığı iki parçalıdır: `<div class="cur-module__head cur-module__head--split">` içinde modül adı `<a class="cur-module__link">` (o modülün derslerini açar ve modülün ilk dersine gider; ayrıca "Bu modülde" kartındaki ad ve giriş alanındaki "Modül N" o modülün ilk dersine, `ders.html?id=mN-d1`, gider) ve ok düğmesi `<button class="cur-module__toggle" aria-expanded aria-controls="cur-mN">` (yalnızca açar/kapatır, sayfayı kaydırmaz). Dersler `.cur-lessons-wrap#cur-mN` içinde. Ders sayfasında yalnızca geçerli dersin modülü açık gelir (`data-open`). Birden fazla modül aynı anda açık olabilir. JS yoksa hepsi açık kalır.
 
