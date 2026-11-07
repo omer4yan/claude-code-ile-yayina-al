@@ -1705,13 +1705,321 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m6`, no: 6, title: `Hooks, MCP ve iş akışı`, lessons: [
-      { id: `m6-d1`, title: `CLAUDE.md: projeni Claude'a öğret`, minutes: 2 },
-      { id: `m6-d2`, title: `Slash komutları ve subagent'lar`, minutes: 2 },
-      { id: `m6-d3`, title: `Hooks: sıkıcı kısımları otomatikleştir`, minutes: 2 },
-      { id: `m6-d4`, title: `MCP: Claude'a yeni araçlar ver`, minutes: 2 },
-      { id: `m6-d5`, title: `Terminalin ötesi: Agent SDK`, minutes: 2 },
-      { id: `m6-d6`, title: `Modül 6 özeti`, minutes: 1 }
+    { id: `m6`, no: 6, title: `Hooks, MCP ve iş akışı`, sub: `Çalışma biçimini yapılandır`, lessons: [
+      {
+        id: `m6-d1`, title: `CLAUDE.md: projeni Claude'a öğret`, minutes: 2, ready: true,
+        intro: [
+          `<code>CLAUDE.md</code>, projeyi ve çalışma tercihlerini anlatan sade bir metin dosyasıdır. Doğru konuma yerleştirildiğinde Claude Code'un proje talimatlarına katkıda bulunur ve aynı açıklamaları her oturumda yeniden yapma ihtiyacını azaltır.`,
+          `<code>/init</code> ile bir başlangıç taslağı oluşturabilirsin. Bu ders, o taslağı doğru ve yararlı bilgilerle geliştirmeyle ilgili.`
+        ],
+        blocks: [
+          { t: `h`, text: `İçine ne yazılır?` },
+          { t: `table`, head: [`Başlık`, `Ne yazılır?`], rows: [
+            [`Proje`, `Ne olduğu ve hangi sayfaları içerdiği.`],
+            [`Çalıştırma`, `Siteyi nasıl açacağın ya da önizleyeceğin.`],
+            [`Tercihler`, `Ortak stil ve içerik kuralları.`],
+            [`Sınırlar`, `Yeniden adlandırılmaması ya da korunması gereken öğeler.`]
+          ] },
+          { t: `code`, label: `CLAUDE.md — örnek`, code: `# Kişisel sitem\n- Sayfalar: index.html, projects.html, about.html\n- Görmek için: index.html dosyasını tarayıcıda aç\n- Stil: krem arka plan, tutarlı başlık yazı tipi, parlak renk yok\n- Adım Ayşe; örnek ad yerine bunu kullan\n- Dosyaları yeniden adlandırmadan önce sor` },
+          { t: `h`, text: `Adım 1 — Claude'dan taslak iste` },
+          { t: `code`, label: `Claude'a`, code: `read my project and write a CLAUDE.md describing my pages,\nhow to open the site, and the style choices you notice` },
+          { t: `p`, html: `Anlamı: “Projemi oku ve sayfalarımı, siteyi nasıl açacağımı ve fark ettiğin stil tercihlerini anlatan bir CLAUDE.md yaz.”` },
+          { t: `h`, text: `Adım 2 — Taslağı oku ve tamamla` },
+          { t: `p`, html: `Claude'un bilemeyeceği bilgileri, örneğin adını ve kişisel tercihlerini sen ekle. Dosya yollarını ve çalıştırma talimatlarını gerçek projeyle karşılaştır.` },
+          { t: `practice` },
+          { t: `h`, text: `Güncel ve kısa tut` },
+          { t: `p`, html: `Proje değiştiğinde dosyayı da güncelle. Ana sayfan <code>index.html</code> iken notta <code>home.html</code> yazması Claude'u yanlış yönlendirir. Aynı düzeltmeyi tekrar tekrar yapıyorsan, bunu kısa bir proje kuralına dönüştür.` },
+          { t: `callout`, kind: `warn`, title: `Bir talimat dosyası, bir güvence değildir`, html: `<code>CLAUDE.md</code> kalıcı bir talimat kaynağıdır; eksiksiz bir oturum hafızası ya da güvenlik sınırı değildir. Önemli işlerde talimatın uygulandığını sonuç üzerinden kontrol et.` }
+        ],
+        trouble: [
+          { q: `Claude CLAUDE.md'deki kuralı uygulamadı`, a: `Kuralın kısa, açık ve güncel olduğunu kontrol et. Önemli işlerde kuralı isteğinde de hatırlat ve sonucu kendin doğrula.` },
+          { q: `Taslakta yanlış dosya adları var`, a: `Taslak bir başlangıçtır. <code>ls</code> ile gerçek dosyaları kontrol et ve yanlış satırları düzelt.` }
+        ],
+        have: [
+          `<code>CLAUDE.md</code>'nin dört bölümünü biliyorsun: proje, çalıştırma, tercihler, sınırlar.`,
+          `Claude'dan taslak isteyip kendi bilgilerinle tamamlamayı öğrendin.`,
+          `Tekrarlanan düzeltmeleri kalıcı bir kurala dönüştürmeyi öğrendin.`
+        ],
+        note: `Bu sitenin <code>CLAUDE.md</code> dosyası her yeni kararla büyüdü: marka, sayfalar, içerik kuralları ve yayından önce onay alınması gibi sınırlar orada yazılı.`,
+        next: `Sırada: Özel slash komutları ve subagent'lar.`,
+        prompt: `Kişisel bir web sitesi projesi için iyi bir CLAUDE.md dosyasında hangi bölümler olmalı? Kısa bir örnek şablon hazırlar mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`, "~/my-first-project/projects.html": `<h1>Projects</h1>`, "~/my-first-project/about.html": `<h1>About me</h1>` },
+          claude: [
+            { match: `read my project and write a CLAUDE.md describing my pages, how to open the site, and the style choices you notice`,
+              write: { "~/my-first-project/CLAUDE.md": `# Personal site\n- Pages: index.html, projects.html, about.html\n- To view: open index.html in a browser\n- Style: cream background, same heading font on every page` },
+              out: [`[OK] wrote CLAUDE.md`, `Adın ve kişisel tercihlerin gibi bilemeyeceğim bilgileri lütfen sen ekle.`] }
+          ],
+          try: [
+            { cmd: `ls`, desc: `projenin dosyaları` },
+            { cmd: `claude "read my project and write a CLAUDE.md describing my pages, how to open the site, and the style choices you notice"`, desc: `taslak iste` },
+            { cmd: `cat CLAUDE.md`, desc: `taslağı oku` }
+          ]
+        }
+      },
+      {
+        id: `m6-d2`, title: `Slash komutları ve subagent'lar`, minutes: 2, ready: true,
+        intro: [
+          `Tekrarlanan istekleri kaydetmek ve büyük incelemeleri odaklı yardımcılara ayırmak, çalışma akışını daha düzenli hâle getirir. Bu derste özel slash komutlarını ve subagent'ları tanıyacaksın.`
+        ],
+        blocks: [
+          { t: `h`, text: `Özel slash komutu: isteği bir kez kaydet` },
+          { t: `p`, html: `<code>/clear</code> gibi yerleşik komutların yanında, kurulumunun desteklediği özel komut ya da becerilerle sık kullandığın talimatları kısa bir ad altında saklayabilirsin.` },
+          { t: `code`, label: `Claude'a`, code: `create a slash command called /check\nthat looks over all my pages for broken links and missing menus` },
+          { t: `p`, html: `Anlamı: “Bütün sayfalarımı kırık bağlantılar ve eksik menüler için tarayan /check adlı bir slash komutu oluştur.” Oluşan talimat dosyasını oku ve <code>/check</code> komutunun listede göründüğünü kontrol et. Kayıt biçimi ve konumu sürüme göre değişebilir.` },
+          { t: `callout`, kind: `tip`, title: `Kapsamı belirt`, html: `Komutun önce inceleyip bulguları raporlamasını, düzeltmeleri ise ayrıca istemeni sağlayacak şekilde yaz. Böylece komut kendiliğinden dosya değiştirmez.` },
+          { t: `practice` },
+          { t: `h`, text: `Subagent: odaklı yardımcı` },
+          { t: `p`, html: `Subagent, sınırları belli bir görevi ayrı bir çalışma bağlamında inceleyip sonucu ana konuşmaya bildiren bir yardımcıdır. Uzun dosya okumalarının ayrıntılarını ana konuşmadan uzak tutar.` },
+          { t: `code`, label: `Claude'a`, code: `use a subagent to check every page for spelling mistakes\nand report back a single list; do not edit files` },
+          { t: `p`, html: `Anlamı: “Her sayfayı yazım hataları için kontrol etmesi için bir subagent kullan ve tek bir liste olarak raporla; dosyaları düzenleme.” Bütün sayfalardaki yazım hatalarını taramak gibi büyük ve kendi içinde tamamlanabilir işler buna uygundur. Dönen listeyi doğrula ve hangi düzeltmeleri uygulayacağını sen seç.` },
+          { t: `h`, text: `Ne zaman devretmemeli?` },
+          { t: `p`, html: `Hızlı ve küçük bir düzenleme için yardımcı başlatmak gereksiz ek iş yaratır. Devretmeden önce hedefi, kapsamı, izin verilen işlemleri ve beklediğin raporu açıkça belirt.` },
+          { t: `table`, head: [`Araç`, `Asıl kazanç`], rows: [
+            [`Özel slash komutu`, `Tekrarlanan talimatı yeniden yazmadan çağırmak.`],
+            [`Subagent`, `Sınırları belli bir işi ayrı bağlamda inceletip sonuç almak.`]
+          ] }
+        ],
+        trouble: [
+          { q: `/check komutu listede görünmüyor`, a: `Oluşan dosyanın konumunu ve adını kontrol et; Claude Code'u yeniden başlatman gerekebilir. Biçim sürüme göre değiştiği için <code>/help</code>'e bak.` },
+          { q: `Subagent dosyaları değiştirdi`, a: `İsteğe “do not edit files” ekini açıkça yaz ve değişiklikleri <code>/rewind</code> ile geri al.` }
+        ],
+        have: [
+          `Sık kullandığın bir isteği özel bir slash komutu olarak kaydetmeyi öğrendin.`,
+          `Büyük ve bağımsız bir incelemeyi subagent'a devretmeyi öğrendin.`,
+          `Küçük işlerde yardımcı başlatmanın gereksiz olduğunu biliyorsun.`
+        ],
+        note: `Bu sitede bağlantı kontrolünü her seferinde aynı biçimde yaptırdım; bu tür tekrarlanan bir kontrolün özel bir komuta dönüştürülebileceğini bu derste öğrendim.`,
+        next: `Sırada: Hook'larla sıkıcı kısımları otomatikleştirmek.`,
+        prompt: `Claude Code'da özel slash komutu ile subagent arasındaki farkı ve her birinin hangi durumda işe yaradığını kısa örneklerle açıklar mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`, `~/my-first-project/.claude`, `~/my-first-project/.claude/commands`],
+          files: { "~/my-first-project/index.html": `<nav><a href="index.html">Home</a> <a href="about.html">About</a></nav>\n<h1>Helo, I'm Ayşe</h1>`, "~/my-first-project/about.html": `<h1>About me</h1>\n<p>I am lerning to build websites.</p>` },
+          cmds: [
+            { match: `/check`, claude: true, out: [`/check raporu (değişiklik yapmadım):`, `- about.html: menü eksik.`, `- Kırık bağlantı bulunmadı.`] }
+          ],
+          claude: [
+            { match: `create a slash command called /check that looks over all my pages for broken links and missing menus`,
+              write: { "~/my-first-project/.claude/commands/check.md": `Look over all pages for broken links and missing menus.\nReport the findings as a list. Do not edit any files.` },
+              out: [`[OK] wrote .claude/commands/check.md`, `Artık /check yazarak bu kontrolü çalıştırabilirsin.`] },
+            { match: `use a subagent to check every page for spelling mistakes and report back a single list; do not edit files`,
+              out: [`Subagent raporu (dosyalar değiştirilmedi):`, `- index.html: "Helo" → "Hello"`, `- about.html: "lerning" → "learning"`] }
+          ],
+          try: [
+            { cmd: `claude "create a slash command called /check that looks over all my pages for broken links and missing menus"`, desc: `komutu kaydet` },
+            { cmd: `cat .claude/commands/check.md`, desc: `talimat dosyasını oku` },
+            { cmd: `/check`, desc: `komutu çalıştır` },
+            { cmd: `claude "use a subagent to check every page for spelling mistakes and report back a single list; do not edit files"`, desc: `subagent'a devret` }
+          ]
+        }
+      },
+      {
+        id: `m6-d3`, title: `Hooks: sıkıcı kısımları otomatikleştir`, minutes: 2, ready: true,
+        intro: [
+          `<strong>Hook</strong>, belirli bir Claude Code olayı gerçekleştiğinde tanımladığın komutu ya da kontrolü çalıştıran bir otomasyondur. Tekrarlanan mekanik işleri bir hatırlatmaya bağlı olmaktan çıkarır.`
+        ],
+        blocks: [
+          { t: `h`, text: `Olay → otomatik işlem` },
+          { t: `table`, head: [`Olay örneği`, `Yararlı işlem`], rows: [
+            [`Dosya düzenlendikten sonra`, `Uygun HTML dosyalarında bir biçimlendirici çalıştırmak.`],
+            [`Bir araç ya da komut çalışmadan önce`, `İşlemi bir izin politikasıyla değerlendirmek.`],
+            [`Görev tamamlandığında`, `Bir bildirim ya da ses üretmek.`]
+          ] },
+          { t: `p`, html: `Olay adları, eşleştirme kuralları ve engelleme davranışı yapılandırmaya bağlıdır. Bir hook kurmak tek başına bütün riskleri engelleyen bir garanti değildir.` },
+          { t: `h`, text: `Adım 1 — Kuralı anlatarak taslak oluştur` },
+          { t: `code`, label: `Claude'a`, code: `add a hook that tidies up the spacing in any HTML file you edit,\nso my pages stay neat without me asking` },
+          { t: `p`, html: `Anlamı: “Düzenlediğin her HTML dosyasındaki boşlukları düzelten bir hook ekle; böylece ben istemeden sayfalarım düzenli kalsın.” Claude'un önerdiği ayar dosyasını ve çalıştıracağı komutu incele: Hangi dosyalara uygulanacak, gereken biçimlendirici kurulu mu, hata olursa ne olacak?` },
+          { t: `practice` },
+          { t: `h`, text: `Sıradan bir istekten farkı ne?` },
+          { t: `p`, html: `“Bunu her seferinde yap” cümlesi, modelin talimata uymasına bağlıdır. Hook ise eşleşen olayda program tarafından tetiklenir. Yine de komutun başarısı izinlere, dosya yollarına, araçların kurulu olmasına ve doğru yapılandırmaya bağlıdır.` },
+          { t: `h`, text: `Adım 2 — Kurduktan sonra dene` },
+          { t: `steps`, items: [
+            `Küçük bir deneme dosyasında ilgili olayı tetikle.`,
+            `Hook'un gerçekten çalıştığını ve beklenen sonucu verdiğini kontrol et.`,
+            `Hata ya da eşleşmeyen dosya durumunu da değerlendir.`,
+            `Otomatik düzenlemenin istemediğin içeriği değiştirmediğini incele.`
+          ] }
+        ],
+        trouble: [
+          { q: `Hook hiç çalışmıyor`, a: `Ayar dosyasının doğru konumda olduğunu, olay adının ve dosya eşleştirmesinin doğru yazıldığını kontrol et. Çalıştırılan aracın bilgisayarında kurulu olduğundan emin ol.` },
+          { q: `Hook istemediğim dosyaları da değiştirdi`, a: `Eşleştirme kuralını daralt; örneğin yalnızca <code>.html</code> uzantılı dosyalar. Değişiklikleri Git ile kontrol et.` }
+        ],
+        have: [
+          `Hook'un bir olaya bağlı otomatik işlem olduğunu biliyorsun.`,
+          `Hook önerisini çalıştıracağı komut ve kapsam açısından incelemeyi öğrendin.`,
+          `Kurduğun otomasyonu küçük bir dosyada test etmenin adımlarını biliyorsun.`
+        ],
+        note: `Hook ile “her seferinde yap” isteği arasındaki farkı bu derste öğrendim: Biri programın tetiklediği bir işlem, diğeri modelin hatırlamasına bağlı bir talimat.`,
+        next: `Sırada: MCP ile Claude'a yeni araçlar bağlamak.`,
+        prompt: `Claude Code'da hook nedir? Bir web sitesi projesinde işe yarayabilecek 3 basit hook örneği verir ve her birinin risklerini kısaca söyler misin?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`, `~/my-first-project/.claude`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `add a hook that tidies up the spacing in any HTML file you edit, so my pages stay neat without me asking`,
+              write: { "~/my-first-project/.claude/settings.json": `{\n  "hooks": {\n    "PostToolUse": [\n      {\n        "matcher": "Edit|Write",\n        "hooks": [\n          { "type": "command", "command": "npx prettier --write \\"**/*.html\\"" }\n        ]\n      }\n    ]\n  }\n}` },
+              out: [`[OK] wrote .claude/settings.json`, `Bu hook, Claude bir dosyayı düzenledikten sonra HTML dosyalarında prettier çalıştırır.`, `Not: prettier'ın kurulu olması gerekir; komutu ve kapsamı onaylamadan önce incele.`] }
+          ],
+          try: [
+            { cmd: `claude "add a hook that tidies up the spacing in any HTML file you edit, so my pages stay neat without me asking"`, desc: `hook taslağı` },
+            { cmd: `cat .claude/settings.json`, desc: `ayarı ve komutu incele` }
+          ]
+        }
+      },
+      {
+        id: `m6-d4`, title: `MCP: Claude'a yeni araçlar ver`, minutes: 2, ready: true,
+        intro: [
+          `<strong>MCP</strong> (Model Context Protocol), bir yapay zekâ uygulamasını dış araçlar ve veri kaynaklarıyla buluşturan ortak bir protokoldür. Dosyalardan, tasarımlardan ya da başka servislerden bilgiyi elle taşımak yerine ilgili bağlantı üzerinden almayı sağlar.`
+        ],
+        blocks: [
+          { t: `h`, text: `Standart bağlantı fikri` },
+          { t: `p`, html: `Bir MCP sunucusu, belirli araçları ya da kaynakları istemciye sunar. Claude Code, yapılandırılan ve erişim verilen bu yetenekleri uygun görevlerde kullanabilir. Her bağlayıcının sunduğu işlemler farklıdır.` },
+          { t: `h`, text: `Adım 1 — Bir bağlantıyı değerlendir` },
+          { t: `code`, label: `Claude'a`, code: `what MCP connectors could help with my website,\nand what would each let you do?` },
+          { t: `p`, html: `Anlamı: “Hangi MCP bağlayıcıları web siteme yardım edebilir ve her biri sana neyi yapma imkânı verir?” Önce ihtiyacını belirle: bir tasarımı okumak mı, bulut klasöründen dosya almak mı, başka bir serviste arama yapmak mı? Sonra sunucunun kaynağını, sunduğu araçları ve istediği erişimleri incele. Kurulum ve giriş yöntemi sağlayıcıya göre değişir.` },
+          { t: `practice` },
+          { t: `h`, text: `İsteklerin nasıl değişebilir?` },
+          { t: `list`, items: [
+            `“Bulut klasörümdeki fotoğrafı üst görsel olarak kullan.”`,
+            `“Renkleri bu tasarıma uydur.”`,
+            `“Hakkımda sayfası için bu kaynakta ilgili bilgileri ara.”`
+          ] },
+          { t: `p`, html: `Bunların yapılabilmesi, bağlı aracın ilgili kaynağa ve işleme erişim sunmasına bağlıdır. Bir bağlantı kurmak, bütün servise sınırsız erişim anlamına gelmez.` },
+          { t: `h`, text: `Adım 2 — En az erişimle başla` },
+          { t: `list`, items: [
+            `Yalnızca güvendiğin sunucuları bağla.`,
+            `Okumak yeterliyse yazma izni verme.`,
+            `Parolayı ya da erişim anahtarını sohbete yapıştırma; desteklenen güvenli giriş yolunu kullan.`,
+            `Bir aracın dış sistemde yapacağı değişikliği görevin kapsamıyla karşılaştır.`,
+            `Gereksiz bağlantıları ve izinleri kaldır.`
+          ] }
+        ],
+        trouble: [
+          { q: `Bağladığım araç görünmüyor`, a: `MCP yapılandırmasını ve giriş adımını kontrol et; Claude Code'u yeniden başlatman gerekebilir. Bağlı araçların listesini Claude'a sorabilirsin.` },
+          { q: `Araç istediğimden fazla erişim istiyor`, a: `Daha dar bir erişim seçeneği olup olmadığına bak. Yoksa ve görev için gerekmiyorsa bağlantıyı kurma.` }
+        ],
+        have: [
+          `MCP'nin dış araçlar için ortak bir bağlantı yolu olduğunu biliyorsun.`,
+          `Bir bağlayıcıyı ihtiyaç, kaynak ve istediği erişim açısından değerlendirmeyi öğrendin.`,
+          `En az erişim ilkesini biliyorsun.`
+        ],
+        note: `Bu sitenin içeriklerini kendi dosyalarımdan aldım. Bir MCP bağlantısı kurduğumda önce yalnızca okuma izniyle başlamayı not ettim.`,
+        next: `Sırada: Terminalin ötesi, Agent SDK.`,
+        prompt: `MCP (Model Context Protocol) nedir? Yeni başlayan biri için basit bir benzetmeyle anlatır ve bir bağlantı kurarken dikkat edilmesi gereken güvenlik noktalarını listeler misin?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `what MCP connectors could help with my website, and what would each let you do?`,
+              out: [`Ne işine yarayacağına göre birkaç örnek:`, `- Tasarım aracı bağlayıcısı: bir tasarımdaki renkleri ve ölçüleri okuyabilirim.`, `- Bulut depolama bağlayıcısı: bir klasördeki görseli sitene alabilirim.`, `- Belge bağlayıcısı: Hakkımda sayfası için notlarından bilgi arayabilirim.`, `Her birinde önce sunucunun kaynağını ve istediği izinleri kontrol et; okumak yeterliyse yazma izni verme.`] }
+          ],
+          try: [
+            { cmd: `claude "what MCP connectors could help with my website, and what would each let you do?"`, desc: `seçenekleri sor` }
+          ]
+        }
+      },
+      {
+        id: `m6-d5`, title: `Terminalin ötesi: Agent SDK`, minutes: 2, ready: true,
+        intro: [
+          `Terminalde Claude'u doğrudan sen yönlendirirsin. <strong>Agent SDK</strong> ise talimatları ve araç kullanımını bir programın içine yerleştirmeye yardım eder. Bu kursu tamamlamak için kullanman gerekmez.`
+        ],
+        blocks: [
+          { t: `h`, text: `Konuşmadan programa` },
+          { t: `table`, head: [`Terminalde`, `Agent SDK ile`], rows: [
+            [`İsteği sen yazarsın.`, `Program talimatları gönderir ve sonuçları işler.`],
+            [`Adımları etkileşimli olarak sen kontrol edersin.`, `Program izinleri, araçları ve denetim noktalarını yapılandırır.`],
+            [`Oturumu sen yürütürsün.`, `Bir uygulama, zamanlayıcı ya da olay akışı süreci başlatabilir.`]
+          ] },
+          { t: `callout`, kind: `info`, title: `SDK tek başına bir hizmet değildir`, html: `Zamanlama ve olay tetikleme için ayrıca bir uygulama ya da çalıştırma ortamı gerekir. SDK tek başına, bilgisayar kapalıyken çalışan bir hizmet oluşturmaz.` },
+          { t: `h`, text: `Örnek kullanım alanları` },
+          { t: `list`, items: [
+            `Bir klasördeki notlardan düzenli özet üretmek.`,
+            `Bir uygulamanın içindeki özetleme yardımcısını çalıştırmak.`,
+            `Bir olay gerçekleştiğinde belirli bir inceleme sürecini başlatmak.`
+          ] },
+          { t: `code`, label: `Claude'a`, code: `in plain language, describe one small thing I could automate\nwith the Agent SDK once I am comfortable,\nand what it would need` },
+          { t: `p`, html: `Anlamı: “Kendimi hazır hissettiğimde Agent SDK ile otomatikleştirebileceğim küçük bir şeyi ve bunun için nelerin gerektiğini sade bir dille anlat.”` },
+          { t: `practice` },
+          { t: `h`, text: `Ne zaman kullanmalı?` },
+          { t: `p`, html: `Sık tekrarlanan, adımları anlaşılmış ya da bir ürünün içinde çalışması gereken görevlerde düşün. Tek seferlik ve keşif niteliğindeki işlerde terminal daha doğrudandır.` },
+          { t: `h`, text: `Önce elle doğrula` },
+          { t: `p`, html: `İş akışını önce etkileşimli olarak dene. Doğru girdiyi, beklenen çıktıyı, gereken izinleri ve hata durumlarını anla. Sonra otomasyona taşı ve gerekli yerlere insan kontrolü ile hata raporu ekle.` }
+        ],
+        trouble: [
+          { q: `SDK'ya ne zaman geçeceğimi bilmiyorum`, a: `Aynı işi terminalde birkaç kez sorunsuz yaptıysan ve adımları netse, otomasyona hazır olabilir. Emin değilsen terminalde kalmak daha güvenlidir.` }
+        ],
+        have: [
+          `Terminal ile Agent SDK arasındaki farkı biliyorsun.`,
+          `SDK'nın hangi tür işlere uygun olduğunu öğrendin.`,
+          `Bir süreci otomatikleştirmeden önce elle doğrulamanın önemini biliyorsun.`
+        ],
+        note: `Şimdilik terminalde çalışmak benim için yeterli; Agent SDK'yı, adımlarını iyice anladığım tekrarlı bir iş olduğunda düşüneceğim bir sonraki adım olarak not ettim.`,
+        next: `Sırada: Modül 6'nın özeti.`,
+        prompt: `Claude Agent SDK ile otomatikleştirilebilecek, yeni başlayan biri için uygun 3 küçük iş örneği verir misin? Her biri için neye ihtiyaç olacağını kısaca yaz.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {},
+          claude: [
+            { match: `in plain language, describe one small thing I could automate with the Agent SDK once I am comfortable, and what it would need`,
+              out: [`Örnek: Her hafta notlar klasöründeki yeni dosyaları okuyup kısa bir özet dosyası yazan küçük bir program.`, `Gerekenler: SDK'nın kurulu olduğu bir çalışma ortamı, programı haftada bir çalıştıracak bir zamanlayıcı,`, `klasörü okuma ve tek bir özet dosyası yazma izni, bir de hata olursa sana haber verecek bir yol.`, `Önce aynı işi terminalde elle birkaç kez dene.`] }
+          ],
+          try: [
+            { cmd: `claude "in plain language, describe one small thing I could automate with the Agent SDK once I am comfortable, and what it would need"`, desc: `bir örnek iste` }
+          ]
+        }
+      },
+      {
+        id: `m6-d6`, title: `Modül 6 özeti`, minutes: 1, ready: true,
+        intro: [
+          `Bu modülde tek tek istek vermekten, çalışma biçimini yapılandırmaya geçtin. Ortak amaç, doğru bilgiyi kalıcı hâle getirmek ve tekrarlanan işleri uygun araçla azaltmak.`
+        ],
+        blocks: [
+          { t: `h`, text: `Modül 6 araç seti` },
+          { t: `table`, head: [`Araç`, `Ne kazandırır?`], rows: [
+            [`<code>CLAUDE.md</code>`, `Proje bilgisi, tercihler ve çalışma kuralları için kalıcı talimat dosyası.`],
+            [`Özel slash komutları`, `Tekrarlanan bir isteği kısa bir adla çağırmak.`],
+            [`Subagent'lar`, `Sınırları belli işleri ayrı bağlamda inceletip rapor almak.`],
+            [`Hooks`, `Eşleşen olayda yapılandırılmış bir komutu ya da kontrolü çalıştırmak.`],
+            [`MCP`, `Dış araçlara ve veri kaynaklarına erişim bağlantıları.`],
+            [`Agent SDK`, `Model ve araç akışını bir programın içine yerleştirmek.`]
+          ] },
+          { t: `h`, text: `Ortak çizgi: tekrarı doğru yere taşı` },
+          { t: `list`, items: [
+            `Bilgi tekrar ediyorsa proje notuna (<code>CLAUDE.md</code>) yaz.`,
+            `İstek tekrar ediyorsa özel bir komut olarak kaydet.`,
+            `Mekanik bir işlem tekrar ediyorsa test edilmiş bir otomasyona (hook) dönüştür.`,
+            `Dış bilgiye sürekli ihtiyaç varsa uygun bir bağlantıyı (MCP) değerlendir.`
+          ] },
+          { t: `callout`, kind: `tip`, title: `Her tekrarı hemen otomatikleştirme`, html: `Önce süreci anla. Kapsamı, izinleri, bakımı ve hata durumlarını değerlendirdikten sonra uygun aracı seç.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Projeye kalıcı ve güncel talimatlar eklemek.`,
+          `Yeniden kullanılabilir istekler hazırlamak.`,
+          `Büyük incelemeleri odaklı yardımcılara ayırmak.`,
+          `Olay tabanlı otomasyonun nerede işe yaradığını ayırt etmek.`,
+          `Dış araç erişimini en az izinle planlamak.`,
+          `Bir işin programa taşınmaya hazır olup olmadığını değerlendirmek.`
+        ],
+        note: `Tekrarı doğru yere taşı: Bu sitede tekrar eden kuralları <code>CLAUDE.md</code>'ye yazmak, her oturumda aynı şeyleri yeniden anlatma ihtiyacını azalttı.`,
+        next: `Sırada: Bitirme projesi, kendi siteni yayınlamak.`,
+        prompt: `Claude Code kursunun altıncı modülünde CLAUDE.md, özel slash komutları, subagent'lar, hooks, MCP ve Agent SDK konularını öğrendim. 5 soruluk kısa bir tekrar testi hazırlar mısın? Cevapları en sonda ver.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/CLAUDE.md": `# Personal site\n- Pages: index.html, projects.html, about.html\n- To view: open index.html in a browser\n- My name is Ayşe; use it instead of example names\n- Ask before renaming files` },
+          try: [
+            { cmd: `cat CLAUDE.md`, desc: `kalıcı talimatlar` }
+          ]
+        }
+      }
     ] },
     { id: `m7`, no: 7, title: `Bitirme projesi: kendi siteni yayınla`, lessons: [
       { id: `m7-d1`, title: `Bitirme projesinin brief'i`, minutes: 2 },
