@@ -185,7 +185,7 @@
   });
   // Her çizgide birkaç nokta; her noktanın arkasında küçülerek sönen kısa bir kuyruk var.
   // Saydamlık style ile verilir (CSS kuralı SVG özniteliğini ezdiği için öznitelik kullanılmaz).
-  var PER_ROUTE = 3, FLOW_MS = 3600; // bir ışığın bir çizgiyi geçme süresi
+  var PER_ROUTE = 3, FLOW_MS = 4800; // bir ışığın bir çizgiyi geçme süresi
   var TAIL = [{ lag: 0, r: 3.4, a: 1 }, { lag: 0.035, r: 2.6, a: 0.5 }, { lag: 0.07, r: 1.9, a: 0.25 }];
   var particles = [];
   routes.forEach(function (route, ri) {
