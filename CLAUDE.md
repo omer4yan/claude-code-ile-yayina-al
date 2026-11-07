@@ -34,7 +34,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
 - Ana sayfa başlığı ve açıklaması kullanıcının verdiği metinlerdir; kelimeleri değiştirme. Başlık cümle düzeninde yazılır: yalnız ilk harf büyük (kullanıcı isteği; EN'de "AI" kısaltma olduğu için büyük). Başlıktaki vurgular `.hl` ile:
   TR "yapay zekâ inovasyonuna:" ve "değer üreten"; EN "AI innovation:" ve "value creation".
 - Modül/ders adları ve konular yalnızca `Claude Code ile yayına al/` klasöründeki PDF notlarından alınır; uydurma yok.
-- Hakkımda bilgileri yalnızca CV'den (`CV/`) alınır. Telefon, adres ve referanslar sitede YER ALMAZ. İstisna: ana sayfadaki kısa hakkımda bölümünün metni ("Windows XP ile başlayan merak, bugün yapay zekâ ile devam ediyor." başlığı ve iki paragraf) kullanıcının verdiği metindir; kelimelerini değiştirme, İngilizcesi sadık çevirisidir.
+- Hakkımda bilgileri yalnızca CV'den (`CV/`) alınır. Telefon, adres ve referanslar sitede YER ALMAZ. İstisna: ana sayfadaki kısa hakkımda bölümünün metni ("Windows XP ile başlayan merak, bugün yapay zekâ ile devam ediyor." başlığı ve iki paragraf) kullanıcının verdiği metindir; Hakkımda sayfasındaki metin de ("Merhaba, ben Ömer." altındaki dört paragraf) kullanıcının verdiği metindir; kelimelerini değiştirme, İngilizcesi sadık çevirisidir.
 - Kurs sağlayıcı adı, kurs bağlantısı, sertifika ve ilerleme bilgisi (yüzde, x/40, "tamamlandı") gösterilmez.
 - Ana sayfa giriş alanında üst etiket ve modül/ders sayısı yok; "7 modül · 40 ders" yalnızca Eğitim Modülleri başlığının altında.
 - Footer: solda "© 2026 Orvena · Türkçe · English", sağda "Claude Code yardımıyla hazırlandı · GitHub Pages'te yayında" (EN: "Built with the help of Claude Code · Published on GitHub Pages"). Yatırım uyarısı kullanılmaz.
