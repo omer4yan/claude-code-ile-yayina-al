@@ -87,6 +87,49 @@
     accentColor = cs.getPropertyValue("--accent").trim() || "#e8622c";
   };
 
+  /* ---------- Etiketler: tablet ve telefonda okunur boyut, iki satır ----------
+     Harita küçüldüğünde 11 birimlik yazı okunmaz. ≤1023px'te yazı boyutu ekrandaki
+     ölçeğe göre ~9,5px olacak şekilde ayarlanır ve modül etiketleri "04 ·" ile adı
+     olarak iki satıra bölünür (metin değişmez). Masaüstünde özgün hâline döner. */
+  var narrow = window.matchMedia("(max-width: 1023px)");
+  var labels = [].slice.call(svg.querySelectorAll(".map-label"));
+  labels.forEach(function (l) { l.setAttribute("data-full", l.textContent); });
+  var labelsSplit = false;
+  var fitLabels = function (stageWidth) {
+    if (narrow.matches && stageWidth) {
+      // hedef ~9,5px (küçük telefonda en az 8,6px); görünen pencere 645 birim genişliğindedir
+      var shownPx = stageWidth * 645 / VB_W;
+      var target = Math.max(8.6, Math.min(9.5, shownPx / 40));
+      var fs = Math.max(11, Math.min(17, target / (stageWidth / VB_W)));
+      labels.forEach(function (l) {
+        l.style.fontSize = fs.toFixed(1) + "px";
+        if (labelsSplit || l.classList.contains("map-label--hub")) return;
+        var full = l.getAttribute("data-full"), cut = full.indexOf(" · ");
+        if (cut < 0) return;
+        var x = l.getAttribute("x");
+        l.textContent = "";
+        [full.slice(0, cut + 2), full.slice(cut + 3)].forEach(function (part, k) {
+          var t = document.createElementNS(SVGNS, "tspan");
+          t.setAttribute("x", x);
+          if (k) t.setAttribute("dy", "1.2em");
+          t.textContent = part;
+          l.appendChild(t);
+        });
+      });
+      labelsSplit = true;
+      // Görünen pencerenin sağ kenarına (745 birim) sığmayan uzun etiketi yalnızca o kadar küçült
+      labels.forEach(function (l) {
+        try {
+          var b = l.getBBox(), room = 742 - b.x;
+          if (b.width > room && room > 0) l.style.fontSize = (fs * room / b.width).toFixed(1) + "px";
+        } catch (e) { /* görünmüyorsa ölçülemez */ }
+      });
+    } else if (labelsSplit || labels[0] && labels[0].style.fontSize) {
+      labels.forEach(function (l) { l.textContent = l.getAttribute("data-full"); l.style.fontSize = ""; });
+      labelsSplit = false;
+    }
+  };
+
   var scale = 1;
   var resize = function () {
     var rect = stage.getBoundingClientRect();
@@ -95,6 +138,7 @@
     canvas.width = Math.round(rect.width * dpr);
     canvas.height = Math.round(rect.height * dpr);
     scale = (rect.width / VB_W) * dpr;
+    fitLabels(rect.width);
   };
 
   var fieldShift = { x: 0, y: 0 };
@@ -129,6 +173,8 @@
 
   readColors();
   resize();
+  // Etiket yazı tipi sonradan yüklenince genişlikler değişir; etiketleri yeniden ölç
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fitLabels(stage.getBoundingClientRect().width); });
   draw();
   fig.classList.add("is-live");
 
