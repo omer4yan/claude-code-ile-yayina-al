@@ -140,7 +140,7 @@
     if (mod) mod.classList.toggle("is-collapsed", !open);
   };
   var hashModule = (location.hash.match(/^#(m\d+)-d\d+$/) || [])[1];
-  curriculumBox.querySelectorAll(".cur-module__head[aria-controls]").forEach(function (btn) {
+  curriculumBox.querySelectorAll(".cur-module__toggle[aria-controls]").forEach(function (btn) {
     var mod = btn.closest(".cur-module");
     // Ders sayfasında geçerli modül (data-open) açık gelir
     var openIt = !!mod && (mod.hasAttribute("data-open") || (!!hashModule && mod.getAttribute("data-module") === hashModule));
@@ -148,6 +148,14 @@
     btn.addEventListener("click", function () {
       setModuleOpen(btn, btn.getAttribute("aria-expanded") !== "true");
     });
+  });
+
+  // Modül adına tıklanınca (modülün başına giden bağlantı) o modülün dersleri de açılır
+  curriculumBox.addEventListener("click", function (e) {
+    var modLink = e.target.closest(".cur-module__link");
+    if (!modLink) return;
+    var toggleBtn = modLink.parentElement.querySelector(".cur-module__toggle");
+    if (toggleBtn) setModuleOpen(toggleBtn, true);
   });
 
   // Dar ekranda müfredattan bir bağlantıya tıklanınca paneli kapat

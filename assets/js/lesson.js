@@ -85,11 +85,13 @@
     DATA.modules.forEach(function (m) {
       var open = m.id === M.id;
       html += '<div class="cur-module' + (open ? " is-active" : " is-collapsed") + '" data-module="' + m.id + '"' + (open ? " data-open" : "") + ">" +
-        '<button class="cur-module__head" type="button" aria-expanded="' + open + '" aria-controls="cur-' + m.id + '">' +
+        '<div class="cur-module__head cur-module__head--split">' +
+        '<a class="cur-module__link" href="yolculuk.html#' + m.id + '">' +
         '<span class="cur-badge">' + pad2(m.no) + "</span>" +
         '<span class="cur-module__name">' + esc(m.title) + "</span>" +
-        '<span class="cur-module__count">' + m.lessons.length + " ders</span>" +
-        ICON.chev.replace("<svg ", '<svg class="cur-module__chev" ') + "</button>" +
+        '<span class="cur-module__count">' + m.lessons.length + " ders</span></a>" +
+        '<button class="cur-module__toggle" type="button" aria-expanded="' + open + '" aria-controls="cur-' + m.id + '" aria-label="Dersleri göster veya gizle">' +
+        ICON.chev.replace("<svg ", '<svg class="cur-module__chev" ') + "</button></div>" +
         '<div class="cur-lessons-wrap" id="cur-' + m.id + '"><ul class="cur-lessons">';
       m.lessons.forEach(function (l) {
         var active = l.id === L.id;
