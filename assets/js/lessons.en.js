@@ -802,12 +802,291 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m3`, no: 3, title: `Single-file edits`, lessons: [
-      { id: `m3-d1`, title: `Reading a diff`, minutes: 5 },
-      { id: `m3-d2`, title: `Accepting and adjusting edits`, minutes: 3 },
-      { id: `m3-d3`, title: `Asking for explanations`, minutes: 2 },
-      { id: `m3-d4`, title: `Small refactors`, minutes: 5 },
-      { id: `m3-d5`, title: `Module 3 summary`, minutes: 2 }
+    { id: `m3`, no: 3, title: `Single-file edits`, sub: `Read the diff, decide, check the result`, lessons: [
+      {
+        id: `m3-d1`, title: `Reading a diff`, minutes: 5, ready: true,
+        intro: [
+          `When changing a file, the most important habit to build is reading the proposed change. A <strong>diff</strong> shows the difference between the old and new content line by line.`
+        ],
+        blocks: [
+          { t: `callout`, kind: `warn`, title: `An approval screen may not always appear`, html: `In a permission mode that asks for approval, Claude shows the proposal and waits for your decision. If automatic edit permissions are on, the change may already have been applied; don't assume you'll see an approval screen every time.` },
+          { t: `h`, text: `Step 1 — Ask for a small change` },
+          { t: `code`, label: `Terminal`, code: `cd my-first-project\nclaude` },
+          { t: `code`, label: `To Claude`, code: `in index.html, change my main heading to say hello and then my name` },
+          { t: `p`, html: `If an approval screen appears, <strong>don't accept it yet</strong>. First read the file name and the changed lines.` },
+          { t: `h`, text: `Step 2 — Read the diff` },
+          { t: `diff`, label: `index.html`, lines: [`  <body>`, `- <h1>My name</h1>`, `+ <h1>Hello, I'm Ayşe</h1>`, `  <p>I am learning to build websites.</p>`] },
+          { t: `list`, items: [
+            `A line starting with <code>-</code> is <strong>removed</strong>.`,
+            `A line starting with <code>+</code> is <strong>added</strong>.`,
+            `Unmarked <strong>context lines</strong> show the content around the change that stays the same; they help you see where in the file the change is.`
+          ] },
+          { t: `p`, html: `This example replaces one heading line with a new one. Don't conclude from a single hunk that the rest of the file is unchanged; check the other blocks in the proposal too.` },
+          { t: `practice` },
+          { t: `h`, text: `Step 3 — The options on the approval screen` },
+          { t: `table`, head: [`Option`, `Meaning`], rows: [
+            [`Yes`, `Applies the proposed change.`],
+            [`Yes, and switch to accept edits`, `Applies the change and switches to the mode that accepts file edits automatically. Check how permissions will behave next.`],
+            [`No`, `Rejects the pending proposal.`]
+          ] },
+          { t: `p`, html: `Menu text and keys can vary by version. If the edit is right, approve it; then leave with <code>/exit</code> and open the page:` },
+          { t: `cmd`, code: `start index.html` },
+          { t: `p`, html: `Check that the heading changed the way you wanted and that the other sections stayed as they were.` },
+          { t: `h`, text: `Scan a large diff in this order` },
+          { t: `steps`, items: [
+            `<strong>Which file?</strong> Did the change stay in the files you asked for?`,
+            `<strong>How much change?</strong> Is the scope proportionate to your request?`,
+            `<strong>What's being removed?</strong> Is content you want to keep being deleted?`
+          ] },
+          { t: `p`, html: `If you see an unexpectedly large diff for a small request, ask for an explanation or narrow the job. The number of lines alone isn't proof of an error; it's a sign that you need to examine the scope.` }
+        ],
+        trouble: [
+          { q: `No approval screen appeared; the change was applied directly`, a: `The selected permission mode may be accepting file edits automatically. Check the mode near the input box; also examine the applied change in the diff or by opening the file.` },
+          { q: `There are lines in the diff I didn't expect`, a: `Don't accept the proposal. Choose <strong>No</strong> and write a short note on what shouldn't change, or ask Claude to explain the change.` }
+        ],
+        have: [
+          `<code>-</code> shows what's removed, <code>+</code> what's added; context lines show the location.`,
+          `You know the difference between the three options on the approval screen.`,
+          `You can scan a large diff in the order: file, scope, removed content.`
+        ],
+        note: `I made a note to look at the minus lines in a diff first: what's going to be deleted can be more of a surprise than what's going to be added.`,
+        next: `Next: accepting, adjusting or rejecting a pending proposal.`,
+        prompt: `How do I read a diff? Could you explain lines starting with minus and plus, and context lines, using a small HTML example?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<body>\n  <h1>My name</h1>\n  <p>I am learning to build websites.</p>\n</body>` },
+          cmds: [
+            { match: `start index.html`, out: [`(simulation) index.html would open in your default browser.`] }
+          ],
+          claude: [
+            { match: `in index.html, change my main heading to say hello and then my name`, write: { "~/my-first-project/index.html": `<body>\n  <h1>Hello, I'm Ayşe</h1>\n  <p>I am learning to build websites.</p>\n</body>` },
+              out: [`Proposed change — index.html:`, `  <body>`, `- <h1>My name</h1>`, `+ <h1>Hello, I'm Ayşe</h1>`, `  <p>I am learning to build websites.</p>`, `(simulation: proposal accepted)`, `[OK] edited index.html`] }
+          ],
+          try: [
+            { cmd: `cat index.html`, desc: `before` },
+            { cmd: `claude "in index.html, change my main heading to say hello and then my name"`, desc: `see the diff` },
+            { cmd: `cat index.html`, desc: `after` }
+          ]
+        }
+      },
+      {
+        id: `m3-d2`, title: `Accepting and adjusting edits`, minutes: 3, ready: true,
+        intro: [
+          `A proposed diff is an offer. With an edit waiting for approval, you choose the next step: accept, adjust or reject.`
+        ],
+        blocks: [
+          { t: `h`, text: `Your three options` },
+          { t: `table`, head: [`Response`, `What you do`], rows: [
+            [`Accept`, `Have the right change applied.`],
+            [`Adjust`, `Reject the pending proposal and describe a small adjustment.`],
+            [`Reject`, `Leave a proposal you don't want unapplied.`]
+          ] },
+          { t: `callout`, kind: `info`, title: `Automatic permissions`, html: `If automatic edit permissions are on, the file may have changed before your decision. Check the selected mode.` },
+          { t: `h`, text: `A small correction instead of explaining from scratch` },
+          { t: `code`, label: `To Claude`, code: `in index.html, make my heading bigger` },
+          { t: `p`, html: `The diff may be heading in the right direction, but the heading may be too big. In that case, move to the <strong>No</strong> option and open the feedback field with <kbd>Tab</kbd>. If the menu is different, use the available explanation or feedback option. Then write only the correction:` },
+          { t: `code`, label: `Feedback`, code: `a little smaller` },
+          { t: `p`, html: `Short corrections such as “keep the colour” or “leave the paragraph alone” keep you on the same target. Read and assess the new diff too.` },
+          { t: `practice` },
+          { t: `h`, text: `Small steps, frequent checks` },
+          { t: `p`, html: `Instead of accepting a large change without reading it, ask for steps you can check one by one. That way, if a problem appears, it's easier to find which change caused it.` },
+          { t: `h`, text: `Try it now` },
+          { t: `code`, label: `To Claude`, code: `in index.html, add a short sentence under my heading welcoming visitors` },
+          { t: `p`, html: `Ask for three small changes to your page one at a time. Read each proposal and adjust at least one of them with a short correction. Then open the page and check that the result matches the decisions you made.` }
+        ],
+        trouble: [
+          { q: `I can't find the feedback field`, a: `The menu can vary by version. Reject the proposal and write the correction as a short sentence in your next message.` },
+          { q: `Other things changed too after the correction`, a: `Reject the new diff and add clearly what shouldn't change; for example “only change the font size”.` }
+        ],
+        have: [
+          `You can accept, adjust or reject a pending proposal.`,
+          `You learned to adjust a proposal with short feedback instead of explaining from scratch.`,
+          `You saw the benefit of keeping changes small and reviewable.`
+        ],
+        note: `In this lesson I saw that a two-word correction like “a little smaller” gets a result much faster than rewriting the request.`,
+        next: `Next: asking for an explanation before changing anything.`,
+        prompt: `How do I decide between accepting a pending edit proposal in Claude Code, adjusting it with short feedback, and rejecting it? Could you explain with simple examples?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>\n<p>I am learning to build websites.</p>` },
+          claude: [
+            { match: `in index.html, make my heading bigger`, out: [`Proposed change — index.html:`, `- <h1>Hello, I'm Ayşe</h1>`, `+ <h1 style="font-size:5rem">Hello, I'm Ayşe</h1>`, `(proposal pending — instead of accepting, you can write a short correction)`] },
+            { match: `a little smaller`, write: { "~/my-first-project/index.html": `<h1 style="font-size:3rem">Hello, I'm Ayşe</h1>\n<p>I am learning to build websites.</p>` }, out: [`Updated proposal — index.html:`, `- <h1>Hello, I'm Ayşe</h1>`, `+ <h1 style="font-size:3rem">Hello, I'm Ayşe</h1>`, `(simulation: proposal accepted)`, `[OK] edited index.html`] },
+            { match: `in index.html, add a short sentence under my heading welcoming visitors`, write: { "~/my-first-project/index.html": `<h1 style="font-size:3rem">Hello, I'm Ayşe</h1>\n<p>Welcome, thanks for stopping by!</p>\n<p>I am learning to build websites.</p>` }, out: [`Proposed change — index.html:`, `  <h1 style="font-size:3rem">Hello, I'm Ayşe</h1>`, `+ <p>Welcome, thanks for stopping by!</p>`, `(simulation: proposal accepted)`, `[OK] edited index.html`] }
+          ],
+          try: [
+            { cmd: `claude "in index.html, make my heading bigger"`, desc: `see the proposal` },
+            { cmd: `claude "a little smaller"`, desc: `short correction` },
+            { cmd: `claude "in index.html, add a short sentence under my heading welcoming visitors"`, desc: `the next small step` },
+            { cmd: `cat index.html`, desc: `check the result` }
+          ]
+        }
+      },
+      {
+        id: `m3-d3`, title: `Asking for explanations`, minutes: 2, ready: true,
+        intro: [
+          `Use Claude not only to change files but also to understand them. Before changing a part you don't understand, ask what it does.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — First have the real file explained` },
+          { t: `code`, label: `To Claude`, code: `explain what @index.html does, in plain language, section by section` },
+          { t: `p`, html: `With <code>@index.html</code> you point at the relevant file; you learn in plain language what the heading, the paragraphs and the styles are for.` },
+          { t: `h`, text: `Three questions worth keeping` },
+          { t: `list`, items: [
+            `<code>Explain @index.html like I have never seen HTML before.</code>`,
+            `<code>What would happen to my page if I deleted this part?</code>`,
+            `<code>Why is this written this way instead of something simpler?</code>`
+          ] },
+          { t: `p`, html: `When you use phrases like “this part”, also include the relevant code or the section's name. An explanation brings out possible design reasons; still, compare the reasoning with the file and with how the page behaves.` },
+          { t: `practice` },
+          { t: `h`, text: `Step 2 — Ask for an explanation before accepting a diff` },
+          { t: `p`, html: `If you're not sure about a pending proposal, use <strong>No</strong> and the feedback option (in most versions it opens with <kbd>Tab</kbd> while <strong>No</strong> is selected) and write:` },
+          { t: `code`, label: `Feedback`, code: `before I approve, walk me through what this change does\nand what might look different on my page` },
+          { t: `p`, html: `If the explanation doesn't match what you asked for, narrow the proposal or reject it. Also review the diff presented again after the explanation; don't assume it's the same as before.` },
+          { t: `h`, text: `Try it now` },
+          { t: `p`, html: `Have your page explained from start to finish. Then ask “Why is it written like this?” about a single section. Compare the explanation you get with the result in the browser.` }
+        ],
+        trouble: [
+          { q: `The explanation was too technical`, a: `State the level: an addition such as “like I have never seen HTML before” or “in two sentences” simplifies the explanation.` },
+          { q: `The explanation doesn't match the file`, a: `Open the file, show the relevant line and ask again. An explanation helps you decide but doesn't replace checking the file itself.` }
+        ],
+        have: [
+          `You learned to have a file explained section by section.`,
+          `You have three question patterns worth keeping.`,
+          `You can ask for an explanation before approving a pending diff.`
+        ],
+        note: `Understand first, then change: I noted asking “what happens if I delete this?” before deleting a section as a habit I took from this lesson.`,
+        next: `Next: tidying code without changing how it looks.`,
+        prompt: `Could you explain what the <head>, <body>, <h1>, <p> and <style> parts of a simple HTML page do, as if to someone who has never seen HTML?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<style>h1 { color: #b33; }</style>\n<h1>Hello, I'm Ayşe</h1>\n<p>Welcome, thanks for stopping by!</p>` },
+          claude: [
+            { match: `explain what @index.html does, in plain language, section by section`, out: [`index.html has three parts:`, `1. <style>: The page's appearance rules. Here it makes the heading red.`, `2. <h1>: The page's main heading — the big text a visitor sees first.`, `3. <p>: The welcome paragraph under the heading.`] },
+            { match: `what would happen to my page if I deleted the style part?`, out: [`If you delete the <style> part, the heading stops being red and appears in the browser's default colour (usually black).`, `The text and the page's structure don't change.`] }
+          ],
+          try: [
+            { cmd: `claude "explain what @index.html does, in plain language, section by section"`, desc: `have the file explained` },
+            { cmd: `claude "what would happen to my page if I deleted the style part?"`, desc: `ask before deleting` },
+            { cmd: `cat index.html`, desc: `compare the explanation with the file` }
+          ]
+        }
+      },
+      {
+        id: `m3-d4`, title: `Small refactors`, minutes: 5, ready: true,
+        intro: [
+          `A refactor reorganises the internal structure of code while keeping its externally visible behaviour. On the web page in this lesson, the goal is to tidy the code without changing how it looks or works.`
+        ],
+        blocks: [
+          { t: `h`, text: `Common tidy-ups` },
+          { t: `table`, head: [`Operation`, `Meaning`], rows: [
+            [`Rename`, `Give an item a clearer name everywhere it's used.`],
+            [`Extract`, `Gather a repeated value or structure in one place.`],
+            [`Simplify`, `Make code that does the same job easier to understand.`]
+          ] },
+          { t: `h`, text: `Step 1 — Make a small, specific request` },
+          { t: `code`, label: `To Claude`, code: `in index.html, put the colours in named variables\nat the top of the style block,\nwithout changing how the page looks` },
+          { t: `p`, html: `If a colour is used in more than one place, inconsistencies can creep in when you change it later. Named CSS variables gather shared values in one place.` },
+          { t: `diff`, label: `index.html — example`, lines: [`  <style>`, `+   :root { --brand: #b33; }`, `-   h1 { color: #b33; }`, `+   h1 { color: var(--brand); }`, `-   a { color: #b33; }`, `+   a { color: var(--brand); }`, `  </style>`] },
+          { t: `h`, text: `Step 2 — Read the diff` },
+          { t: `list`, items: [
+            `Are the variables defined with the right values?`,
+            `Is every use linked to the right variable?`,
+            `Is there any new content or unexpected change in appearance?`
+          ] },
+          { t: `practice` },
+          { t: `h`, text: `Step 3 — Verify the appearance and behaviour` },
+          { t: `cmd`, code: `start index.html` },
+          { t: `p`, html: `Open the page or refresh the open tab. Are the colours, font sizes, spacing and links as before? If needed, also look at different window widths.` },
+          { t: `p`, html: `If something changed unexpectedly, stop. Examine which change caused it; if there's a suitable checkpoint, go back with <code>/rewind</code>, or fix it by comparing with the previous version.` },
+          { t: `callout`, kind: `tip`, title: `Keep tidying separate from new features`, html: `If you both reorganise code and add a new feature in the same step, it gets harder to isolate the source of a problem when one appears. Do the two jobs in separate, reviewable steps.` },
+          { t: `h`, text: `Try it now` },
+          { t: `code`, label: `To Claude`, code: `read @index.html and suggest three small tidy-ups\nthat would not change how the page looks;\ndo not change anything yet` },
+          { t: `steps`, items: [
+            `Read the suggestions.`,
+            `Choose one small tidy-up.`,
+            `Have only that one applied and review the diff.`,
+            `Open the page and verify that the appearance and behaviour are preserved.`
+          ] }
+        ],
+        trouble: [
+          { q: `The page's appearance changed after the refactor`, a: `Check the values of the variables and where they're used in the diff. If needed, go back with <code>/rewind</code> and try again, keeping the “without changing how the page looks” addition in the request.` },
+          { q: `Claude added new things along with the refactor`, a: `Reject the proposal and narrow the request: “only move the colours into variables; do not add anything new”.` }
+        ],
+        have: [
+          `You know that a refactor is an internal reorganisation that keeps appearance and behaviour.`,
+          `You saw colours gathered into named CSS variables.`,
+          `You learned to do tidying in a separate step from new features.`
+        ],
+        note: `This site's colours also live in CSS variables; that's what lets me change the light and dark themes from one place.`,
+        next: `Next: the Module 3 summary.`,
+        prompt: `Why is it useful to move colours into variables (custom properties) in CSS? Could you show a before/after with a simple example?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<style>\n  h1 { color: #b33; }\n  a { color: #b33; }\n</style>\n<h1>Hello, I'm Ayşe</h1>\n<a href="about.html">About me</a>` },
+          cmds: [
+            { match: `start index.html`, out: [`(simulation) index.html would open in the browser. Are the colours as before? Check.`] }
+          ],
+          claude: [
+            { match: `read @index.html and suggest three small tidy-ups that would not change how the page looks; do not change anything yet`, out: [`I haven't changed anything. Three tidy-ups that won't change the appearance:`, `1. Gather the repeated #b33 colour into a variable.`, `2. Wrap the heading and the link in a <main>.`, `3. Put the style rules in alphabetical order.`] },
+            { match: `in index.html, put the colours in named variables at the top of the style block, without changing how the page looks`, write: { "~/my-first-project/index.html": `<style>\n  :root { --brand: #b33; }\n  h1 { color: var(--brand); }\n  a { color: var(--brand); }\n</style>\n<h1>Hello, I'm Ayşe</h1>\n<a href="about.html">About me</a>` },
+              out: [`Proposed change — index.html:`, `  <style>`, `+   :root { --brand: #b33; }`, `-   h1 { color: #b33; }`, `+   h1 { color: var(--brand); }`, `-   a { color: #b33; }`, `+   a { color: var(--brand); }`, `  </style>`, `(simulation: proposal accepted)`, `[OK] edited index.html — appearance unchanged`] }
+          ],
+          try: [
+            { cmd: `claude "read @index.html and suggest three small tidy-ups that would not change how the page looks; do not change anything yet"`, desc: `suggestions first` },
+            { cmd: `claude "in index.html, put the colours in named variables at the top of the style block, without changing how the page looks"`, desc: `a single tidy-up` },
+            { cmd: `cat index.html`, desc: `read the result` },
+            { cmd: `start index.html`, desc: `verify the appearance` }
+          ]
+        }
+      },
+      {
+        id: `m3-d5`, title: `Module 3 summary`, minutes: 2, ready: true,
+        intro: [
+          `You set up the single-file editing loop: read the proposal, give the right response, ask for an explanation when needed and make small tidy-ups. These habits still apply as the project grows.`
+        ],
+        blocks: [
+          { t: `h`, text: `Module 3 quick reference` },
+          { t: `table`, head: [`Skill`, `Move`], rows: [
+            [`Read a diff`, `<code>-</code> shows what's removed, <code>+</code> what's added; context lines show the location.`],
+            [`Review order`, `Which file → how much change → what's being removed?`],
+            [`Respond`, `Accept the pending proposal, adjust it with short feedback, or reject it.`],
+            [`Understand first`, `Ask “Explain @index.html” and “Why is it written this way?”.`],
+            [`Tidy up`, `Make a small refactor; check appearance and behaviour in the browser.`]
+          ] },
+          { t: `h`, text: `Mental model` },
+          { t: `p`, html: `<strong>Ask → read the diff → accept or adjust → check the page.</strong> Keeping the scope of a change small makes both reviewing it and finding the source of a problem easier.` },
+          { t: `callout`, kind: `warn`, title: `Know your permission mode`, html: `In modes that require approval, you assess pending changes. If automatic edit permissions are on, you may not be asked about every change; know the selected mode and review applied diffs too.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Telling added and removed lines apart in a diff.`,
+          `Deliberately accepting, adjusting or rejecting a proposal.`,
+          `Asking for an explanation before changing anything.`,
+          `Making a small refactor and checking that appearance and behaviour are preserved.`
+        ],
+        note: `Ask, read, decide, check: I aim to apply this loop, learned on a single file, to every change.`,
+        next: `Next: planning changes that affect more than one file and reviewing them together.`,
+        prompt: `In the third module of a Claude Code course I learned about reading diffs, accepting/adjusting/rejecting proposals, asking for explanations and small refactors. Could you prepare a short 5-question review quiz? Give the answers at the end.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>My name</h1>\n<p>I am learning to build websites.</p>` },
+          claude: [
+            { match: `in index.html, change my main heading to say hello and then my name`, write: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>\n<p>I am learning to build websites.</p>` },
+              out: [`Proposed change — index.html:`, `- <h1>My name</h1>`, `+ <h1>Hello, I'm Ayşe</h1>`, `  <p>I am learning to build websites.</p>`, `(simulation: proposal accepted)`, `[OK] edited index.html`] }
+          ],
+          try: [
+            { cmd: `claude "in index.html, change my main heading to say hello and then my name"`, desc: `ask and read the diff` },
+            { cmd: `cat index.html`, desc: `check the result` }
+          ]
+        }
+      }
     ] },
     { id: `m4`, no: 4, title: `Build a multi-page site`, lessons: [
       { id: `m4-d1`, title: `Why planning matters`, minutes: 4 },
