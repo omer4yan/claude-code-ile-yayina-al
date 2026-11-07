@@ -724,46 +724,111 @@
   color: var(--muted);
 }
 
+/* "Şunları dene": tek sütunlu, numaralı liste. Her satır: sıra numarası, "$" ile komut,
+   sağda açıklama (telefonda komutun altında). Uzun prompt'lar kelime aralarından kırılır. */
 .sandbox__trylist {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 8px;
+  gap: 6px;
+}
+
+.lesson-body .sandbox__trylist li {
+  max-width: none;
 }
 
 .sandbox__try {
   width: 100%;
   display: grid;
-  gap: 2px;
+  grid-template-columns: 26px minmax(0, 1fr) minmax(104px, 21%);
+  align-items: start;
+  column-gap: 14px;
+  row-gap: 2px;
   text-align: left;
-  padding: 10px 12px;
+  padding: 11px 14px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--panel-2);
   color: var(--text);
+  font: inherit;
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, background-color 0.25s;
 }
 
-.sandbox__try:hover {
+.sandbox__try:hover,
+.sandbox__try:focus-visible {
   border-color: var(--accent-line);
 }
 
-.sandbox__try code {
+.sandbox__try.is-picked {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.sandbox__try-n {
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--panel-3);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.sandbox__try .sandbox__try-cmd {
+  min-width: 0;
   background: none;
   border: 0;
   padding: 0;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
   color: var(--accent);
-  overflow-wrap: anywhere;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
-.sandbox__try span {
-  font-size: 0.82rem;
+.sandbox__try-ps {
+  color: var(--dim);
+  user-select: none;
+}
+
+.sandbox__try-desc {
+  padding-top: 1px;
+  font-size: 0.84rem;
+  line-height: 1.45;
   color: var(--muted);
+  text-align: right;
+}
+
+/* Telefon: açıklama komutun altına iner */
+@media (max-width: 640px) {
+  .sandbox__try {
+    grid-template-columns: 22px minmax(0, 1fr);
+    column-gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .sandbox__try-n {
+    width: 20px;
+    height: 20px;
+    font-size: 0.66rem;
+  }
+
+  .sandbox__try-desc {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .sandbox__try .sandbox__try-cmd {
+    font-size: 0.78rem;
+  }
 }
 
 /* ---------- Çalışmadıysa ---------- */

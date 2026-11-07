@@ -260,8 +260,13 @@
 
     var build = function () {
       built = true;
-      var tryHtml = (cfg.try || []).map(function (t) {
-        return '<li><button type="button" class="sandbox__try" data-cmd="' + esc(t.cmd) + '"><code>' + esc(t.cmd) + "</code><span>" + esc(t.desc) + "</span></button></li>";
+      var tryHtml = (cfg.try || []).map(function (t, i) {
+        // Uzun adresler yalnızca "/" sonrasından kırılabilsin (kelimeler ortadan bölünmez)
+        var shown = esc(t.cmd).replace(/\//g, "/<wbr>");
+        return '<li><button type="button" class="sandbox__try" data-cmd="' + esc(t.cmd) + '">' +
+          '<span class="sandbox__try-n" aria-hidden="true">' + (i + 1) + "</span>" +
+          '<code class="sandbox__try-cmd"><span class="sandbox__try-ps" aria-hidden="true">$</span> ' + shown + "</code>" +
+          '<span class="sandbox__try-desc">' + esc(t.desc) + "</span></button></li>";
       }).join("");
       var inputId = "sandbox-input-" + idx;
       box.innerHTML =
@@ -274,7 +279,7 @@
         '<label class="sandbox__ps" for="' + inputId + '"></label>' +
         '<input class="sandbox__input" id="' + inputId + '" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="' + esc(T.input) + '">' +
         "</form></div>" +
-        (tryHtml ? '<div class="sandbox__tryhead">' + T.tryHead + " <small>" + T.tryHint + '</small></div><ul class="sandbox__trylist">' + tryHtml + "</ul>" : "");
+        (tryHtml ? '<div class="sandbox__tryhead">' + T.tryHead + " <small>" + T.tryHint + '</small></div><ol class="sandbox__trylist">' + tryHtml + "</ol>" : "");
       screen = box.querySelector(".sandbox__screen");
       input = box.querySelector(".sandbox__input");
       promptEl = box.querySelector(".sandbox__form .sandbox__ps");
@@ -318,6 +323,10 @@
         var t = e.target.closest(".sandbox__try");
         if (!t) return;
         input.value = t.getAttribute("data-cmd");
+        // Komutun satıra yazıldığını gösteren kısa vurgu
+        box.querySelectorAll(".sandbox__try.is-picked").forEach(function (b) { b.classList.remove("is-picked"); });
+        t.classList.add("is-picked");
+        window.setTimeout(function () { t.classList.remove("is-picked"); }, 900);
         input.focus();
         try { input.setSelectionRange(input.value.length, input.value.length); } catch (er) { /* bazı tarayıcılar */ }
       });
