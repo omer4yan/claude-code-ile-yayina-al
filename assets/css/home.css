@@ -413,6 +413,58 @@
   }
 }
 
+/* ---------- Telefon yatay (≤1023px genişlik, ≤500px yükseklik) ----------
+   Kullanıcı isteği: ekran çok alçak olduğu için üstteki harita ≈230px'e küçülüyor ve iki yanı
+   boş kalıyordu. Yatayda masaüstündeki gibi yan yana: solda metin ve düğmeler, sağda büyük
+   harita (sütun genişliğinde; dolu bölüm kırpılarak gösterilir). Harita ekrandan biraz
+   uzun olabilir; aşağı kaydırınca alt kısmı ve "Dağıt, yeniden topla" görünür. */
+@media (max-width: 1023px) and (orientation: landscape) and (max-height: 500px) {
+  .hero2 {
+    --map-col: calc((100cqw - 28px) * 1.1 / 2.1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-rows: auto;
+    align-items: start;
+    gap: 28px;
+    padding-top: 16px;
+  }
+
+  .hero2__map {
+    --mw: var(--map-col);
+    order: 0;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .map-scatter {
+    right: 0;
+    bottom: 8px;
+  }
+
+  .hero2__title {
+    font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+    line-height: 1.06;
+  }
+
+  .hero2__desc {
+    margin-top: 12px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .hero2__actions {
+    margin-top: 16px;
+    gap: 10px;
+  }
+
+  .hero2__actions .btn {
+    flex: 0 1 auto;
+    height: 44px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-size: 0.9rem;
+  }
+}
+
 /* Yüksek ekranlarda metin bloğu nefes alır (kullanıcı isteği): haritanın büyüyemediği
    yükseklik başlığın üstünde boşluk olarak kalmasın diye, main.js içindeki fitHero()
    gerçek boş alanı ölçer ve satır aralıklarına ve aralara dağıtır (--fit-* değişkenleri).
