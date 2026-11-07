@@ -378,13 +378,429 @@ window.ORVENA_LESSONS = {
         }
       ]
     },
-    { id: `m2`, no: 2, title: `Your first prompt`, lessons: [
-      { id: `m2-d1`, title: `Anatomy of a prompt`, minutes: 7 },
-      { id: `m2-d2`, title: `The clarity lever`, minutes: 6 },
-      { id: `m2-d3`, title: `Context windows and /clear`, minutes: 5 },
-      { id: `m2-d4`, title: `Slash commands`, minutes: 5 },
-      { id: `m2-d5`, title: `@file and @directory`, minutes: 5 },
-      { id: `m2-d6`, title: `Module 2 summary`, minutes: 3 }
+    { id: `m2`, no: 2, title: `Your first prompt`, sub: `Install Claude Code and build your first page`, lessons: [
+      {
+        id: `m2-d1`, title: `Anatomy of a prompt`, minutes: 7, ready: true,
+        intro: [
+          `You did the Module 1 exercises in the practice terminal. In this lesson you'll install the real Claude Code on your own computer and, with a single sentence, create a web page you can open in your browser.`,
+          `If Claude Code is already installed, run <code>claude --version</code>. If you see a version number, go straight to the “Your first page” step.`
+        ],
+        blocks: [
+          { t: `callout`, kind: `info`, title: `Account requirement`, html: `To use Claude Code you need to sign in to Anthropic with a suitable Claude plan. Check the current plan and billing terms in your Anthropic account during installation.` },
+          { t: `h`, text: `Step 1 — Open the terminal` },
+          { t: `p`, html: `On Windows, press <kbd>Win</kbd> + <kbd>X</kbd> and choose <strong>Terminal</strong>. On some computers this option appears as <strong>Windows PowerShell</strong>. If the line starts with <code>PS</code>, you're in PowerShell. If you use Command Prompt (CMD), the install command is different; you'll find both in the next step.` },
+          { t: `h`, text: `Step 2 — Run the official installer` },
+          { t: `p`, html: `Choose the <strong>one</strong> command that matches your shell, copy it, paste it and press <kbd>Enter</kbd>. Both commands download and run the official installer.` },
+          { t: `code`, label: `PowerShell`, code: `irm https://claude.ai/install.ps1 | iex` },
+          { t: `code`, label: `CMD`, code: `curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd` },
+          { t: `p`, html: `Wait until the process finishes and the command line appears again. This lesson follows the Windows steps; the install command is different on macOS and Linux.` },
+          { t: `h`, text: `Step 3 — Verify the installation` },
+          { t: `cmd`, code: `claude --version`, expect: `2.x.x (Claude Code)` },
+          { t: `p`, html: `You should see a version number and the name “Claude Code”; the number doesn't have to match the example here. If the command isn't found, close the terminal, open it again and retry.` },
+          { t: `h`, text: `Step 4 — Prepare the project folder` },
+          { t: `p`, html: `The folder in Module 1 was in the browser simulation; you need to create it separately on your real computer. Create the folder, move into it and start Claude:` },
+          { t: `code`, label: `Terminal`, code: `mkdir my-first-project\ncd my-first-project\nclaude` },
+          { t: `p`, html: `If the folder already exists, skip the <code>mkdir</code> step and check your location with <code>pwd</code>. If asked on the first run, sign in with your Claude account, then return to the terminal.` },
+          { t: `h`, text: `Step 5 — Write your first real prompt` },
+          { t: `p`, html: `Once Claude opens, send the request below as <strong>a single message</strong>. The lines are only split for readability. If you like, add your own name, the topic you're learning and three things you want to build to the message.` },
+          { t: `code`, label: `To Claude`, code: `make a file called index.html - a simple one-page website about me,\nwith my name as a heading, a short paragraph about what I am learning,\nand a list of three things I want to build` },
+          { t: `p`, html: `Review the proposed file change and approve it if asked. Then leave Claude with <code>/exit</code>.` },
+          { t: `h`, text: `Step 6 — Open the page in your browser` },
+          { t: `cmd`, code: `start index.html` },
+          { t: `p`, html: `On Windows this command opens the file in its default application, usually the browser. Check that the page has a heading, a short paragraph and a three-item list.` },
+          { t: `practice` },
+          { t: `h`, text: `Why did this prompt work?` },
+          { t: `p`, html: `The request reduced the points Claude would have had to guess. The template to keep in mind is simple: <strong>Where, what, and why when it matters?</strong>` },
+          { t: `table`, head: [`Part`, `In this example`], rows: [
+            [`Where`, `In a file called <code>index.html</code>.`],
+            [`What`, `A one-page personal site with a heading, a short paragraph and a three-item list.`],
+            [`Why`, `Not stated in this example. Add it if the purpose affects a design decision.`]
+          ] },
+          { t: `p`, html: `Compare it with a vague request:` },
+          { t: `code`, label: `Vague request`, code: `make me a website` },
+          { t: `p`, html: `In this request the topic, the file name, the sections and the look aren't defined. Claude chooses them itself; you may then have to fix details you didn't choose.` },
+          { t: `h`, text: `“Why” helps with decisions` },
+          { t: `code`, label: `To Claude`, code: `in index.html, make the text bigger and darker,\nbecause I am showing this to my grandmother\nand she finds it hard to read` },
+          { t: `p`, html: `The reason steers not only the text size but also related decisions such as contrast and line spacing in the right direction.` },
+          { t: `h`, text: `Try it now` },
+          { t: `p`, html: `Start Claude again and use all three parts together:` },
+          { t: `code`, label: `To Claude`, code: `in index.html, add a section at the bottom with a way to contact me,\nbecause I want to share this page with friends` },
+          { t: `p`, html: `Refresh the page in your browser; check where the new section was added, its content and the contact details it uses.` }
+        ],
+        trouble: [
+          { q: `“irm” or “&&” isn't recognised`, a: `Check that the command belongs to the shell you're using: <code>irm</code> is a PowerShell command; it doesn't work in CMD. <code>&&</code> isn't valid in older Windows PowerShell versions. If the line starts with <code>PS</code>, use the PowerShell command.` },
+          { q: `The “claude” command can't be found`, a: `Close the terminal, open it again and retry <code>claude --version</code>. If the installer gave a PATH warning, follow its guidance.` },
+          { q: `An SSL/TLS or other installation error`, a: `Don't try to turn off security checks. Read the error message and follow the guidance in the official installation documentation.` }
+        ],
+        have: [
+          `A working Claude Code installation on your computer.`,
+          `An <code>index.html</code> page in the <code>my-first-project</code> folder, created with a single sentence.`,
+          `The template for a good request: where, what, and why when it matters.`
+        ],
+        note: `In this lesson I saw that adding the “why” to a request helps Claude make not only the requested change but also related decisions in the right direction.`,
+        next: `Next: the practical way to ask for a clear change.`,
+        prompt: `I'm learning to use the “where, what and why” template when giving Claude Code a task. How would I rewrite a vague request like “make me a website” with this template? Could you give 3 examples?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {},
+          cmds: [
+            { match: `start index.html`, out: [`(simulation) index.html would open in your default browser.`, `Check that the page has a heading, a short paragraph and a three-item list.`] }
+          ],
+          claude: [
+            { match: `make a file called index.html - a simple one-page website about me, with my name as a heading, a short paragraph about what I am learning, and a list of three things I want to build`,
+              write: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>About me</title></head>\n<body>\n  <h1>Your Name</h1>\n  <p>I am learning to build websites with Claude Code.</p>\n  <ul>\n    <li>A personal website</li>\n    <li>A recipe collection</li>\n    <li>A small game</li>\n  </ul>\n</body>\n</html>` },
+              out: [`[OK] wrote index.html`] },
+            { match: `in index.html, add a section at the bottom with a way to contact me, because I want to share this page with friends`,
+              write: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>About me</title></head>\n<body>\n  <h1>Your Name</h1>\n  <p>I am learning to build websites with Claude Code.</p>\n  <ul>\n    <li>A personal website</li>\n    <li>A recipe collection</li>\n    <li>A small game</li>\n  </ul>\n  <section>\n    <h2>Contact me</h2>\n    <p>Email: you@example.com</p>\n  </section>\n</body>\n</html>` },
+              out: [`[OK] edited index.html — added a "Contact me" section at the bottom`] }
+          ],
+          try: [
+            { cmd: `claude --version`, desc: `is it installed?` },
+            { cmd: `claude "make a file called index.html - a simple one-page website about me, with my name as a heading, a short paragraph about what I am learning, and a list of three things I want to build"`, desc: `your first real prompt` },
+            { cmd: `cat index.html`, desc: `read the file` },
+            { cmd: `claude "in index.html, add a section at the bottom with a way to contact me, because I want to share this page with friends"`, desc: `where + what + why` },
+            { cmd: `start index.html`, desc: `open in the browser` }
+          ]
+        }
+      },
+      {
+        id: `m2-d2`, title: `The clarity lever`, minutes: 6, ready: true,
+        intro: [
+          `You know the shape of a prompt: where, what, and sometimes why. In this lesson you'll see how short but specific instructions make the result easier to check.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — First try a vague request` },
+          { t: `code`, label: `To Claude`, code: `make my page better` },
+          { t: `p`, html: `“Better” could mean colour, text, layout or spacing; Claude may change several of these at once. Open the result, look at it and ask yourself: Which of these changes did I actually want?` },
+          { t: `p`, html: `To be able to compare, go back to the starting state: press <kbd>Esc</kbd> twice while the input box is empty or type <code>/rewind</code>, then choose the right earlier point and the <strong>Restore code and conversation</strong> option. Remember that undo only covers tracked changes.` },
+          { t: `h`, text: `Step 2 — Name the change` },
+          { t: `code`, label: `To Claude`, code: `in index.html, change the background to a light cream colour\nand make the heading font larger` },
+          { t: `p`, html: `This time both the file and the two changes are clear. You can check the result by looking only at these two properties, instead of re-evaluating the whole page.` },
+          { t: `practice` },
+          { t: `h`, text: `Quick clarity check` },
+          { t: `list`, items: [
+            `<strong>Did you name the file?</strong>`,
+            `<strong>Did you say what the actual change is?</strong>`,
+            `<strong>If something new is being created, did you say where?</strong>`
+          ] },
+          { t: `p`, html: `Before sending, ask yourself: Does this instruction have a single reasonable interpretation? Being specific doesn't mean being long; you don't need to add a detail that doesn't change the result.` },
+          { t: `h`, text: `What to write instead of vague words` },
+          { t: `table`, head: [`Vague phrase`, `More useful direction`], rows: [
+            [`“Make it better”`, `Name the property: colour, size, spacing or text.`],
+            [`“Clean it up”`, `Say what's wrong right now.`],
+            [`“Fix the style”`, `Describe what looks wrong and what you expect.`],
+            [`“Add some content”`, `Specify the section and roughly what content to add.`]
+          ] },
+          { t: `h`, text: `If you don't know yet what you want` },
+          { t: `p`, html: `If you can't choose the result, be specific about the process: ask Claude to review first and suggest options.` },
+          { t: `code`, label: `To Claude`, code: `read index.html and tell me three things you would improve,\nand why - do not change anything yet` },
+          { t: `p`, html: `Choose one of the suggestions and ask only for that change. The <strong>look first, then act</strong> pattern reduces sweeping changes you didn't want.` },
+          { t: `h`, text: `Try it now` },
+          { t: `steps`, items: [
+            `Deliberately ask for a vague change and review the result.`,
+            `Go back to the starting state with the appropriate undo method.`,
+            `Ask for the same change again, naming the file and the property.`,
+            `Compare the time you spent checking the two results.`
+          ] }
+        ],
+        trouble: [
+          { q: `Claude changed places I didn't want changed`, a: `Undo the change and narrow the request: write the file, the property to change and the part that must not be touched clearly. For example, “make the heading bigger, don't touch the paragraph text”.` },
+          { q: `I undid it but the file didn't go back to how it was`, a: `<code>/rewind</code> only undoes tracked file edits. Changes made with terminal commands may fall outside its scope; open the file and check.` }
+        ],
+        have: [
+          `You compared the results of a vague request and a clear one.`,
+          `A three-question clarity check you can run before sending.`,
+          `The “review first, suggest, don't change” pattern for when you don't know what you want.`
+        ],
+        note: `In this lesson I understood that clarity doesn't mean length: naming the file and the property to change is often enough.`,
+        next: `Next: keeping the context focused as the conversation grows.`,
+        prompt: `Could you help me turn vague requests like “make it better”, “clean it up” and “fix the style” into clearer instructions for a web page? Write one example for each.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>About me</title></head>\n<body>\n  <h1>Your Name</h1>\n  <p>I am learning to build websites with Claude Code.</p>\n</body>\n</html>` },
+          claude: [
+            { match: `make my page better`, write: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>Welcome!</title>\n<style>body{font-family:Georgia;background:#203040;color:#fff;padding:60px}h1{letter-spacing:4px}</style></head>\n<body>\n  <h1>YOUR NAME</h1>\n  <p>Hello and welcome to my brand new website, where I share my journey.</p>\n  <footer>Made with care</footer>\n</body>\n</html>` },
+              out: [`[OK] edited index.html — changed the title, colours, font, heading text,`, `     rewrote the paragraph and added a footer`] },
+            { match: `in index.html, change the background to a light cream colour and make the heading font larger`, write: { "~/my-first-project/index.html": `<!doctype html>\n<html lang="en">\n<head><meta charset="utf-8"><title>About me</title>\n<style>body{background:#fdf6e3}h1{font-size:3rem}</style></head>\n<body>\n  <h1>Your Name</h1>\n  <p>I am learning to build websites with Claude Code.</p>\n</body>\n</html>` },
+              out: [`[OK] edited index.html — background: light cream, heading: larger`] },
+            { match: `read index.html and tell me three things you would improve, and why - do not change anything yet`,
+              out: [`I haven't changed anything. Three suggestions:`, `1. Add a background colour — the page looks very plain right now.`, `2. Make the heading bigger — so the page's subject is clear at first glance.`, `3. Add a contact section — so visitors know how to reach you.`, `Which one would you like me to apply?`] }
+          ],
+          try: [
+            { cmd: `cat index.html`, desc: `starting state` },
+            { cmd: `claude "make my page better"`, desc: `vague request` },
+            { cmd: `cat index.html`, desc: `what changed?` },
+            { cmd: `claude "read index.html and tell me three things you would improve, and why - do not change anything yet"`, desc: `ask for suggestions first` },
+            { cmd: `claude "in index.html, change the background to a light cream colour and make the heading font larger"`, desc: `clear request` }
+          ]
+        }
+      },
+      {
+        id: `m2-d3`, title: `Context windows and /clear`, minutes: 5, ready: true,
+        intro: [
+          `The conversation and working information Claude can use while producing a response is called <strong>context</strong>. This space can be large, but it isn't unlimited; unrelated history can blur the focus of the task you're working on.`
+        ],
+        blocks: [
+          { t: `h`, text: `What's in the context?` },
+          { t: `p`, html: `Your messages, Claude's responses, the contents of files that were read and tool outputs all go into the context. In long sessions some information may be summarised; don't assume the history is always kept in full.` },
+          { t: `callout`, kind: `info`, title: `A file and the conversation are not the same thing`, html: `A file's contents can enter the context when it's read. Clearing the conversation doesn't delete the file on disk.` },
+          { t: `h`, text: `How can you tell the focus has drifted?` },
+          { t: `list`, items: [
+            `Claude keeps referring to an old task that's finished.`,
+            `When you ask for a small change, it heads for unrelated files.`
+          ] },
+          { t: `p`, html: `These may point to context clutter, but that's not the only possible cause. First check that your request is clear and which file it targets.` },
+          { t: `h`, text: `A clean start for a new task: /clear` },
+          { t: `code`, label: `In the Claude session`, code: `/clear` },
+          { t: `p`, html: `Clear the conversation when you move to an unrelated task. <code>/clear</code> doesn't touch files and doesn't undo earlier changes; it only clears the conversation context. If you're making small fixes on the same job, keeping the history can be useful; open a clean conversation when you really change task.` },
+          { t: `h`, text: `Same task, long conversation: /compact` },
+          { t: `code`, label: `In the Claude session`, code: `/compact` },
+          { t: `p`, html: `If you're still on the same task and the conversation has grown long, you can continue by summarising it. That's what <code>/compact</code> is for. The summary is not a copy that keeps every detail of the earlier conversation.` },
+          { t: `table`, head: [`Command`, `When to prefer it`], rows: [
+            [`<code>/clear</code>`, `A new or unrelated task; you don't need the details of the earlier conversation.`],
+            [`<code>/compact</code>`, `The same task continues; you want to summarise the useful history and free up space.`]
+          ] },
+          { t: `callout`, kind: `tip`, title: `The deciding question`, html: `“Will I use information from the earlier conversation in this task?” If yes, keep the context or use <code>/compact</code>; if no, start clean with <code>/clear</code>.` },
+          { t: `practice` },
+          { t: `h`, text: `Try it now` },
+          { t: `steps`, items: [
+            `Ask Claude to change the colours in <code>index.html</code>.`,
+            `In the same conversation, ask for an unrelated file: a five-item <code>shopping-list.md</code>.`,
+            `Then type <code>make the heading bigger</code> and observe which file Claude heads for.`,
+            `Use <code>/clear</code>. This time state the target clearly: <code>in index.html, make the heading bigger</code>.`
+          ] },
+          { t: `p`, html: `The first vague request doesn't necessarily cause an error. The point is to observe the effect of old tasks and the difference that giving a clear file name makes.` }
+        ],
+        trouble: [
+          { q: `After /clear, the change in the file didn't come back`, a: `That's the expected behaviour: <code>/clear</code> only clears the conversation; it doesn't touch files. Use <code>/rewind</code> to undo a change.` },
+          { q: `After /compact, Claude forgot a detail`, a: `The summary doesn't keep every detail. Remind it of an important rule or decision in a short message.` }
+        ],
+        have: [
+          `You know that context is the information used in the session, not the files on disk themselves.`,
+          `You learned to use <code>/clear</code> between unrelated tasks and <code>/compact</code> in the same long task.`,
+          `A single question to decide which one to choose.`
+        ],
+        note: `The deciding question for me was this: Do I need the information from the earlier conversation in this task? If not, <code>/clear</code>; if so, <code>/compact</code>.`,
+        next: `Next: commonly used slash commands.`,
+        prompt: `What is the context window in Claude Code? In which situations should I use the /clear and /compact commands? Could you explain with short examples?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` },
+          cmds: [
+            { match: `/clear`, out: [`(simulation) Conversation context cleared. The files are as they were.`] },
+            { match: `/compact`, out: [`(simulation) Conversation summarised; you can continue with the same task.`] }
+          ],
+          claude: [
+            { match: `make a file called shopping-list.md with five items`, write: { "~/my-first-project/shopping-list.md": `# Shopping list\n\n- bread\n- milk\n- eggs\n- apples\n- coffee` }, out: [`[OK] wrote shopping-list.md`] },
+            { match: `make the heading bigger`, out: [`Which heading do you mean? The last file we worked on is shopping-list.md;`, `should I enlarge its “# Shopping list” heading, or the heading in index.html?`] },
+            { match: `in index.html, make the heading bigger`, write: { "~/my-first-project/index.html": `<h1 style="font-size:3rem">Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` }, out: [`[OK] edited index.html — heading font-size: 3rem`] }
+          ],
+          try: [
+            { cmd: `claude "make a file called shopping-list.md with five items"`, desc: `an unrelated task` },
+            { cmd: `claude "make the heading bigger"`, desc: `vague request` },
+            { cmd: `/clear`, desc: `clear the conversation` },
+            { cmd: `claude "in index.html, make the heading bigger"`, desc: `state the target clearly` },
+            { cmd: `ls`, desc: `are the files still there?` }
+          ]
+        }
+      },
+      {
+        id: `m2-d4`, title: `Slash commands`, minutes: 5, ready: true,
+        intro: [
+          `You describe most of the jobs you give Claude in natural language. Slash commands, which start with <code>/</code>, are for managing the session: clearing the conversation, choosing the model, getting help or leaving.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — Find the commands` },
+          { t: `p`, html: `Typing a single <code>/</code> opens a list of available commands. Keep typing to narrow the list; for example <code>/cl</code>. Since commands can vary by installation and version, look at the help screen:` },
+          { t: `code`, label: `In the Claude session`, code: `/help` },
+          { t: `h`, text: `Seven commands for day one` },
+          { t: `table`, head: [`Command`, `What it does`], rows: [
+            [`<code>/clear</code>`, `Clears the conversation context for a fresh start.`],
+            [`<code>/compact</code>`, `Summarises the conversation to help you continue with the same task.`],
+            [`<code>/rewind</code>`, `Opens the undo menu. <kbd>Esc</kbd> <kbd>Esc</kbd> does the same when the input box is empty.`],
+            [`<code>/help</code>`, `Shows help and the available commands.`],
+            [`<code>/model</code>`, `Lets you choose or change the active model.`],
+            [`<code>/init</code>`, `Helps you create a <code>CLAUDE.md</code> guide that describes the project.`],
+            [`<code>/exit</code>`, `Leaves the Claude Code session.`]
+          ] },
+          { t: `callout`, kind: `warn`, title: `Remember`, html: `<code>/clear</code> doesn't undo file changes. <code>/rewind</code> is not a backup that covers every effect of terminal commands.` },
+          { t: `h`, text: `Step 2 — Describe the project once with /init` },
+          { t: `code`, label: `In the Claude session`, code: `/init` },
+          { t: `p`, html: `Start with this command in a project you'll come back to. Claude examines the project structure and prepares a <code>CLAUDE.md</code> file describing what the project is and how to work on it.` },
+          { t: `p`, html: `If read or write permission is requested, review the operation and the file path. Always open and read the resulting file; fix any wrong or missing information. <code>CLAUDE.md</code> carries the project instructions into later sessions; when the rules in it are correct, you don't have to repeat the same explanations every session.` },
+          { t: `h`, text: `Step 3 — Choose as needed with /model` },
+          { t: `code`, label: `In the Claude session`, code: `/model` },
+          { t: `p`, html: `Lets you choose among the models available on your account. Models can differ in speed, capability and usage cost. When starting out, you can stay with the default model.` },
+          { t: `h`, text: `Slash command or natural language?` },
+          { t: `table`, head: [`Situation`, `What to use`], rows: [
+            [`You're managing the session`, `A command such as <code>/clear</code>, <code>/model</code> or <code>/exit</code>.`],
+            [`You want a job done`, `A sentence such as “make the heading in index.html bigger”.`]
+          ] },
+          { t: `p`, html: `Don't assume there's a special slash command for every job. Some installations add custom commands or skills; check the current list with <code>/help</code>.` },
+          { t: `practice` },
+          { t: `h`, text: `Try it now` },
+          { t: `p`, html: `Run <code>/init</code> in the project folder. Read the resulting <code>CLAUDE.md</code> file and edit one line so it describes the project the way you would.` }
+        ],
+        trouble: [
+          { q: `I can't see a command in the list`, a: `Commands can vary by version and installation. Check the available commands with <code>/help</code>; update Claude Code if needed.` },
+          { q: `There's wrong information in CLAUDE.md`, a: `Open the file and fix it. The guide Claude writes is a starting draft; checking it is your job.` }
+        ],
+        have: [
+          `You know that slash commands manage the session, while jobs are requested in natural language.`,
+          `You learned what the seven day-one commands do.`,
+          `You can create a <code>CLAUDE.md</code> that describes your project once, with <code>/init</code>.`
+        ],
+        note: `I saw that reading and fixing the <code>CLAUDE.md</code> created by <code>/init</code>, instead of leaving it as it is, saves time in later sessions. This site has a <code>CLAUDE.md</code> file too.`,
+        next: `Next: pointing Claude at the right file and folder with <code>@</code>.`,
+        prompt: `Could you compare the /clear, /compact, /rewind, /help, /model, /init and /exit commands in Claude Code in a table? Give a usage example for each.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` },
+          cmds: [
+            { match: `/help`, out: [`(simulation) Some of the available commands:`, `  /clear  /compact  /rewind  /help  /model  /init  /exit`, `The real list may have more commands depending on your installation.`] },
+            { match: `/init`, claude: true, write: { "~/my-first-project/CLAUDE.md": `# my-first-project\n\nA simple personal website made while learning Claude Code.\n\n## Files\n- index.html: the one-page site\n\n## How to view\nOpen index.html in a browser.` }, out: [`[OK] wrote CLAUDE.md — I examined the project and prepared a draft guide.`, `Please read the file and fix any wrong or missing information.`] },
+            { match: `/model`, out: [`(simulation) The models available on your account are listed here.`, `When starting out, you can stay with the default model.`] },
+            { match: `/exit`, out: [`(simulation) Left the Claude Code session.`] }
+          ],
+          try: [
+            { cmd: `/help`, desc: `see the commands` },
+            { cmd: `/init`, desc: `create CLAUDE.md` },
+            { cmd: `cat CLAUDE.md`, desc: `read the guide` },
+            { cmd: `/model`, desc: `model choice` }
+          ]
+        }
+      },
+      {
+        id: `m2-d5`, title: `@file and @directory`, minutes: 5, ready: true,
+        intro: [
+          `Pointing at a file with <code>@</code> directs Claude to a specific source related to your request. This is especially useful when changing a file, comparing two sources or having an example's format followed.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — Point at a file` },
+          { t: `p`, html: `First ask Claude to create a second file:` },
+          { t: `code`, label: `To Claude`, code: `make a file called about.md\nwith a few paragraphs about what I am learning` },
+          { t: `p`, html: `Now you can talk about <code>index.html</code> and <code>about.md</code> separately:` },
+          { t: `code`, label: `To Claude`, code: `explain what @about.md says, in one sentence` },
+          { t: `p`, html: `Typing <code>@</code> may open a file picker. Narrow the list with a few letters such as <code>@ab</code>, choose the file with the arrow keys and complete it with <kbd>Tab</kbd> or <kbd>Enter</kbd>. After choosing, check that the path is right.` },
+          { t: `h`, text: `Step 2 — Use a file as a pattern` },
+          { t: `code`, label: `To Claude`, code: `using @index.html as the pattern,\nmake a second page called projects.html with the same styling` },
+          { t: `p`, html: `In the result, check that the font, colours and spacing match.` },
+          { t: `callout`, kind: `info`, title: `Is @ required?`, html: `Claude can sometimes find and read the relevant file without <code>@</code>. The benefit of using <code>@</code> is that you state clearly which source you mean.` },
+          { t: `h`, text: `Step 3 — Point at a folder` },
+          { t: `p`, html: `If you don't know which file has the answer, you can point at a folder within the project. For example, if you have a <code>pages/</code> folder:` },
+          { t: `code`, label: `To Claude`, code: `look through @pages/\nand tell me which files mention my name` },
+          { t: `p`, html: `Choosing a folder doesn't mean everything in it will be loaded in full; Claude may need to examine the relevant files separately. The scope of access depends on permissions and settings.` },
+          { t: `practice` },
+          { t: `h`, text: `Use context sparingly` },
+          { t: `p`, html: `Files that are read and tool outputs take up space in the context. Having a broad folder examined takes more work and context than showing a single relevant file.` },
+          { t: `list`, items: [
+            `Point at one or two important files.`,
+            `If you know where to look, choose the relevant file instead of a broad folder.`,
+            `In long files, also give the name of the relevant section or the question you're looking for.`
+          ] },
+          { t: `callout`, kind: `tip`, title: `An analogy`, html: `Sharing a single relevant document in a meeting increases focus; emptying the whole filing cabinet onto the table doesn't do the same job.` },
+          { t: `h`, text: `Is it needed in every message?` },
+          { t: `p`, html: `If you keep working on the same file, you don't need to add <code>@</code> every time. Use it again when you change files, compare two sources or clear up a misunderstanding.` },
+          { t: `h`, text: `Try it now` },
+          { t: `code`, label: `To Claude`, code: `compare @index.html and @about.md -\nis anything said differently between them?` },
+          { t: `p`, html: `Are your name, the topics you're learning or the projects you want to build described differently in the two files? Compare the findings in the response with the files yourself by opening them.` }
+        ],
+        trouble: [
+          { q: `The file picker doesn't open when I type @`, a: `You can type the file name by hand as <code>@about.md</code>. Check with <code>pwd</code> that you started Claude in the project folder.` },
+          { q: `Claude looked at the wrong file`, a: `Check the chosen path and send the request again with the right file. If there's more than one file with the same name, include the folder path too.` }
+        ],
+        have: [
+          `You learned to direct Claude to a specific source with <code>@file</code>.`,
+          `You can use one file as a pattern for a new page.`,
+          `You learned to use context sparingly by choosing the relevant file instead of a broad folder.`
+        ],
+        note: `I saw that choosing a file clearly with <code>@</code> helps not only Claude but me too: I know what to look at when I check the result.`,
+        next: `Next: the Module 2 summary and quick-reference table.`,
+        prompt: `What's the benefit of giving context with @file and @folder in Claude Code? Could you give 3 practical tips for using context sparingly?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>\n<ul><li>A personal website</li><li>A recipe collection</li><li>A small game</li></ul>` },
+          claude: [
+            { match: `make a file called about.md with a few paragraphs about what I am learning`, write: { "~/my-first-project/about.md": `# About\n\nI am learning how to use the terminal and Claude Code.\n\nMy goal is to publish my own website.` }, out: [`[OK] wrote about.md`] },
+            { match: `explain what @about.md says, in one sentence`, out: [`about.md says you're learning the terminal and Claude Code and that your goal is to publish your own site.`] },
+            { match: `using @index.html as the pattern, make a second page called projects.html with the same styling`, write: { "~/my-first-project/projects.html": `<h1>Projects</h1>\n<p>Things I want to build.</p>\n<ul><li>A personal website</li><li>A recipe collection</li><li>A small game</li></ul>` }, out: [`[OK] wrote projects.html — same structure and style as index.html`] },
+            { match: `compare @index.html and @about.md - is anything said differently between them?`, out: [`index.html lists the three projects you want to build; about.md doesn't mention them.`, `about.md describes your goal of publishing your site; that information isn't in index.html.`] }
+          ],
+          try: [
+            { cmd: `claude "make a file called about.md with a few paragraphs about what I am learning"`, desc: `a second file` },
+            { cmd: `claude "explain what @about.md says, in one sentence"`, desc: `point at the file` },
+            { cmd: `claude "using @index.html as the pattern, make a second page called projects.html with the same styling"`, desc: `use it as a pattern` },
+            { cmd: `claude "compare @index.html and @about.md - is anything said differently between them?"`, desc: `compare two files` },
+            { cmd: `ls`, desc: `which files are there?` }
+          ]
+        }
+      },
+      {
+        id: `m2-d6`, title: `Module 2 summary`, minutes: 3, ready: true,
+        intro: [
+          `You learned to create a web page from a sentence, describe the change you want clearly, and manage the conversation context. This module laid the foundation for communicating effectively with Claude.`
+        ],
+        blocks: [
+          { t: `h`, text: `Module 2 quick reference` },
+          { t: `table`, head: [`Idea`, `Practical move`], rows: [
+            [`Anatomy of a prompt`, `Answer where, what, and why when it matters.`],
+            [`Clarity`, `Aim for a single reasonable interpretation; name the file and the change.`],
+            [`When you don't know`, `Ask it to review and make suggestions before changing anything.`],
+            [`Context window`, `The information used in the session; not the files on disk themselves.`],
+            [`<code>/clear</code>`, `Clear the conversation context when moving to an unrelated task.`],
+            [`<code>/compact</code>`, `Continue by summarising a long conversation on the same task.`],
+            [`<code>/init</code>`, `Helps you create a <code>CLAUDE.md</code> that describes the project.`],
+            [`<code>@file</code>`, `Direct your request clearly to the relevant file; check the chosen path.`]
+          ] },
+          { t: `h`, text: `Mental model` },
+          { t: `p`, html: `A good prompt is <strong>specific about the work and sparing with context</strong>. Choose deliberately what you want to change, which files are relevant, and whether you still need the old conversation.` },
+          { t: `p`, html: `The common problem isn't only a badly written sentence: a vague request sent into a cluttered conversation also makes the result harder.` },
+          { t: `h`, text: `Two habits worth keeping` },
+          { t: `p`, html: `<strong>1. Look before you leap.</strong> If you're not sure, ask Claude to read and make suggestions instead of changing anything. First see the options, then choose which change is made.` },
+          { t: `code`, label: `To Claude`, code: `read @index.html and suggest three improvements;\ndo not change anything yet` },
+          { t: `p`, html: `<strong>2. Be specific about names.</strong> Instead of “better” or “clean up”, give the colour, heading, spacing, section and file name. An instruction people would understand differently is vague for Claude too.` },
+          { t: `code`, label: `To Claude`, code: `in index.html, increase the main heading size\nand leave the paragraph text unchanged` },
+          { t: `h`, text: `A short check before you start` },
+          { t: `list`, items: [
+            `Which file or folder will be worked on?`,
+            `What exactly will change?`,
+            `Does the purpose affect the choice?`,
+            `Is there relevant context, or should a new conversation be opened?`,
+            `How will you check that the result is right?`
+          ] },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Writing prompts that reduce guessing.`,
+          `Choosing between <code>/clear</code> and <code>/compact</code> as needed.`,
+          `Directing to the right file with <code>@</code>.`,
+          `Asking for review first, implementation second.`,
+          `Opening the web page on your own computer and checking the changes.`
+        ],
+        note: `Specific about the work, sparing with context: that's the one sentence that stuck with me from this module.`,
+        next: `Next: using these communication habits to make changes to real code and read diffs.`,
+        prompt: `In the second module of a Claude Code course I learned about writing prompts (where/what/why), clarity, /clear, /compact, /init and using @file. Could you prepare a short 5-question review quiz on these topics? Give the answers at the end.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` },
+          claude: [
+            { match: `read @index.html and suggest three improvements; do not change anything yet`, out: [`I haven't changed anything. Three suggestions:`, `1. Make the heading bigger.`, `2. Add the projects you want to build as a list.`, `3. Add a contact section at the bottom.`] },
+            { match: `in index.html, increase the main heading size and leave the paragraph text unchanged`, write: { "~/my-first-project/index.html": `<h1 style="font-size:3rem">Your Name</h1>\n<p>I am learning to build websites with Claude Code.</p>` }, out: [`[OK] edited index.html — heading larger, paragraph unchanged`] }
+          ],
+          try: [
+            { cmd: `claude "read @index.html and suggest three improvements; do not change anything yet"`, desc: `look first` },
+            { cmd: `claude "in index.html, increase the main heading size and leave the paragraph text unchanged"`, desc: `be specific` },
+            { cmd: `cat index.html`, desc: `check the result` }
+          ]
+        }
+      }
     ] },
     { id: `m3`, no: 3, title: `Single-file edits`, lessons: [
       { id: `m3-d1`, title: `Reading a diff`, minutes: 5 },
