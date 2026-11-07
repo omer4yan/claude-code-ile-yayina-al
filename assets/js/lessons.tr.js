@@ -1108,12 +1108,277 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m4`, no: 4, title: `Çok sayfalı bir site kur`, lessons: [
-      { id: `m4-d1`, title: `Planlama neden önemli`, minutes: 4 },
-      { id: `m4-d2`, title: `Dosyalar arası düzenlemeler`, minutes: 4 },
-      { id: `m4-d3`, title: `Görevleri parçalara bölme`, minutes: 2 },
-      { id: `m4-d4`, title: `Kendi diff'ini gözden geçirme`, minutes: 2 },
-      { id: `m4-d5`, title: `Modül 4 özeti`, minutes: 2 }
+    { id: `m4`, no: 4, title: `Çok sayfalı bir site kur`, sub: `Planla, sayfalara yay, bütünü gözden geçir`, lessons: [
+      {
+        id: `m4-d1`, title: `Planlama neden önemli`, minutes: 4, ready: true,
+        intro: [
+          `Siten birden fazla sayfaya çıktığında bir değişiklik başka dosyaları da etkiler. Bir sayfanın adını değiştirmek bağlantıları, ortak menüyü değiştirmek bütün sayfaları ilgilendirir. Bu yüzden düzenlemeye geçmeden önce yaklaşımı planla.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Düzenlemeyi değil, planı iste` },
+          { t: `code`, label: `Claude'a`, code: `I want to add a second page called projects.html\nand link to it from my home page. Plan the change first:\nlist the files you would touch and in what order.\nDo not edit anything yet.` },
+          { t: `p`, html: `Anlamı: “projects.html adında ikinci bir sayfa ekleyip ana sayfamdan ona bağlantı vermek istiyorum. Önce değişikliği planla: dokunacağın dosyaları ve sırasını listele. Henüz hiçbir şeyi düzenleme.” Böylece hangi dosyaların değişeceğini ve sırayı önceden görürsün. Eksik bir sayfayı ya da yanlış bir varsayımı, düzenleme başlamadan fark etmek çok daha kolaydır.` },
+          { t: `practice` },
+          { t: `h`, text: `Adım 2 — Planı eleştirel bir gözle oku` },
+          { t: `list`, items: [
+            `<strong>Kapsam:</strong> Etkilenen bütün dosyalar listede mi?`,
+            `<strong>Sıra:</strong> Ortak stil ve bağlantı bağımlılıkları düşünülmüş mü?`,
+            `<strong>Sınır:</strong> Dokunulmasını istemediğin bir dosya var mı?`
+          ] },
+          { t: `p`, html: `Her işin tek bir doğru sırası yoktur. Önemli olan, planın gerekçesinin anlaşılır olması ve bağımlılıkları atlamaması.` },
+          { t: `h`, text: `Adım 3 — Plan modunu kullan` },
+          { t: `p`, html: `<kbd>Shift</kbd> + <kbd>Tab</kbd> ile plan moduna geçebilirsin. Seçili modu arayüzden kontrol et; sürüm ve izin ayarlarına göre farklılık olabilir.` },
+          { t: `callout`, kind: `warn`, title: `Plan, inceleme yerine geçmez`, html: `Planı okumak, uygulanan değişiklikleri sonradan incelemen gerektiği gerçeğini değiştirmez. Plan yönü belirler; diff ve tarayıcı sonucu doğrular.` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `code`, label: `Claude'a`, code: `plan how to give my site a projects page and an about page,\nboth linked from the home page;\nlist the files and the order, no edits yet` },
+          { t: `p`, html: `Yalnızca planı oku. Eksik bir dosya ya da istemediğin bir adım varsa bunu açıkla ve planı yeniden düzenlet. Bu alıştırmada uygulamaya geçmek zorunda değilsin.` }
+        ],
+        trouble: [
+          { q: `Claude planlamak yerine doğrudan düzenlemeye başladı`, a: `<kbd>Esc</kbd> ile durdur. İsteğe “do not edit anything yet” ekini koy ya da plan moduna geçip yeniden iste.` },
+          { q: `Planda bir dosya eksik`, a: `Eksik dosyayı adıyla söyle: “you also need to update about.html”. Planı yeniden yazdır ve tekrar oku.` }
+        ],
+        have: [
+          `Düzenlemeden önce dosya listesi ve sıra içeren bir plan istemeyi öğrendin.`,
+          `Planı kapsam, sıra ve sınır açısından kontrol edebilirsin.`,
+          `Plan modunun yerini ve sınırını biliyorsun.`
+        ],
+        note: `Bu sitenin Türkçe ve İngilizce sayfalarını birlikte güncellemem gerektiği için “önce hangi dosyalara dokunacaksın?” sorusu benim için özellikle önemli.`,
+        next: `Sırada: Planlanan değişikliği ilgili bütün sayfalara tutarlı biçimde yaymak.`,
+        prompt: `Çok sayfalı basit bir web sitesine yeni bir sayfa eklerken, değişiklik yapmadan önce nasıl bir plan istemeliyim? Bir planı kontrol etmek için hangi sorulara bakmalıyım?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>\n<p>Welcome, thanks for stopping by!</p>` },
+          claude: [
+            { match: `I want to add a second page called projects.html and link to it from my home page. Plan the change first: list the files you would touch and in what order. Do not edit anything yet`,
+              out: [`Plan (henüz hiçbir dosyayı değiştirmedim):`, `1. projects.html — yeni sayfa; index.html ile aynı yapı ve stil.`, `2. index.html — projects.html'e giden bir bağlantı ekle.`, `Dokunmayacağım dosyalar: yok.`, `Onaylarsan 1. adımdan başlarım.`] },
+            { match: `plan how to give my site a projects page and an about page, both linked from the home page; list the files and the order, no edits yet`,
+              out: [`Plan (düzenleme yok):`, `1. projects.html oluştur.`, `2. about.html oluştur.`, `3. index.html'e iki sayfaya giden bağlantıları ekle.`, `4. Üç sayfada ortak stilin aynı olduğunu kontrol et.`, `Sıra önerisi: önce sayfalar, sonra bağlantılar — böylece bağlantılar boşa gitmez.`] }
+          ],
+          try: [
+            { cmd: `claude "I want to add a second page called projects.html and link to it from my home page. Plan the change first: list the files you would touch and in what order. Do not edit anything yet."`, desc: `önce planı iste` },
+            { cmd: `ls`, desc: `hiçbir şey değişmedi mi?` },
+            { cmd: `claude "plan how to give my site a projects page and an about page, both linked from the home page; list the files and the order, no edits yet"`, desc: `iki sayfalık plan` }
+          ]
+        }
+      },
+      {
+        id: `m4-d2`, title: `Dosyalar arası düzenlemeler`, minutes: 4, ready: true,
+        intro: [
+          `Plan hazır olduğunda değişikliği ilgili bütün sayfalara tutarlı biçimde yay. Ortak bir menü, renk ya da alt bilgi için hangi sayfaların birlikte değişmesi gerektiğini belirle.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Ortak menüyü her sayfaya ekle` },
+          { t: `code`, label: `Claude'a`, code: `add the same navigation menu - Home, Projects, About -\nto the top of every page,\nlinking each one to the right file` },
+          { t: `p`, html: `Anlamı: “Her sayfanın en üstüne aynı gezinme menüsünü (Ana sayfa, Projeler, Hakkımda) ekle ve her birini doğru dosyaya bağla.” Claude birden fazla dosyada düzenleme önerebilir. Her dosyayı tek başına değil, değişikliğin bütünü içindeki rolüyle oku.` },
+          { t: `practice` },
+          { t: `h`, text: `Adım 2 — Dosyalar arasını gözden geçir` },
+          { t: `list`, items: [
+            `<strong>Eksiksiz mi?</strong> İlgili her sayfa değişikliği almış mı?`,
+            `<strong>Tutarlı mı?</strong> Menü adları, sırası ve hedef bağlantılar uyumlu mu?`,
+            `<strong>Planla sınırlı mı?</strong> Yalnızca amaçlanan dosyalara mı dokunulmuş?`
+          ] },
+          { t: `h`, text: `Adım 3 — Tarayıcıda gerçekten doğrula` },
+          { t: `cmd`, code: `start index.html` },
+          { t: `p`, html: `Ana sayfayı aç. Menüden diğer sayfalara geç ve her sayfadaki bağlantıları dene. Dosya adlarının, klasör yollarının ve büyük/küçük harflerin doğru olduğunu kontrol et.` },
+          { t: `h`, text: `Adım 4 — Eksikliği somut olarak bildir` },
+          { t: `p`, html: `Bir sayfada menü eksikse dosyayı ve belirtiyi adıyla söyle:` },
+          { t: `code`, label: `Claude'a`, code: `the menu is missing on about.html;\nadd the same menu as on the other pages` },
+          { t: `p`, html: `Anlamı: “about.html'de menü eksik; diğer sayfalardaki menünün aynısını oraya da ekle.” Düzeltmeden sonra ilgili bağlantıları yeniden dene.` }
+        ],
+        trouble: [
+          { q: `Bir bağlantı “dosya bulunamadı” hatası veriyor`, a: `Bağlantıdaki dosya adını gerçek dosya adıyla karşılaştır; büyük/küçük harf ve klasör yolu da önemlidir. <code>ls</code> ile dosyanın adını kontrol et.` },
+          { q: `Menü bir sayfada farklı görünüyor`, a: `O sayfanın aynı stil dosyasını ya da stil bloğunu kullanıp kullanmadığını sor ve sayfayı adıyla belirterek düzeltme iste.` }
+        ],
+        have: [
+          `Ortak bir öğeyi bütün ilgili sayfalara birlikte uygulatmayı öğrendin.`,
+          `Çok dosyalı bir diff'i eksiksizlik, tutarlılık ve kapsam açısından inceleyebilirsin.`,
+          `Bağlantıları tarayıcıda deneyerek doğrulamayı ve eksikliği somut bildirmeyi öğrendin.`
+        ],
+        note: `Bu sitenin üst menüsü ve alt bilgisi altı sayfada ortak; birini değiştirdiğimde hepsini kontrol etmem gerektiğini bu ders netleştirdi.`,
+        next: `Sırada: Büyük değişiklikleri gözden geçirilebilir parçalara bölmek.`,
+        prompt: `Üç sayfalık basit bir HTML sitesine (index, projects, about) ortak bir gezinme menüsü eklemek istiyorum. Değişikliği nasıl isterim ve sonucu kontrol etmek için neye bakmalıyım?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {
+            "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`,
+            "~/my-first-project/projects.html": `<h1>Projects</h1>`,
+            "~/my-first-project/about.html": `<h1>About me</h1>`
+          },
+          cmds: [
+            { match: `start index.html`, out: [`(simülasyon) index.html tarayıcıda açılırdı. Menüdeki her bağlantıyı tek tek dene.`] }
+          ],
+          claude: [
+            { match: `add the same navigation menu - Home, Projects, About - to the top of every page, linking each one to the right file`,
+              write: {
+                "~/my-first-project/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>Hello, I'm Ayşe</h1>`,
+                "~/my-first-project/projects.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>Projects</h1>`
+              },
+              out: [`[OK] edited index.html — menü eklendi`, `[OK] edited projects.html — menü eklendi`, `(simülasyon: about.html bu turda atlandı — kontrol ederek fark etmeye çalış)`] },
+            { match: `the menu is missing on about.html; add the same menu as on the other pages`,
+              write: { "~/my-first-project/about.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>About me</h1>` },
+              out: [`[OK] edited about.html — diğer sayfalardaki menünün aynısı eklendi`] }
+          ],
+          try: [
+            { cmd: `claude "add the same navigation menu - Home, Projects, About - to the top of every page, linking each one to the right file"`, desc: `ortak menü` },
+            { cmd: `cat about.html`, desc: `her sayfada var mı?` },
+            { cmd: `claude "the menu is missing on about.html; add the same menu as on the other pages"`, desc: `eksikliği bildir` },
+            { cmd: `cat about.html`, desc: `düzeldi mi?` }
+          ]
+        }
+      },
+      {
+        id: `m4-d3`, title: `Görevleri parçalara bölme`, minutes: 2, ready: true,
+        intro: [
+          `“Bütün sitemi kur” ya da “her şeyi yeniden tasarla” gibi işler, tek seferde inceleyemeyeceğin büyüklükte değişiklikler üretebilir. Çözüm, işi tek tek kontrol edebileceğin parçalara bölmek.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Doğal adımları bul` },
+          { t: `steps`, items: [
+            `Projeler sayfasını içeriğiyle oluştur.`,
+            `Hakkımda sayfasını içeriğiyle oluştur.`,
+            `Ortak gezinme menüsünü bütün sayfalara ekle.`,
+            `Renkleri ve yazı tiplerini uyumlu hâle getir.`
+          ] },
+          { t: `p`, html: `Adımların sırası projeye göre değişebilir. Her parçanın sonunda, siteyi açıp gözden geçirebileceğin çalışır bir durum hedefle.` },
+          { t: `h`, text: `Adım 2 — Bir parça yap, sonra dur` },
+          { t: `code`, label: `Claude'a`, code: `do step 1 only: create the projects page with a heading\nand a short list of things I have made.\nStop and let me review before the next step.` },
+          { t: `p`, html: `Anlamı: “Yalnızca 1. adımı yap: başlığı ve yaptığım şeylerin kısa bir listesini içeren projeler sayfasını oluştur. Bir sonraki adımdan önce dur ve incelememe izin ver.” Her adımda diff'i oku ve sonucu tarayıcıda kontrol et.` },
+          { t: `callout`, kind: `warn`, title: `Kabul etmek yedeklemek değildir`, html: `Kabul edilen bir adım tek başına kalıcı bir yedek değildir. Güvenilir bir geri dönüş noktası için uygun bir checkpoint ya da Git commit'i kullan; Git'i Modül 5'te göreceksin.` },
+          { t: `practice` },
+          { t: `h`, text: `Bağlamı ihtiyaca göre yönet` },
+          { t: `p`, html: `Bir sonraki parça bağımsızsa <code>/clear</code> ile temiz başlayabilirsin. Aynı işe ait önemli kararlar hâlâ gerekliyse bağlamı koru ya da <code>/compact</code> ile özetle. Temiz başladığında kalan planı ve gerekli dosyaları yeniden belirt.` },
+          { t: `h`, text: `Şimdi dene` },
+          { t: `code`, label: `Claude'a`, code: `let us build my about page in steps. Step one:\njust the page with my name and a short bio.\nWe will add the rest after I look at it.` },
+          { t: `p`, html: `Anlamı: “Hakkımda sayfamı adım adım yapalım. Birinci adım: yalnızca adımı ve kısa bir biyografiyi içeren sayfa. Ben baktıktan sonra gerisini ekleyeceğiz.” Sayfayı açıp inceledikten sonra bir sonraki adıma geç.` }
+        ],
+        trouble: [
+          { q: `Claude durmadan sonraki adıma da geçti`, a: `<kbd>Esc</kbd> ile durdur ve isteğe açıkça “stop after this step” ya da “do step 1 only” yaz.` },
+          { q: `Bir adımdan sonra site bozuldu`, a: `Yalnızca o adımın diff'ine bak; parçalar küçük olduğu için sorunun kaynağını bulmak kolaydır. Gerekirse <code>/rewind</code> ile o adımın öncesine dön.` }
+        ],
+        have: [
+          `Büyük bir işi doğal ve kontrol edilebilir adımlara bölmeyi öğrendin.`,
+          `Claude'dan tek bir adımı yapıp durmasını isteyebilirsin.`,
+          `Adımlar arasında bağlamı ve geri dönüş noktalarını bilinçli yönetmeyi öğrendin.`
+        ],
+        note: `Bu site de tek seferde değil parça parça oluştu; her parçadan sonra durup sayfayı açmak, sorunları erken görmemi sağladı.`,
+        next: `Sırada: Parçalar bittiğinde siteyi bir bütün olarak gözden geçirmek.`,
+        prompt: `“Kişisel web sitemi kur” gibi büyük bir işi, her biri ayrı kontrol edilebilecek küçük adımlara nasıl bölerim? Örnek bir adım listesi hazırlar mısın?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `do step 1 only: create the projects page with a heading and a short list of things I have made. Stop and let me review before the next step`,
+              write: { "~/my-first-project/projects.html": `<h1>Projects</h1>\n<ul>\n  <li>My first web page</li>\n  <li>A shopping list in Markdown</li>\n</ul>` },
+              out: [`[OK] wrote projects.html`, `1. adım tamam. İncelemen için burada duruyorum.`] },
+            { match: `let us build my about page in steps. Step one: just the page with my name and a short bio. We will add the rest after I look at it`,
+              write: { "~/my-first-project/about.html": `<h1>Ayşe</h1>\n<p>I am learning to build and publish websites with Claude Code.</p>` },
+              out: [`[OK] wrote about.html — yalnızca ad ve kısa biyografi`, `Sen baktıktan sonra devam ederiz.`] }
+          ],
+          try: [
+            { cmd: `claude "do step 1 only: create the projects page with a heading and a short list of things I have made. Stop and let me review before the next step."`, desc: `tek adım` },
+            { cmd: `cat projects.html`, desc: `adımı incele` },
+            { cmd: `claude "let us build my about page in steps. Step one: just the page with my name and a short bio. We will add the rest after I look at it."`, desc: `adım adım` },
+            { cmd: `ls`, desc: `neler oluştu?` }
+          ]
+        }
+      },
+      {
+        id: `m4-d4`, title: `Kendi diff'ini gözden geçirme`, minutes: 2, ready: true,
+        intro: [
+          `Her parçayı incelemek önemlidir; ama sonunda siteye bir bütün olarak da bakmalısın. Sitenin açılması, bütün sayfaların ve bağlantıların doğru olduğu anlamına gelmez.`
+        ],
+        blocks: [
+          { t: `h`, text: `Adım 1 — Baştan sona gez` },
+          { t: `p`, html: `Her sayfada amacı, tamamlanmış içeriği ve diğer sayfalarla uyumu kontrol et. Yer tutucu metinleri, yarım kalmış bölümleri ve unutulmuş bağlantıları aramayı alışkanlık hâline getir.` },
+          { t: `h`, text: `Hızlı öz gözden geçirme` },
+          { t: `table`, head: [`Kontrol`, `Ne arıyorsun?`], rows: [
+            [`Eksiksiz`, `Her sayfa tamamlanmış; yarım bölüm ya da yer tutucu yok.`],
+            [`Tutarlı`, `Ortak menü, renkler ve alt bilgi uyumlu.`],
+            [`Bağlantılar`, `Her bağlantı amaçlanan gerçek hedefe gidiyor.`],
+            [`Gerçek içerik`, `Örnek metinler yerine doğru ve sana ait içerik var.`]
+          ] },
+          { t: `h`, text: `Adım 2 — Claude'dan ikinci bir inceleme iste` },
+          { t: `code`, label: `Claude'a`, code: `look over all my pages as if you are a first-time visitor.\nWhat is inconsistent, unfinished, or confusing?\nDo not change anything yet.` },
+          { t: `p`, html: `Anlamı: “Bütün sayfalarıma siteyi ilk kez ziyaret eden biri gibi bak. Tutarsız, yarım kalmış ya da kafa karıştıran ne var? Henüz hiçbir şeyi değiştirme.” Bulguları dosya ve sayfa üzerinden doğrula. Hangi düzeltmelerin yapılacağına sen karar ver; önerilen her değişikliği uygulamak zorunda değilsin.` },
+          { t: `practice` },
+          { t: `callout`, kind: `warn`, title: `Dosya incelemesi, tarayıcının yerini tutmaz`, html: `Claude'un dosyaları incelemesi, sayfaları tarayıcıda gezmenin yerini almaz. Bir bağlantının doğru dosyaya gidip gitmediğini ve görünümü kendin kontrol et. “Bitti” demeden önce sonuca gerçekten bak.` }
+        ],
+        trouble: [
+          { q: `Claude'un bulduğu sorun gerçek değil`, a: `Bulguyu dosyada ve tarayıcıda kontrol et. Yanlışsa bunu söyle ve geç; her öneriyi uygulamak zorunda değilsin.` },
+          { q: `Yer tutucu metinleri bulamıyorum`, a: `Claude'dan bunları listelemesini iste: “list any placeholder or example text on my pages; do not change anything”.` }
+        ],
+        have: [
+          `Parçalar bittiğinde siteyi bütün olarak gözden geçirmeyi öğrendin.`,
+          `Eksiksizlik, tutarlılık, bağlantılar ve gerçek içerik için dört maddelik bir kontrol listen var.`,
+          `Claude'dan ilk kez gelen bir ziyaretçi gözüyle inceleme isteyip bulguları doğrulayabilirsin.`
+        ],
+        note: `Bu siteyi yayınlamadan önce bağlantıları bir betikle tek tek kontrol ettirdim; ama sayfaları tarayıcıda gezmek yine de ayrı bir adım olarak kaldı.`,
+        next: `Sırada: Modül 4'ün özeti.`,
+        prompt: `Kişisel web sitemi yayınlamadan önce gözden geçirmek için bir kontrol listesi hazırlar mısın? Eksiksizlik, tutarlılık, bağlantılar ve içerik başlıklarını kullan.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {
+            "~/my-first-project/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>Hello, I'm Ayşe</h1>`,
+            "~/my-first-project/projects.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="About.html">About</a></nav>\n<h1>Projects</h1>\n<p>Lorem ipsum dolor sit amet.</p>`,
+            "~/my-first-project/about.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="about.html">About</a></nav>\n<h1>About me</h1>\n<p>I am learning to build and publish websites.</p>`
+          },
+          claude: [
+            { match: `look over all my pages as if you are a first-time visitor. What is inconsistent, unfinished, or confusing? Do not change anything yet`,
+              out: [`Değişiklik yapmadım. Bulgular:`, `1. projects.html — menüdeki About bağlantısı "About.html"e gidiyor; dosyanın adı "about.html".`, `2. projects.html — "Lorem ipsum" yer tutucu metni duruyor.`, `3. index.html — ziyaretçiye sitenin ne olduğunu anlatan bir cümle yok.`, `Hangilerini düzeltmemi istersin?`] }
+          ],
+          try: [
+            { cmd: `cat projects.html`, desc: `kendin bak` },
+            { cmd: `claude "look over all my pages as if you are a first-time visitor. What is inconsistent, unfinished, or confusing? Do not change anything yet."`, desc: `ikinci göz` },
+            { cmd: `ls`, desc: `dosya adlarını karşılaştır` }
+          ]
+        }
+      },
+      {
+        id: `m4-d5`, title: `Modül 4 özeti`, minutes: 2, ready: true,
+        intro: [
+          `Artık birden fazla sayfayı etkileyen bir değişikliği planlayabilir, tutarlı biçimde uygulayabilir ve küçük adımlarla kontrol edebilirsin. Son aşamada da siteyi bir bütün olarak gözden geçirirsin.`
+        ],
+        blocks: [
+          { t: `h`, text: `Modül 4 hızlı başvuru` },
+          { t: `table`, head: [`Beceri`, `Hamle`], rows: [
+            [`Önce planla`, `Düzenlemeden önce plan, dosya listesi ve sıra iste; uygun olduğunda plan modunu kullan.`],
+            [`Her sayfayı düşün`, `Ortak değişikliği bütün ilgili sayfalara uygulat; bağlantıları deneyerek doğrula.`],
+            [`Büyük işi parçala`, `Doğal adımlara böl; her parçadan sonra diff'i ve sayfayı incele.`],
+            [`Son inceleme`, `Eksiksizlik, tutarlılık, bağlantılar ve gerçek içerik kontrolü yap; Claude'dan da inceleme iste.`]
+          ] },
+          { t: `h`, text: `Zihinsel model` },
+          { t: `p`, html: `<strong>Planla → değiştir → diff'i gözden geçir → sayfaları kontrol et.</strong> Tek dosyadaki döngü aynen sürüyor; eklenen alışkanlık, sayfalar arasındaki tutarlılığı birlikte düşünmek.` },
+          { t: `p`, html: `Bir menü ya da stil ortaksa bütün ilgili sayfaları değerlendir. Büyük işi tek seferde incelemek yerine küçük adımlara ayır ve yayınlamadan önce bütün siteyi gez.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Çok dosyalı bir değişikliği planlamak ve gözden geçirmek.`,
+          `Paylaşılan öğeleri bütün sayfalarda tutarlı tutmak.`,
+          `Büyük bir işi küçük ve kontrol edilen adımlarla yürütmek.`,
+          `Bitmiş siteyi bir bütün olarak değerlendirmek.`
+        ],
+        note: `Planla, değiştir, gözden geçir, kontrol et: Çok sayfalı bir sitede bu döngüye “bütün sayfaları birlikte düşün” adımını ekledim.`,
+        next: `Sırada: Siteni bilgisayarından internete taşıyıp paylaşılabilir bir adresle yayınlamak.`,
+        prompt: `Claude Code kursunun dördüncü modülünde çok sayfalı bir site için planlamayı, dosyalar arası düzenlemeyi, işi parçalara bölmeyi ve son gözden geçirmeyi öğrendim. 5 soruluk kısa bir tekrar testi hazırlar mısın? Cevapları en sonda ver.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: {
+            "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`,
+            "~/my-first-project/projects.html": `<h1>Projects</h1>`,
+            "~/my-first-project/about.html": `<h1>About me</h1>`
+          },
+          try: [
+            { cmd: `ls`, desc: `sitenin dosyaları` },
+            { cmd: `cat about.html`, desc: `bir sayfayı oku` }
+          ]
+        }
+      }
     ] },
     { id: `m5`, no: 5, title: `İlk projeni yayına alma`, lessons: [
       { id: `m5-d1`, title: `Localhost ile yayındaki web`, minutes: 2 },
