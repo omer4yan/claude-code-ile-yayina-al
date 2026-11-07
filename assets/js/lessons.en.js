@@ -1997,13 +1997,335 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m7`, no: 7, title: `Capstone: publish your own site`, lessons: [
-      { id: `m7-d1`, title: `The capstone brief`, minutes: 2 },
-      { id: `m7-d2`, title: `Build the pages, deploy on day one`, minutes: 2 },
-      { id: `m7-d3`, title: `Fill it with real content`, minutes: 3 },
-      { id: `m7-d4`, title: `Add a way to reach you`, minutes: 4 },
-      { id: `m7-d5`, title: `Polish, review and publish`, minutes: 2 },
-      { id: `m7-d6`, title: `Module 7 summary: you shipped`, minutes: 2 }
+    { id: `m7`, no: 7, title: `Capstone: publish your own site`, sub: `A small but real site`, lessons: [
+      {
+        id: `m7-d1`, title: `The capstone brief`, minutes: 2, ready: true,
+        intro: [
+          `In the capstone project you'll plan and publish a small site of your own. The goal is a finished result you can really use and share with others.`
+        ],
+        blocks: [
+          { t: `h`, text: `Your task: a small but real site` },
+          { t: `p`, html: `Choose whichever of these formats suits you:` },
+          { t: `list`, items: [
+            `<strong>Personal site:</strong> who you are, what you do, contact.`,
+            `<strong>Portfolio:</strong> a few projects and short descriptions.`,
+            `<strong>Showcase page:</strong> a side project or a small business.`,
+            `<strong>An event or invitation page.</strong>`
+          ] },
+          { t: `p`, html: `A home page and the two or three extra pages you need are enough. Leave unnecessary pages and features out of the first version's scope.` },
+          { t: `h`, text: `Step 1 — Plan before you build` },
+          { t: `code`, label: `To Claude`, code: `I want to build a personal portfolio site:\na home page, a projects page, and a contact page.\nPlan the pages and the order to build them in.\nDo not write anything yet.` },
+          { t: `practice` },
+          { t: `h`, text: `Step 2 — Read the plan` },
+          { t: `list`, items: [
+            `Are all the pages you want in the plan?`,
+            `Have the shared look, menu and links been considered?`,
+            `Is the build order clear?`
+          ] },
+          { t: `p`, html: `Fix wrong assumptions before any files are created.` },
+          { t: `h`, text: `Publish in thin slices` },
+          { t: `p`, html: `First build a simple, navigable skeleton. Then add one page's real content, followed by the other content and the contact details. At each finished piece, check the diff, the local result and, after deployment, the live site.` },
+          { t: `callout`, kind: `info`, title: `Don't rush personal information`, html: `Keeping the first version small lets you verify the publishing flow early. You don't need to hurry to share personal or private information for that; choose the content to publish deliberately.` }
+        ],
+        trouble: [
+          { q: `I can't decide what kind of site to make`, a: `Choose a result you'll really use: a page you'd want to send someone the link to. If you're not sure, start with a personal site; it can be finished with the fewest pages.` }
+        ],
+        have: [
+          `You chose a format for the capstone project.`,
+          `You know why it matters to keep the scope small and read the page plan first.`,
+          `You have a plan to progress in thin slices: skeleton, content, contact.`
+        ],
+        note: `My capstone project is this site: Orvena. It consists of the Home, My Learning Journey and About Me pages, in Turkish and English.`,
+        next: `Next: building the skeleton of all the pages and publishing on day one.`,
+        prompt: `I want to build a personal portfolio site: home page, projects and contact. Could you suggest a page plan and build order that keeps the scope small for the first version?`,
+        sandbox: {
+          cwd: `~`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: {},
+          claude: [
+            { match: `I want to build a personal portfolio site: a home page, a projects page, and a contact page. Plan the pages and the order to build them in. Do not write anything yet`,
+              out: [`Plan (I haven't written any files yet):`, `1. The skeleton of the three pages: index.html, projects.html, contact.html — each with a heading and a shared menu.`, `2. The home page's real content: your name and a short introduction.`, `3. Projects page: 2–3 projects and short descriptions.`, `4. Contact page: email and profile links.`, `I suggest publishing and checking after each step.`] }
+          ],
+          try: [
+            { cmd: `cd my-portfolio`, desc: `move into the project folder` },
+            { cmd: `claude "I want to build a personal portfolio site: a home page, a projects page, and a contact page. Plan the pages and the order to build them in. Do not write anything yet."`, desc: `ask for the plan` },
+            { cmd: `ls`, desc: `no files yet` }
+          ]
+        }
+      },
+      {
+        id: `m7-d2`, title: `Build the pages, deploy on day one`, minutes: 2, ready: true,
+        intro: [
+          `The plan is ready. First you'll create the rough form of all the pages and the links between them. Then you'll verify the publishing flow while the content is still simple.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — Build the whole skeleton first` },
+          { t: `code`, label: `To Claude`, code: `build the skeleton of my site: a home, projects, and contact page,\neach with just a heading and one placeholder line,\nand a shared menu linking all three` },
+          { t: `p`, html: `Read the diffs. Open each page; check that the headings and menu links are right.` },
+          { t: `callout`, kind: `tip`, title: `The whole first, then the details`, html: `Don't try to perfect one page before the others exist. First see the structure of the whole site.` },
+          { t: `practice` },
+          { t: `h`, text: `Step 2 — Publish early` },
+          { t: `code`, label: `To Claude`, code: `set up git, push this to a new GitHub repo,\nand walk me through getting it live on Vercel` },
+          { t: `p`, html: `Check the repository target, its visibility and the files to be sent. Verify the project root and deployment settings on the host. See that the first deployment finished and the address you're given opens.` },
+          { t: `callout`, kind: `warn`, title: `A placeholder isn't real information`, html: `If you don't want the skeleton to be public, consider the provider's preview or access restriction options. Don't present unfinished example content as real information.` },
+          { t: `h`, text: `Step 3 — Record the milestone` },
+          { t: `p`, html: `Record the working skeleton with a descriptive commit message and push it to the remote repository. Go through all the pages again at the live or preview address. This commit is a version record you can compare later changes against.` }
+        ],
+        trouble: [
+          { q: `A link in the menu gives a 404 on the live site`, a: `Compare the file name in the link with the actual file name; upper/lower case and the folder path matter.` },
+          { q: `The deployment finished but the address doesn't open`, a: `Check that the project root on the host is the right folder and that <code>index.html</code> is in that folder.` }
+        ],
+        have: [
+          `You built the skeleton of all the pages with a shared menu.`,
+          `You verified the publishing flow while the content was still simple.`,
+          `You recorded the working skeleton as a milestone with a commit.`
+        ],
+        note: `On this site too, the skeleton of the pages and the shared menu came first; content and design details came later, step by step.`,
+        next: `Next: filling the skeleton with real content.`,
+        prompt: `How do I build the skeleton of a simple three-page HTML site (home, projects, contact) with a shared menu? Could you show a short code example?`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: {},
+          cmds: [
+            { match: `git add .`, out: [] },
+            { match: `git commit -m "add the skeleton of all three pages with a shared menu"`, out: [`[main (root-commit) 1a2b3c4] add the skeleton of all three pages with a shared menu`, ` 3 files changed, 12 insertions(+)`] }
+          ],
+          claude: [
+            { match: `build the skeleton of my site: a home, projects, and contact page, each with just a heading and one placeholder line, and a shared menu linking all three`,
+              write: {
+                "~/my-portfolio/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Home</h1>\n<p>(placeholder) A short intro will go here.</p>`,
+                "~/my-portfolio/projects.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Projects</h1>\n<p>(placeholder) My projects will go here.</p>`,
+                "~/my-portfolio/contact.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Contact</h1>\n<p>(placeholder) How to reach me will go here.</p>`
+              },
+              out: [`[OK] wrote index.html`, `[OK] wrote projects.html`, `[OK] wrote contact.html`, `All three pages have the same menu.`] },
+            { match: `set up git, push this to a new GitHub repo, and walk me through getting it live on Vercel`,
+              out: [`(simulation) Steps:`, `1. git init, a first commit and a push to a new GitHub repository — you confirm the repository name and visibility.`, `2. Sign in at vercel.com with GitHub and Import the repository.`, `3. Check the project root and press Deploy.`, `4. Open the address you're given and go through the three pages from the menu.`] }
+          ],
+          try: [
+            { cmd: `claude "build the skeleton of my site: a home, projects, and contact page, each with just a heading and one placeholder line, and a shared menu linking all three"`, desc: `build the skeleton` },
+            { cmd: `ls`, desc: `the pages` },
+            { cmd: `cat contact.html`, desc: `read a page` },
+            { cmd: `claude "set up git, push this to a new GitHub repo, and walk me through getting it live on Vercel"`, desc: `publish early` },
+            { cmd: `git add .`, desc: `stage` },
+            { cmd: `git commit -m "add the skeleton of all three pages with a shared menu"`, desc: `milestone` }
+          ]
+        }
+      },
+      {
+        id: `m7-d3`, title: `Fill it with real content`, minutes: 3, ready: true,
+        intro: [
+          `What turns the skeleton into a personal site is correct content that's yours. Go page by page and replace the placeholders with your name, your own descriptions and your real projects.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — Replace every placeholder` },
+          { t: `code`, label: `To Claude`, code: `on my home page, replace the placeholder heading with Ayşe Yılmaz\nand write a warm two-sentence intro saying I am learning\nto build things and I make small useful websites` },
+          { t: `p`, html: `Replace the example name with your own. Give real material for each page: what you do, which projects you're working on and why they matter to you. Check the facts and tone in the text Claude writes through the diff.` },
+          { t: `practice` },
+          { t: `h`, text: `Step 2 — Add your own images` },
+          { t: `code`, label: `To Claude`, code: `I have added photo.jpg to my project.\nPut it on the home page next to my intro, at a sensible size.` },
+          { t: `p`, html: `Put the file in the project folder; state its name and location clearly. Check that the image fits the page layout, doesn't overflow on mobile and has suitable alternative text (<code>alt</code>).` },
+          { t: `callout`, kind: `warn`, title: `Image rights`, html: `Only publish images you have the right to use. If your photo isn't ready, you can use a simple graphic or a deliberate image area; but don't leave a forgotten “photo goes here” note on the live site.` },
+          { t: `h`, text: `Step 3 — Make it sound like you` },
+          { t: `code`, label: `To Claude`, code: `read my about page and rewrite anything that sounds stiff\nor generic so it sounds like a real person wrote it;\nkeep my facts exactly the same` },
+          { t: `p`, html: `Read the text aloud. Fix lines that don't sound natural and verify that no new achievement, skill or personal information has been made up.` },
+          { t: `h`, text: `Finish a page, check it, publish it` },
+          { t: `p`, html: `When a page's real content is ready, commit and push. After the automatic deployment finishes, open and verify the live version; then move on to the next page.` }
+        ],
+        trouble: [
+          { q: `Claude added information I don't know about`, a: `Reject or fix the line you found in the diff and add “keep my facts exactly the same; do not add anything new about me” to the request.` },
+          { q: `The photo doesn't appear`, a: `Check that the file name and extension (e.g. <code>photo.jpg</code> / <code>Photo.JPG</code>) are exactly the same as in the code and that the file is in the right folder.` }
+        ],
+        have: [
+          `You learned to replace placeholders with your own name and descriptions.`,
+          `You learned to add your own image to the page and check it on mobile and in its <code>alt</code> text.`,
+          `You learned to keep your facts while making the text sound natural.`
+        ],
+        note: `The About information on this site comes only from my CV, and the lesson topics only from my lesson notes; when I asked Claude to edit the text, I specifically asked it not to add new information.`,
+        next: `Next: adding a way for visitors to reach you.`,
+        prompt: `I want to rewrite the About text on my personal website in more natural and friendly language, but my facts must not change. What should I watch out for when asking an AI to do this?`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: {
+            "~/my-portfolio/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Home</h1>\n<p>(placeholder) A short intro will go here.</p>`,
+            "~/my-portfolio/photo.jpg": `(this is an image file; its contents can't be read in the terminal)`
+          },
+          claude: [
+            { match: `on my home page, replace the placeholder heading with Ayşe Yılmaz and write a warm two-sentence intro saying I am learning to build things and I make small useful websites`,
+              write: { "~/my-portfolio/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Ayşe Yılmaz</h1>\n<p>Hi, I'm Ayşe — I'm learning to build things, one small step at a time. I make small, useful websites.</p>` },
+              out: [`Proposed change — index.html:`, `- <h1>Home</h1>`, `+ <h1>Ayşe Yılmaz</h1>`, `- <p>(placeholder) A short intro will go here.</p>`, `+ <p>Hi, I'm Ayşe — I'm learning to build things, one small step at a time. I make small, useful websites.</p>`, `(simulation: proposal accepted)`, `[OK] edited index.html`] },
+            { match: `I have added photo.jpg to my project. Put it on the home page next to my intro, at a sensible size`,
+              write: { "~/my-portfolio/index.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Ayşe Yılmaz</h1>\n<img src="photo.jpg" alt="Portrait of Ayşe Yılmaz" width="240" style="max-width:100%;height:auto">\n<p>Hi, I'm Ayşe — I'm learning to build things, one small step at a time. I make small, useful websites.</p>` },
+              out: [`[OK] edited index.html — added photo.jpg (240px wide, shrinks on mobile, has alt text)`] }
+          ],
+          try: [
+            { cmd: `ls`, desc: `is photo.jpg there?` },
+            { cmd: `claude "on my home page, replace the placeholder heading with Ayşe Yılmaz and write a warm two-sentence intro saying I am learning to build things and I make small useful websites"`, desc: `real content` },
+            { cmd: `claude "I have added photo.jpg to my project. Put it on the home page next to my intro, at a sensible size."`, desc: `add the image` },
+            { cmd: `cat index.html`, desc: `read the result` }
+          ]
+        }
+      },
+      {
+        id: `m7-d4`, title: `Add a way to reach you`, minutes: 4, ready: true,
+        intro: [
+          `A visitor may not need a complicated system to reach you. First think about a clear contact link; if you need a form, add one with a suitable service.`
+        ],
+        blocks: [
+          { t: `h`, text: `Level one: clear links` },
+          { t: `code`, label: `To Claude`, code: `on my contact page, add a button that opens a new email\nto me at ayse@example.com, and links to my Instagram and GitHub` },
+          { t: `p`, html: `Replace the example address with your own address that you want to publish. An email link opens a new message if the visitor's device has a suitable email app. Verify the social links against your real profile addresses.` },
+          { t: `practice` },
+          { t: `h`, text: `Level two: a contact form` },
+          { t: `code`, label: `To Claude`, code: `add a simple contact form - name, email, message -\nto my contact page, using a form service like Formspree\nso submissions get emailed to me without my own backend` },
+          { t: `p`, html: `A third-party service like this handles the submissions; you don't need to run your own server.` },
+          { t: `list`, items: [
+            `Check the service's current plan, usage limits, spam controls and data processing terms.`,
+            `Complete the necessary account and endpoint settings.`,
+            `Review the form's labels, required fields, and success and error messages.`,
+            `If a secret access key is needed, don't put it in browser code.`
+          ] },
+          { t: `h`, text: `Test it like a visitor` },
+          { t: `cmd`, code: `start contact.html` },
+          { t: `p`, html: `First try the links and the look locally; then send yourself a test message from the live page. Check that the message reaches your inbox and that the user is shown understandable information if there's an error.` },
+          { t: `callout`, kind: `warn`, title: `A success message isn't enough`, html: `Only send test submissions to your own account or an allowed test target. A success message appearing on screen doesn't, on its own, prove the message really arrived; check your inbox.` }
+        ],
+        trouble: [
+          { q: `The email button doesn't open anything`, a: `The visitor's device may not have an email app set up. Showing the address as plain text on the page too is a good fallback.` },
+          { q: `The form submits but the message doesn't arrive`, a: `Check the account and email verification at the form service; look in the spam folder too. Make sure the form's submission address (endpoint) is right.` }
+        ],
+        have: [
+          `You learned to add a simple way to make contact with email and profile links.`,
+          `You know the steps for adding a contact form with a form service when needed.`,
+          `You learned to test contact end to end, checking the inbox.`
+        ],
+        note: `On this site I chose level one instead of a form: email, GitHub and LinkedIn links. Phone and address details are deliberately left out.`,
+        next: `Next: polishing, the final review and the publishing decision.`,
+        prompt: `I want to add a way to make contact to a static personal site. Could you compare the pros and cons of using only email and social links versus a form service?`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: { "~/my-portfolio/contact.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Contact</h1>\n<p>(placeholder) How to reach me will go here.</p>` },
+          cmds: [
+            { match: `start contact.html`, out: [`(simulation) contact.html would open in the browser. Try the email button and the profile links one by one.`] }
+          ],
+          claude: [
+            { match: `on my contact page, add a button that opens a new email to me at ayse@example.com, and links to my Instagram and GitHub`,
+              write: { "~/my-portfolio/contact.html": `<nav><a href="index.html">Home</a> <a href="projects.html">Projects</a> <a href="contact.html">Contact</a></nav>\n<h1>Contact</h1>\n<p><a class="button" href="mailto:ayse@example.com">Email me</a></p>\n<p>ayse@example.com</p>\n<ul>\n  <li><a href="https://instagram.com/your-profile">Instagram</a></li>\n  <li><a href="https://github.com/your-profile">GitHub</a></li>\n</ul>` },
+              out: [`[OK] edited contact.html — added an email button and two profile links`, `Note: replace the Instagram and GitHub addresses with your own profile addresses.`] }
+          ],
+          try: [
+            { cmd: `claude "on my contact page, add a button that opens a new email to me at ayse@example.com, and links to my Instagram and GitHub"`, desc: `level one` },
+            { cmd: `cat contact.html`, desc: `check the links` },
+            { cmd: `start contact.html`, desc: `try it like a visitor` }
+          ]
+        }
+      },
+      {
+        id: `m7-d5`, title: `Polish, review and publish`, minutes: 2, ready: true,
+        intro: [
+          `Your pages, real content and way to make contact are ready. Now you'll assess the site like a first-time visitor and make the publishing decision.`
+        ],
+        blocks: [
+          { t: `h`, text: `A final polishing round` },
+          { t: `list`, items: [
+            `<strong>First impression:</strong> Does the home page say clearly who you are and what you offer?`,
+            `<strong>Mobile:</strong> Are the text, images and menu usable on a small screen?`,
+            `<strong>Links:</strong> Have you tried the menu and the contact targets from every page?`,
+            `<strong>Leftovers:</strong> Is there any example text, a forgotten placeholder or a half-finished section?`
+          ] },
+          { t: `h`, text: `Ask for a second review` },
+          { t: `code`, label: `To Claude`, code: `review my whole site as if you are about to publish it.\nList anything unfinished, inconsistent, broken on mobile,\nor confusing, and the three most worth fixing first.\nDo not change anything yet.` },
+          { t: `p`, html: `Check the findings. Fix the priority gaps in small steps and note the remaining improvements.` },
+          { t: `callout`, kind: `warn`, title: `A code review isn't a phone test`, html: `Claude reviewing the code doesn't replace testing on a real phone; try mobile issues on the live page too.` },
+          { t: `practice` },
+          { t: `h`, text: `Pre-publishing check` },
+          { t: `table`, head: [`Check`, `Verification`], rows: [
+            [`Live HTTPS address`, `The right publishing address opens; no certificate warning.`],
+            [`Phone`, `The look and navigation work on a small screen.`],
+            [`Links`, `Menus and page links go to the right target.`],
+            [`Real content`, `Placeholders are cleared; name and details are correct.`],
+            [`Contact`, `A test message was really received.`]
+          ] },
+          { t: `h`, text: `Make the publishing decision` },
+          { t: `p`, html: `If a visitor can understand the site, move around the pages and reach you, you've met the basic goal. Instead of waiting indefinitely for perfection, finish the necessary fixes and publish; you can add new improvements later.` }
+        ],
+        trouble: [
+          { q: `I have an endless list of improvements`, a: `Split the list into “required before publishing” and “can be added later”. Finish only the first group and publish.` }
+        ],
+        have: [
+          `You have a four-item list for the final polishing round.`,
+          `You can ask Claude for a prioritised final review.`,
+          `You can make a deliberate publishing decision with the five-item pre-publishing check.`
+        ],
+        note: `Before publishing this site I checked the links and both themes, and looked at screenshots at different screen widths; I also gave approval before every publish.`,
+        next: `Next: the course summary.`,
+        prompt: `Could you prepare a pre-publishing checklist I can use before publishing my personal website? Use the headings mobile, links, content, HTTPS and contact.`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: {
+            "~/my-portfolio/index.html": `<h1>Ayşe Yılmaz</h1>\n<img src="photo.jpg" width="900">\n<p>Hi, I'm Ayşe. I make small, useful websites.</p>`,
+            "~/my-portfolio/projects.html": `<h1>Projects</h1>\n<p>(placeholder) My projects will go here.</p>`,
+            "~/my-portfolio/contact.html": `<h1>Contact</h1>\n<p><a href="mailto:ayse@example.com">Email me</a></p>`
+          },
+          claude: [
+            { match: `review my whole site as if you are about to publish it. List anything unfinished, inconsistent, broken on mobile, or confusing, and the three most worth fixing first. Do not change anything yet`,
+              out: [`I haven't changed anything. Findings:`, `- projects.html: placeholder text is still there.`, `- index.html: the image has a fixed 900px width; it overflows on a phone. It has no alt text either.`, `- No page has a shared menu.`, `- contact.html: the email address looks like an example address.`, `The three most worth fixing first: 1) the placeholder, 2) the image overflowing on mobile, 3) the missing menu.`] }
+          ],
+          try: [
+            { cmd: `claude "review my whole site as if you are about to publish it. List anything unfinished, inconsistent, broken on mobile, or confusing, and the three most worth fixing first. Do not change anything yet."`, desc: `final review` },
+            { cmd: `cat index.html`, desc: `verify a finding` }
+          ]
+        }
+      },
+      {
+        id: `m7-d6`, title: `Module 7 summary: you shipped`, minutes: 2, ready: true,
+        intro: [
+          `By the end of the course, the goal is to build a working loop that lets you plan and publish a small, real site. This lesson brings together the steps you completed and the habits you'll carry into your next project.`
+        ],
+        blocks: [
+          { t: `h`, text: `Skills you gained during the course` },
+          { t: `table`, head: [`Module`, `Skill`], rows: [
+            [`1. Terminal basics`, `Finding your location, seeing files and folders; taking the first steps in the practice environment.`],
+            [`2. First prompt`, `Getting to know the installation flow and creating a page with clear requests.`],
+            [`3. Editing`, `Reading diffs, adjusting proposals, asking for explanations and making small refactors.`],
+            [`4. Multi-page site`, `Making planned, consistent changes across more than one file.`],
+            [`5. Publishing`, `Understanding the flow of Git, remote repositories, hosting, HTTPS and domains.`],
+            [`6. Workflow tools`, `Getting to know project instructions, commands, helpers, hooks and connections.`],
+            [`7. Capstone project`, `Finishing a small site with real content and contact details, and checking it.`]
+          ] },
+          { t: `h`, text: `The real skill: keeping the loop going` },
+          { t: `p`, html: `<strong>Plan → say what you want → review the diff → check the result → publish the finished piece → repeat.</strong> The same approach works for a one-line change and for a bigger project alike.` },
+          { t: `h`, text: `The next project` },
+          { t: `p`, html: `For your next project, choose a small idea that will really be useful to you. Limit the scope, define a first version and move forward with the same checking loop.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Moving around the terminal comfortably and using Claude Code on your own computer.`,
+          `Writing clear requests and reviewing diffs deliberately.`,
+          `Developing a multi-page site in a planned, consistent way.`,
+          `Publishing and updating the site with Git and a host.`,
+          `Finishing and sharing your own small, real site.`
+        ],
+        note: `The goal isn't memorising commands; it's giving clear requests, reviewing the change, and finishing and publishing the result. This site is the first product of that loop.`,
+        next: `The next step: choosing your own small project using what you've learned, and moving forward with the same loop.`,
+        prompt: `I published my first personal site with Claude Code. Could you suggest 5 small project ideas suitable for a beginner that I could build with the same “plan, describe, review the diff, check, publish” loop?`,
+        sandbox: {
+          cwd: `~/my-portfolio`,
+          dirs: [`~`, `~/my-portfolio`],
+          files: { "~/my-portfolio/index.html": `<h1>Ayşe Yılmaz</h1>`, "~/my-portfolio/projects.html": `<h1>Projects</h1>`, "~/my-portfolio/contact.html": `<h1>Contact</h1>` },
+          cmds: [
+            { match: `git push`, out: [`(simulation) To https://github.com/you/my-portfolio.git`, `   4e5f6a7..8b9c0d1  main -> main`, `Watch the deployment and open the live address on another device.`] }
+          ],
+          try: [
+            { cmd: `ls`, desc: `the finished site` },
+            { cmd: `git push`, desc: `publish` }
+          ]
+        }
+      }
     ] }
   ]
 };
