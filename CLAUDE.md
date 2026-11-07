@@ -82,7 +82,7 @@ https://omer4yan.github.io/claude-code-ile-yayina-al/  (İngilizce: …/en/)
   - `.\scripts\seslendir.ps1 -Ids m1-d1,m1-d2 -DryRun -Show` → kredi harcamadan karakter sayısı ve okunuşu değişen cümleler. `-DryRun`'sız üretir; metni/ayarları değişmemiş dersi atlar, `-Force` yeniden üretir.
   - Okunuş kuralları (`Convert-Speech`) yalnızca sese giden metni değiştirir: `$` dolar işareti, `~` tilda, `/clear` slash clear, `@` et (işareti), `index.html` index nokta html, `.gitignore` nokta gitignore, `→` ", sonra", `+` artı, `my-first-project` my first project vb. (kullanıcı onayladı).
   - Bir dersin metni değişirse o ders için betiği yeniden çalıştır; aksi hâlde o derste tarayıcı sesi kullanılır.
-- Durum (2026-11-07): Türkçe 28 ders seslendirildi (Modül 1–5); kalan 13 sayfa (Modül 6, Modül 7, Yayın günü; ≈21.950 karakter) kredi 7 Aralık 2026'da yenilenince üretilecek (kullanıcı beklemeyi seçti). İngilizce seslendirme yok (ses İngilizce için doğrulanmamış; ayrı karar).
+- Durum (2026-11-07): Türkçe 41 sayfanın tamamı seslendirildi (40 ders + Yayın günü, ≈39 MB). ElevenLabs kredi sayacı üretimden sonra bir süre geriden gelir; kalan krediyi tahminle değil API'den (`/v1/user/subscription`) ölç. İngilizce seslendirme yok (ses İngilizce için doğrulanmamış; ayrı karar).
 
 ## Dersler ve bağlantılar
 - Her dersin kimliği `m{modül}-d{ders}` (örn. `#m3-d2`). Toplam 40 ders.
