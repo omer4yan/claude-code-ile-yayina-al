@@ -1637,16 +1637,38 @@ pre {
   .rail-card--module {
     display: none;
   }
+}
 
-  
+/* Tablet yatay (1024–1199px, ör. iPad 1180px): müfredat üstte tam genişlikte, ders içeriği
+   solda, "Bu modülde" ve "Bu derste" kartları sağda sabit sütunda; sağda boşluk kalmaz
+   (kullanıcı isteği) */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .journey {
+    grid-template-columns: minmax(0, 1fr) 270px;
+  }
 
-  
+  .curriculum {
+    grid-column: 1 / -1;
+  }
 
-  
+  .rail {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+  }
 
-  
+  .rail-card--module {
+    display: block;
+  }
 
-  
+  /* Sağ sütunda kart yoksa (Yayın günü) tek sütun, içerik ortada */
+  .journey:not(:has(.rail-card:not([hidden]))) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .journey:not(:has(.rail-card:not([hidden]))) .lesson {
+    margin-inline: auto;
+    width: 100%;
+  }
 }
 
 @media (max-width: 960px) {

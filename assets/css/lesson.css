@@ -1145,7 +1145,8 @@
 }
 
 /* ---------- Duyarlı ---------- */
-@media (max-width: 1199px) {
+/* "Bu derste" kartı: 1024px ve üstünde sağ sütunda (tablet yatay dahil), altında gizli */
+@media (max-width: 1023px) {
   .rail-card--toc {
     display: none;
   }
