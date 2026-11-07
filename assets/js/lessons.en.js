@@ -1360,13 +1360,328 @@ window.ORVENA_LESSONS = {
         }
       }
     ] },
-    { id: `m5`, no: 5, title: `Ship your first project`, lessons: [
-      { id: `m5-d1`, title: `Localhost vs. the live web`, minutes: 2 },
-      { id: `m5-d2`, title: `Git: the five commands you need`, minutes: 2 },
-      { id: `m5-d3`, title: `Deploying to Vercel`, minutes: 2 },
-      { id: `m5-d4`, title: `Environment variables and secrets`, minutes: 2 },
-      { id: `m5-d5`, title: `Domains, HTTPS and really going live`, minutes: 2 },
-      { id: `m5-d6`, title: `Module 5 summary`, minutes: 1 }
+    { id: `m5`, no: 5, title: `Ship your first project`, sub: `From your computer to the internet`, lessons: [
+      {
+        id: `m5-d1`, title: `Localhost vs. the live web`, minutes: 2, ready: true,
+        intro: [
+          `Right now your site's files are on your computer. When you open <code>index.html</code> directly, you see a local path starting with <code>file://</code> in the address bar. That path doesn't give anyone else's computer access to your file.`
+        ],
+        blocks: [
+          { t: `h`, text: `Three kinds of address` },
+          { t: `table`, head: [`Address type`, `What it means`], rows: [
+            [`<code>file://</code>`, `The browser opens the file on its own device directly.`],
+            [`<code>localhost</code>`, `You connect to a local server running on your device. Someone else's “localhost” points to their own device.`],
+            [`Public HTTPS address`, `A server or hosting service reachable from the internet serves the site.`]
+          ] },
+          { t: `p`, html: `When you turn off your computer, your files aren't deleted; only the local server running on that computer stops. Publishing the site on an independent host keeps it reachable even when your own computer is off.` },
+          { t: `h`, text: `What does going live require?` },
+          { t: `steps`, items: [
+            `Move the files into a hosting flow.`,
+            `Have a host serve those files at a web address.`,
+            `Configure the HTTPS connection, or use the HTTPS address the provider offers.`
+          ] },
+          { t: `p`, html: `In this module, GitHub is used to hold the source files and pass them to the host. Whether there's a free plan, and its limits, varies by provider.` },
+          { t: `callout`, kind: `info`, title: `What does HTTPS provide?`, html: `HTTPS encrypts the connection. On its own it doesn't prove the site's content is trustworthy.` },
+          { t: `h`, text: `Ask Claude for a plain explanation` },
+          { t: `code`, label: `To Claude`, code: `in plain language, explain the difference between opening\nmy index.html as a file and putting it on a website` },
+          { t: `practice` },
+          { t: `h`, text: `Publish early, update in small steps` },
+          { t: `p`, html: `Publishing a simple version early lets you learn the sharing and updating flow. Small updates are much easier to check and, if needed, undo.` }
+        ],
+        trouble: [
+          { q: `The link I sent to a friend doesn't open`, a: `If the link starts with <code>file://</code> or <code>localhost</code>, it only works on your device. To share with others, use the HTTPS address of the site published on a host.` }
+        ],
+        have: [
+          `You know the difference between <code>file://</code>, <code>localhost</code> and a public address.`,
+          `You learned the three steps of going live: move, serve, HTTPS.`,
+          `You know the benefit of publishing early and updating in small steps.`
+        ],
+        note: `I first tried this site by opening it on my computer with <code>file://</code>; the public address is provided by GitHub Pages.`,
+        next: `Next: the five Git commands you need.`,
+        prompt: `Could you explain the difference between file://, localhost and a public HTTPS address to a beginner in plain language?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `in plain language, explain the difference between opening my index.html as a file and putting it on a website`,
+              out: [`When you open it as a file, the browser reads the index.html on your computer (file://...).`, `That address only works on your device; nobody else can open it.`, `When you put it on a website, the files are uploaded to a host and served from an HTTPS address`, `anyone can open. The site stays up even if your computer is off.`] }
+          ],
+          try: [
+            { cmd: `pwd`, desc: `the files are here for now` },
+            { cmd: `claude "in plain language, explain the difference between opening my index.html as a file and putting it on a website"`, desc: `ask about the difference` }
+          ]
+        }
+      },
+      {
+        id: `m5-d2`, title: `Git: the five commands you need`, minutes: 2, ready: true,
+        intro: [
+          `Git keeps a project's version history. A <strong>commit</strong> records the state of the tracked files at a particular moment. A <strong>remote</strong> such as GitHub holds a copy of that history elsewhere.`
+        ],
+        blocks: [
+          { t: `callout`, kind: `info`, title: `Push doesn't mean publish`, html: `A host can use a GitHub repository as its publishing source. But unless a publishing connection has been set up, pushing to GitHub doesn't publish the site on the web by itself.` },
+          { t: `h`, text: `Five basic commands` },
+          { t: `table`, head: [`Command`, `What it does`], rows: [
+            [`<code>git init</code>`, `Starts a Git repository in the folder; usually run once per project.`],
+            [`<code>git add .</code>`, `Adds the non-ignored changes under your current location to the staging area for the next commit.`],
+            [`<code>git commit -m "message"</code>`, `Records the staged changes with a descriptive message.`],
+            [`<code>git remote add origin &lt;url&gt;</code>`, `Defines the remote repository's address under the name <code>origin</code>.`],
+            [`<code>git push -u origin main</code>`, `Sends the local <code>main</code> branch to the remote repository and sets up tracking.`]
+          ] },
+          { t: `p`, html: `This is the basic flow. Prerequisites such as having Git installed, setting your user identity, sign-in permission and the right branch name may be needed. For later pushes, <code>git push</code> on its own is usually enough.` },
+          { t: `practice` },
+          { t: `h`, text: `Ask for help with the fiddly steps` },
+          { t: `code`, label: `To Claude`, code: `set up git in this folder, make a first commit,\nand push it to a new GitHub repo called my-first-site;\nwalk me through anything I need to click` },
+          { t: `p`, html: `Before creating the remote repository and pushing, check the target account, the repository name, its visibility (public / private) and the files to be sent.` },
+          { t: `h`, text: `A commit message is a note to your future self` },
+          { t: `p`, html: `Instead of “fix”, write a short message that describes the result of the change, such as “fix the broken link on the about page”.` },
+          { t: `callout`, kind: `warn`, title: `Don't commit secrets`, html: `Don't add passwords and keys to the repository. Using <code>.gitignore</code> doesn't delete a secret that's already been committed from the history. Before pushing, review the files and staged changes with <code>git status</code>.` }
+        ],
+        trouble: [
+          { q: `“src refspec main does not match any”`, a: `There may be no commit yet, or your branch has a different name (e.g. <code>master</code>). Make a <code>git commit</code> first; check the branch name with <code>git branch</code>.` },
+          { q: `A sign-in/permission error while pushing`, a: `You need to sign in with your GitHub account. Follow the guidance in the error message or ask Claude for step-by-step help; don't paste your password into the chat.` },
+          { q: `Files I didn't want went into the commit`, a: `Check the staged files with <code>git status</code>. Add files that shouldn't go to <code>.gitignore</code>; if they were already committed, ask Claude how to remove them from the history.` }
+        ],
+        have: [
+          `You know the concepts of commit and remote.`,
+          `You learned what the five basic Git commands do.`,
+          `You learned to write descriptive commit messages and keep secrets out of the repository.`
+        ],
+        note: `I keep this site's source folders (CV, photo, lesson notes) out of the repository with <code>.gitignore</code>, and I add files by name instead of using <code>git add .</code>.`,
+        next: `Next: connecting the repository to a host and publishing the site.`,
+        prompt: `Could you explain the git init, git add, git commit, git remote add and git push commands to a beginner, in order, with a simple analogy?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`, "~/my-first-project/about.html": `<h1>About me</h1>` },
+          cmds: [
+            { match: `git init`, out: [`Initialized empty Git repository in ~/my-first-project/.git/`] },
+            { match: `git status`, out: [`On branch main`, `Untracked files:`, `  about.html`, `  index.html`] },
+            { match: `git add .`, out: [] },
+            { match: `git commit -m "first version of my site"`, out: [`[main (root-commit) a1b2c3d] first version of my site`, ` 2 files changed, 2 insertions(+)`] },
+            { match: `git remote add origin https://github.com/you/my-first-site.git`, out: [] },
+            { match: `git push -u origin main`, out: [`(simulation) Writing objects: 100% (4/4), done.`, `To https://github.com/you/my-first-site.git`, ` * [new branch]      main -> main`, `branch 'main' set up to track 'origin/main'.`] }
+          ],
+          try: [
+            { cmd: `git init`, desc: `start the repository` },
+            { cmd: `git status`, desc: `what changed?` },
+            { cmd: `git add .`, desc: `stage` },
+            { cmd: `git commit -m "first version of my site"`, desc: `record` },
+            { cmd: `git remote add origin https://github.com/you/my-first-site.git`, desc: `define the remote` },
+            { cmd: `git push -u origin main`, desc: `push` }
+          ]
+        }
+      },
+      {
+        id: `m5-d3`, title: `Deploying to Vercel`, minutes: 2, ready: true,
+        intro: [
+          `Your site's files are on GitHub. In this lesson you'll connect the source repository to a host and learn the flow of serving the site at a shareable HTTPS address. The lesson uses Vercel.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — A one-time connection` },
+          { t: `steps`, items: [
+            `Go to <strong>vercel.com</strong> and sign in with your GitHub account.`,
+            `Import the relevant GitHub repository (<strong>Import</strong>).`,
+            `Review the project root and settings; once you're sure they suit your plain HTML site, press <strong>Deploy</strong>.`
+          ] },
+          { t: `p`, html: `Plan availability, usage limits and the names in the interface may change; check the terms shown in your account. When the deployment finishes, open the address you're given; an example address looks like <code>my-first-site.vercel.app</code>.` },
+          { t: `callout`, kind: `info`, title: `Why is a plain HTML site easy?`, html: `The browser can show HTML, CSS and JavaScript files directly, so a plain static site usually needs no build step. Still, the right project root and files to publish need to be chosen.` },
+          { t: `h`, text: `Step 2 — If a page gives a 404` },
+          { t: `code`, label: `To Claude`, code: `I deployed my site to Vercel but one page shows 404 Not Found.\nHow do I work out which file it is looking for?` },
+          { t: `p`, html: `First compare the link's target with the file's location and name. <code>Projects.html</code> and <code>projects.html</code> may not be treated as the same. A wrong folder, a missing file or redirect settings can also cause a 404.` },
+          { t: `practice` },
+          { t: `h`, text: `The update loop` },
+          { t: `p`, html: `<strong>Change → check → commit → push → watch the deployment → check the live site.</strong>` },
+          { t: `p`, html: `If the Git integration is on, every push may start a new deployment. A push to the production branch updates the live site; other branches may create preview deployments. This behaviour depends on the project settings; don't assume every push changes the live site.` },
+          { t: `p`, html: `When the deployment finishes, try the home page, the other pages and the links at the live address. There's no guarantee that an update finishes instantly or within a set time.` }
+        ],
+        trouble: [
+          { q: `The deployment failed`, a: `Read the error message in the deployment log and show it to Claude as it is. A plain HTML site doesn't need a build command; check that the project root is the right folder.` },
+          { q: `I pushed but the site didn't change`, a: `Check whether the branch you pushed is the production branch and that the deployment has finished. Refresh the page to get past the browser cache.` }
+        ],
+        have: [
+          `You know the steps for connecting a GitHub repository to a host.`,
+          `You learned to compare the file name, path and upper/lower case when you get a 404.`,
+          `You know the change → commit → push → watch the deployment → check loop.`
+        ],
+        note: `The lesson covers Vercel; I published this site on GitHub Pages with the same logic. After every push I checked that the publishing had finished and the live address opened.`,
+        next: `Next: managing environment variables and secrets safely.`,
+        prompt: `I'm getting a 404 error when publishing a static HTML site from a GitHub repository on a hosting service. Could you list the causes and the things I should check, in order?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<nav><a href="index.html">Home</a> <a href="Projects.html">Projects</a></nav>\n<h1>Hello, I'm Ayşe</h1>`, "~/my-first-project/projects.html": `<h1>Projects</h1>` },
+          claude: [
+            { match: `I deployed my site to Vercel but one page shows 404 Not Found. How do I work out which file it is looking for?`,
+              out: [`A 404 means no file was found at the requested address. I looked at index.html:`, `the menu link goes to "Projects.html", but the file is called "projects.html".`, `The host may treat upper and lower case differently. Should I change the link to "projects.html"?`] }
+          ],
+          try: [
+            { cmd: `ls`, desc: `file names` },
+            { cmd: `cat index.html`, desc: `the link's target` },
+            { cmd: `claude "I deployed my site to Vercel but one page shows 404 Not Found. How do I work out which file it is looking for?"`, desc: `ask about the 404` }
+          ]
+        }
+      },
+      {
+        id: `m5-d4`, title: `Environment variables and secrets`, minutes: 2, ready: true,
+        intro: [
+          `A plain personal site can consist of public content only. But when you connect to a service, you may need an API key, a password or another access credential. You need to keep these values from being exposed.`
+        ],
+        blocks: [
+          { t: `h`, text: `What is a secret?` },
+          { t: `p`, html: `A secret is a hidden value that grants authority: a private API key, a password or an access token, for example. Not every configuration value is a secret; but a database address, for example, must be protected especially if it contains credentials.` },
+          { t: `h`, text: `Keep secrets separate from the source code` },
+          { t: `table`, head: [`Environment`, `Where they're kept`], rows: [
+            [`Local development`, `If your tool supports it, in an environment file kept outside Git, such as <code>.env.local</code>.`],
+            [`Hosting environment`, `In the provider's environment variables or secrets management settings. In Vercel: <strong>Settings → Environment Variables</strong>.`]
+          ] },
+          { t: `p`, html: `The code refers to a variable name such as <code>CONTACT_FORM_KEY</code>; the secret value itself isn't written into the source file. Whether a <code>.env.local</code> file is read automatically depends on the application or development tool you use.` },
+          { t: `callout`, kind: `warn`, title: `Browser code can't keep secrets`, html: `A page made only of HTML can't use a secret key safely. Values added to JavaScript, HTML or built files sent to the browser can be seen by users. Run operations that need a secret key on the server side; using an environment variable alone doesn't keep the value secret.` },
+          { t: `h`, text: `.gitignore and checking the history` },
+          { t: `code`, label: `To Claude`, code: `make sure any .env files are in my .gitignore,\nand check that none were ever accidentally committed` },
+          { t: `p`, html: `<code>.gitignore</code> prevents files that aren't tracked yet from being added by mistake; it doesn't automatically remove a file that was already tracked or committed from the history. Don't paste real secrets into a chat message or example output.` },
+          { t: `practice` },
+          { t: `h`, text: `If a secret has leaked` },
+          { t: `steps`, items: [
+            `Create a new key.`,
+            `Update the application with the new key.`,
+            `Revoke or disable the old key.`
+          ] },
+          { t: `p`, html: `Deleting the file or making a new commit doesn't remove the old value from the Git history. Always treat a committed secret as leaked and change it.` }
+        ],
+        trouble: [
+          { q: `My .env file has already been committed`, a: `First revoke and renew the keys in it. Then stop tracking the file and add it to <code>.gitignore</code>; you can ask Claude for help with these steps.` },
+          { q: `The environment variable isn't read on the live site`, a: `Check that the variable was added to the host's settings with the right name and that a new deployment was made after adding it.` }
+        ],
+        have: [
+          `You know what a secret is and why it's kept separate from the source code.`,
+          `You learned that code sent to the browser can't keep secrets.`,
+          `You know the steps for revoking and renewing a leaked key.`
+        ],
+        note: `This site has no secret keys at all; still, I added <code>.env</code> to <code>.gitignore</code> as a precaution.`,
+        next: `Next: domain name, HTTPS and a final round before publishing.`,
+        prompt: `How do I keep secrets like an API key safe in a web project? Could you explain simply how a .env file, .gitignore and the host's environment variables relate to each other?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>`, "~/my-first-project/.env.local": `CONTACT_FORM_KEY=example-value-do-not-share`, "~/my-first-project/.gitignore": `.DS_Store` },
+          claude: [
+            { match: `make sure any .env files are in my .gitignore, and check that none were ever accidentally committed`,
+              write: { "~/my-first-project/.gitignore": `.DS_Store\n.env*` },
+              out: [`[OK] edited .gitignore — added ".env*"`, `I checked the Git history: .env.local was never committed.`, `Note: if a secret had been committed before, .gitignore wouldn't delete it from the history.`] }
+          ],
+          try: [
+            { cmd: `ls -a`, desc: `see hidden files` },
+            { cmd: `cat .gitignore`, desc: `is .env ignored?` },
+            { cmd: `claude "make sure any .env files are in my .gitignore, and check that none were ever accidentally committed"`, desc: `have it checked` },
+            { cmd: `cat .gitignore`, desc: `read the result` }
+          ]
+        }
+      },
+      {
+        id: `m5-d5`, title: `Domains, HTTPS and really going live`, minutes: 2, ready: true,
+        intro: [
+          `You can share your site right away with the address the host gives you. A custom domain is an optional next step: you register the name you choose, connect it to the hosting service and verify HTTPS access.`
+        ],
+        blocks: [
+          { t: `h`, text: `Step 1 — Register the domain` },
+          { t: `p`, html: `Choose a suitable name at a domain registrar and register it. Registration is usually a time-limited, renewable right of use; check the first-year price and the renewal fee separately. The price varies by extension and provider.` },
+          { t: `p`, html: `Registering a domain doesn't automatically connect the site to the right place; you configure separately which service the name points to.` },
+          { t: `h`, text: `Step 2 — Add it to the host and set up DNS` },
+          { t: `p`, html: `Add the domain to your project on the host. Then define the current DNS records the host gives you at the domain's authoritative DNS provider. That provider may be different from where you bought the domain.` },
+          { t: `code`, label: `To Claude`, code: `Vercel told me to add an A record and a CNAME for my domain.\nExplain in plain terms what each one does before I paste them in.` },
+          { t: `table`, head: [`Record`, `What it does`], rows: [
+            [`A`, `Connects a name to an IPv4 address.`],
+            [`CNAME`, `Points a name to another domain name.`]
+          ] },
+          { t: `p`, html: `Take which record is needed for which name from the host's project screen; don't copy example values at random. How soon DNS changes show depends on caches and record settings; a change may not appear immediately. Check the domain verification status on the host.` },
+          { t: `practice` },
+          { t: `h`, text: `Step 3 — Verify HTTPS` },
+          { t: `p`, html: `Many managed hosts handle certificates automatically; for that, DNS verification and certificate creation need to be complete. Open the HTTPS address and check that there's no certificate warning.` },
+          { t: `callout`, kind: `info`, title: `The padlock may not always appear`, html: `HTTPS encrypts the connection; on its own it doesn't prove the content is trustworthy. Browsers may not always show a secure connection with a padlock icon.` },
+          { t: `h`, text: `Step 4 — Take “the stranger's tour”` },
+          { t: `list`, items: [
+            `Open the site on your phone or another device.`,
+            `Try every page and menu link.`,
+            `Verify that there's no warning on the HTTPS connection.`,
+            `Check your real name and content; clear out example text.`
+          ] }
+        ],
+        trouble: [
+          { q: `The domain still goes to the old place`, a: `DNS changes can take time to propagate. Check the verification status on the host and make sure the records are exactly the same as the values the host shows.` },
+          { q: `I see a certificate warning`, a: `DNS verification and certificate creation may not be complete yet. Watch the status on the host's domain screen; if the warning persists, check the records again.` }
+        ],
+        have: [
+          `You know that a custom domain is an optional step.`,
+          `You learned what A and CNAME records are for.`,
+          `You have a “stranger's tour” checklist for before publishing.`
+        ],
+        note: `I didn't use a custom domain for this site; it's live at the HTTPS address GitHub Pages provides. I also noted the “stranger's tour” list for my own site.`,
+        next: `Next: the Module 5 summary and the publishing loop.`,
+        prompt: `When connecting a domain to a static site host, what do an A record and a CNAME record do? Could you explain in plain language with an analogy?`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          claude: [
+            { match: `Vercel told me to add an A record and a CNAME for my domain. Explain in plain terms what each one does before I paste them in`,
+              out: [`A record: connects the domain (e.g. example.com) to a server's IP address — like a street number for an address.`, `CNAME: points a name (e.g. www.example.com) to another domain name — like a note saying “look at that address”.`, `Copy the values exactly from the host's project screen; don't use example values.`] }
+          ],
+          try: [
+            { cmd: `claude "Vercel told me to add an A record and a CNAME for my domain. Explain in plain terms what each one does before I paste them in."`, desc: `ask about DNS records` }
+          ]
+        }
+      },
+      {
+        id: `m5-d6`, title: `Module 5 summary`, minutes: 1, ready: true,
+        intro: [
+          `You learned the basic flow of moving a site from local files to a public web address. Once the publishing connection is set up, you can keep making small updates with the same loop.`
+        ],
+        blocks: [
+          { t: `h`, text: `The publishing loop` },
+          { t: `table`, head: [`Step`, `What you do`], rows: [
+            [`Snapshot`, `Check the change; record it with <code>git add</code> and <code>git commit</code>.`],
+            [`Upload`, `Send it to the right remote repository and branch with <code>git push</code>.`],
+            [`Deploy`, `Watch the connected host's deployment and verify it succeeded.`],
+            [`Check`, `Open the live HTTPS address on another device; try the pages and links.`]
+          ] },
+          { t: `p`, html: `<strong>Commit → push → verify the deployment → check.</strong> Automatic publishing depends on the Git integration and the production branch setting; tell a preview deployment apart from a live site update.` },
+          { t: `h`, text: `Rules worth keeping in mind` },
+          { t: `list`, items: [
+            `<strong>Update small and often:</strong> Check the result of every change.`,
+            `<strong>Don't commit secrets:</strong> Keep environment files and secret values out of Git; change a leaked key.`,
+            `<strong>On a 404, examine the path:</strong> Compare the link, the file name and the folder location.`,
+            `<strong>Try it on another device:</strong> Don't test the published address only in your own development environment.`
+          ] },
+          { t: `p`, html: `These skills are less about memorising commands and more about understanding what each step does and checking the result.` },
+          { t: `practice` }
+        ],
+        trouble: [],
+        have: [
+          `Versioning your files in a Git repository.`,
+          `Connecting the remote repository to a hosting flow.`,
+          `Pushing a change and checking the result of the deployment.`,
+          `Optionally adding a custom domain and verifying HTTPS access.`
+        ],
+        note: `Commit, push, verify, check: I follow the same four steps every time I update this site, and I give approval before publishing.`,
+        next: `Next: improving how you use Claude Code with project instructions, shortcuts and connections to external tools.`,
+        prompt: `In the fifth module of a Claude Code course I learned about the difference between local files and a live site, the five basic Git commands, deploying, secrets, and domains/HTTPS. Could you prepare a short 5-question review quiz? Give the answers at the end.`,
+        sandbox: {
+          cwd: `~/my-first-project`,
+          dirs: [`~`, `~/my-first-project`],
+          files: { "~/my-first-project/index.html": `<h1>Hello, I'm Ayşe</h1>` },
+          cmds: [
+            { match: `git add index.html`, out: [] },
+            { match: `git commit -m "update the home page heading"`, out: [`[main 4e5f6a7] update the home page heading`, ` 1 file changed, 1 insertion(+), 1 deletion(-)`] },
+            { match: `git push`, out: [`(simulation) To https://github.com/you/my-first-site.git`, `   a1b2c3d..4e5f6a7  main -> main`, `Now watch the deployment and check the live address.`] }
+          ],
+          try: [
+            { cmd: `git add index.html`, desc: `snapshot` },
+            { cmd: `git commit -m "update the home page heading"`, desc: `record` },
+            { cmd: `git push`, desc: `upload` }
+          ]
+        }
+      }
     ] },
     { id: `m6`, no: 6, title: `Hooks, MCP and workflow`, lessons: [
       { id: `m6-d1`, title: `CLAUDE.md: teach Claude your project`, minutes: 2 },
