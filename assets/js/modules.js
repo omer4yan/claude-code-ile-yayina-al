@@ -259,7 +259,7 @@
   var track = root.querySelector(".carousel__track");
   var prev = root.querySelector('[data-carousel="prev"]');
   var next = root.querySelector('[data-carousel="next"]');
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reduceMotion = false; // animasyonlar "hareketi azalt" ayarından bağımsız (kullanıcı isteği)
 
   items.forEach(function (m, i) {
     track.appendChild(createModuleCard(m, i, items.length));

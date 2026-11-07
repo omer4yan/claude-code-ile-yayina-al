@@ -103,7 +103,7 @@
     el.classList.add("is-reading");
     var r = el.getBoundingClientRect();
     if (r.top < 90 || r.bottom > window.innerHeight - 20) {
-      el.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 

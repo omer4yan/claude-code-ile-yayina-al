@@ -3,7 +3,9 @@
 CV/
 Fotoğraf/
 Claude Code ile yayına al/
-site tasarımı ekran görüntüleri/
+
+# Logo kaynağı (yalnızca işlenmiş logo assets/img altında yayınlanır)
+Logo/
 
 # Ortam dosyaları ve sırlar
 .env
@@ -15,14 +17,3 @@ Thumbs.db
 desktop.ini
 .vscode/
 .claude/settings.local.json
-
-# Logo kaynağı ve tasarım referansı (yalnızca işlenmiş logo assets/img altında yayınlanır)
-Logo/
-anasayfa dizaynı/
-
-# Diğer tasarım referansı klasörleri (yayınlanmaz)
-anasayfa tasarımı/
-eski anasayfa tasarımı/
-
-# Tasarım referansı ekran videoları (yayınlanmaz)
-video/

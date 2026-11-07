@@ -124,15 +124,6 @@
   animation: crumb-in 0.6s ease 0.75s forwards;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .lesson-crumb > *,
-  .lesson-hero__title,
-  .lesson-hero .hero-chips {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-}
 
 /* ---------- Dinle ---------- */
 .listen {
@@ -1040,11 +1031,9 @@
     font-size: 1rem;
   }
 
-  .lesson-body > p,
-  .lesson-body .callout p,
-  .lesson-body .trouble__item p {
-    text-align: left;
-    hyphens: manual;
+  /* İki yana yaslı iri giriş paragrafında dar ekranda kelime aralıkları açılmasın */
+  .lesson-intro {
+    font-size: 1rem;
   }
 
   .listen__inner {
@@ -1138,9 +1127,3 @@
   animation: crumb-in 0.6s ease 0.65s forwards;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .lesson-hero__sub {
-    animation: none;
-    opacity: 1;
-  }
-}

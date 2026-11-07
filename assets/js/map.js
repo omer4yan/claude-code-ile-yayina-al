@@ -6,7 +6,9 @@
    - ORVENA merkezinden 7 modüle giden çizgiler boyunca noktalar akar (.map-flow).
    - "Dağıt, yeniden topla" düğmesi: noktalar dışarı saçılır, haritadan çıkar,
      sonra kırmızı olarak geri dönüp yerlerine yerleşir; ardından çizgiler yeniden çizilir.
-   - prefers-reduced-motion açıkken hareket yoktur (noktalar durağan, düğme gizli).
+   - Animasyonlar cihazın "hareketi azalt" ayarından bağımsız olarak her zaman çalışır (kullanıcı isteği).
+   - Dokunmatik ekranlarda (fare yok) görünmez bir imleç harita üzerinde yavaşça dolaşır;
+     parmakla dokunulan/sürüklenen yer de imleç gibi davranır. Dikey kaydırma bozulmaz.
    - JavaScript yoksa SVG içindeki desen (.map-pattern) görünmeye devam eder.
    ========================================================= */
 (function () {
@@ -39,7 +41,8 @@
   // Dağıt, yeniden topla zaman çizelgesi (ms)
   var T_OUT = 700, T_IN_START = 1000, T_IN = 1600, T_IN_SPREAD = 900, T_REDRAW = 3900;
 
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Fare olmayan (dokunmatik) cihaz: gezinen imleç kullanılır
+  var touchOnly = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
   var rand = function (a, b) { return a + Math.random() * (b - a); };
 
   /* ---------- Noktaları üret: kara şekilleri SVG maskesinden okunur ---------- */
@@ -139,8 +142,6 @@
     window.addEventListener("resize", function () { resize(); draw(); });
   }
 
-  if (reduce) return; // hareket azaltma: durağan çizim yeterli, düğme gizli kalır
-
   /* ---------- İmleç ---------- */
   var pointer = null; // harita biriminde imleç konumu
   var hero = fig.closest(".hero2") || fig;
@@ -148,9 +149,33 @@
     var rect = stage.getBoundingClientRect();
     return { x: ((e.clientX - rect.left) / rect.width) * VB_W, y: ((e.clientY - rect.top) / rect.height) * VB_H };
   };
-  hero.addEventListener("pointermove", function (e) { pointer = toMap(e); wake(); }, { passive: true });
-  hero.addEventListener("pointerleave", function () { pointer = null; wake(); });
-  hero.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") { pointer = null; wake(); } });
+  var touching = false; // parmak harita üzerinde
+  hero.addEventListener("pointermove", function (e) {
+    if (e.pointerType !== "mouse" && !touching) return;
+    pointer = toMap(e); wake();
+  }, { passive: true });
+  hero.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { pointer = null; wake(); } });
+  // Dokunma: parmağın değdiği yer imleç olur; parmak kalkınca gezinen imlece dönülür
+  stage.addEventListener("pointerdown", function (e) {
+    if (e.pointerType === "mouse") return;
+    touching = true; pointer = toMap(e); wake();
+  }, { passive: true });
+  var endTouch = function (e) {
+    if (e.pointerType === "mouse") return;
+    touching = false;
+    if (!touchOnly) pointer = null;
+    wake();
+  };
+  window.addEventListener("pointerup", endTouch, { passive: true });
+  window.addEventListener("pointercancel", endTouch, { passive: true });
+
+  // Gezinen imleç (dokunmatik ekranlar): harita üzerinde yavaş, düzensiz görünen bir yol
+  var ghostAt = function (now) {
+    return {
+      x: VB_W / 2 + Math.sin(now * 0.00019) * 240 + Math.sin(now * 0.00047 + 1.3) * 60,
+      y: VB_H / 2 + Math.sin(now * 0.00027 + 0.7) * 170 + Math.cos(now * 0.00041) * 40
+    };
+  };
 
   var fgShift = { x: 0, y: 0 };
 
@@ -160,7 +185,7 @@
   });
   // Her çizgide birkaç nokta; her noktanın arkasında küçülerek sönen kısa bir kuyruk var.
   // Saydamlık style ile verilir (CSS kuralı SVG özniteliğini ezdiği için öznitelik kullanılmaz).
-  var PER_ROUTE = 3, FLOW_MS = 2400;
+  var PER_ROUTE = 3, FLOW_MS = 3600; // bir ışığın bir çizgiyi geçme süresi
   var TAIL = [{ lag: 0, r: 3.4, a: 1 }, { lag: 0.035, r: 2.6, a: 0.5 }, { lag: 0.07, r: 1.9, a: 0.25 }];
   var particles = [];
   routes.forEach(function (route, ri) {
@@ -298,6 +323,9 @@
 
   var step = function (now) {
     rafId = 0;
+
+    // Dokunmatik ekranda parmak değmiyorsa imleç kendiliğinden dolaşır
+    if (touchOnly && !touching && !scatter) pointer = ghostAt(now);
 
     // Derinlik: çizgi grubu imleci izler, nokta alanı ters yönde daha az kayar
     var tx = 0, ty = 0;

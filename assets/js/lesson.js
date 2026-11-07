@@ -11,7 +11,7 @@
   var main = document.getElementById("ana-icerik");
   if (!DATA || !main) return;
 
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reduceMotion = false; // animasyonlar "hareketi azalt" ayarından bağımsız (kullanıcı isteği)
 
   /* ---------- Yardımcılar ---------- */
   var ICON = {
