@@ -797,13 +797,7 @@ pre {
   color: var(--muted);
   font-size: 0.96rem;
   line-height: 1.6;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  overflow: hidden;
-  min-height: calc(1.6em * 3);
-  /* İki yana yasla; satır yüksekliği 3 satırlık sınırla uyumlu kalsın diye ortak kurala eklenmedi */
+  /* İki yana yaslı, metnin tamamı gösterilir (satır sınırı yok; kullanıcı isteği) */
   text-align: justify;
   text-align-last: left;
   -webkit-hyphens: auto;
