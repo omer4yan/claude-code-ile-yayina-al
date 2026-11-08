@@ -1213,6 +1213,10 @@
   font-size: 0.96rem;
   line-height: 1.65;
   max-width: none;
+  text-align: justify;
+  text-align-last: left;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 .ov-module__meta {
